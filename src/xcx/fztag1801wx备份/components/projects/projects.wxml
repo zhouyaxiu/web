@@ -1,0 +1,58 @@
+<template name="tasks">
+  <view class="weui-media-box__hd">
+    <text class="weui-media-box__thumb"></text>
+  </view>
+  <view class="weui-media-box__bd">
+    <view class="weui-media-box__title">{{abstract}}</view>
+    <view class="weui-media-box__desc">{{id}}</view>
+  </view>
+  <view class="text-right">
+    <view class="fr"></view>
+  </view>
+</template>
+<template name="task_revises">
+  <view class="weui-media-box weui-media-box_appmsg">
+    <view class="weui-media-box__hd">
+      <text class="weui-media-box__thumb"></text>
+    </view>
+    <view class="weui-media-box__bd">
+      <view class="weui-media-box__title">{{taskid}}</view>
+      <view class="weui-media-box__desc">{{uuid}}</view>
+    </view>
+    <view class="weui-media-box__desc color_primary text-right">{{review}}</view>
+  </view>
+</template>
+<template name="skeleton">
+  <view class="channel">
+    <view view class="weui-panel weui-panel_access">
+      <view wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="index" wx:for-item="item">
+        <view class="weui-media-box weui-media-box_appmsg" bindtap="viewProject" data-id="{{item.id}}">
+          <view class="weui-media-box__hd skeleton-radius">
+            <text class="weui-media-box__thumb"></text>
+          </view>
+          <view class="weui-media-box__bd">
+            <view class="weui-media-box__title skeleton-rect">title</view>
+            <view class="weui-media-box__desc skeleton-rect">desc</view>
+          </view>
+          <view class="text-right">
+            <view class="fr"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<view class="wrapper">
+  <view class="channel">
+    <view class="weui-panel weui-panel_access">
+      <view wx:if="{{projects.length}}">
+        <view wx:for="{{projects}}" wx:key="index" wx:for-item="item">
+          <view class="weui-media-box weui-media-box_appmsg" bindtap="viewProject" data-id="{{item.id}}">
+            <template is="tasks" data="{{...item}}" />
+          </view>
+        </view>
+      </view>
+      <text class="nodata" wx:else>{{nodata}}</text>
+    </view>
+  </view>
+</view>

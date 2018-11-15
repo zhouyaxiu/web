@@ -1,0 +1,146 @@
+<style lang='less'>
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+  <view class='container'>
+    <picker value='{{langIndex}}' bindchange='bindSelectLanguage' range='{{lang}}'>
+      <!-- <image src='../../images/switch.png' alt='' class='switch' /> -->
+    </picker>
+    <view class='channel'>
+      <view view class='weui-panel weui-panel_access'>
+        <block wx:for='{{projects}}' wx:key='index' wx:for-item='item' wx:for-index='id'>
+          <navigator url='../task_detail/index?taskid={{item.id}}'>
+            <view class='weui-media-box weui-media-box_appmsg'>
+              <view class='weui-media-box__hd'>
+                <text class='weui-media-box__thumb'></text>
+              </view>
+              <view class='weui-media-box__bd'>
+                <view class='weui-media-box__title'>{{item.abstract}}</view>
+                <view class='weui-media-box__desc'>{{item.id}}</view>
+              </view>
+              <view class='fr'></view>
+            </view>
+          </navigator>
+        </block>
+      </view>
+    </view>
+    <toast />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import Panel from '@/components/panel' // alias example
+  import Counter from 'counter' // alias example
+  import List from '../components/list' // aliasFields example
+  import moduleA from 'module-a' // aliasFields ignore module example
+  import Group from '../components/group'
+  import Toast from 'wepy-com-toast'
+  import testMixin from '../mixins/test'
+
+  console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
+
+  @connect({
+    num (state) {
+      return state.counter.num
+    },
+    asyncNum (state) {
+      return state.counter.asyncNum
+    },
+    sumNum (state) {
+      return state.counter.num + state.counter.asyncNum
+    }
+  })
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+      panel: Panel,
+      counter1: Counter,
+      counter2: Counter,
+      list: List,
+      group: Group,
+      toast: Toast
+    }
+
+    mixins = [testMixin]
+
+    data = {
+      projects: [],
+      changelangs: [],
+      lang: ['中文简体', 'English'],
+      langIndex: 0,
+      langCode: ['zh', 'en'],
+      showData: [],
+      jsonData: [{ zh: '首页', en: 'Home' }, { zh: '我的', en: 'Me' }],
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      filterSopType: function(tasklist) {
+        var tmp = []
+        for(var k in tasklist) {
+          if (tasklist[k].sopType.indexOf('COLLECT') != -1 ||
+            tasklist[k].sopType.indexOf('TEXTTRANS') != -1) {
+            tmp.push(tasklist[k])
+          }
+        }
+        return tmp
+      },
+      getProjects: function() {
+        var that = this
+        wx.request({
+          url: cfg.getAPIURL()+'/api/projects',
+          method: 'get',
+          header: app.globalData.header,
+          success: function(response){
+            that.setData({
+              projects: that.filterSopType(response.data.projects)
+            });
+          },
+          fail: function(response) {
+            console.log(response)
+            wx.showToast({
+              title: '882',
+              icon: 'none',
+              duration: 1500
+            });
+          } 
+        });
+      },
+    }
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+    onLoad() {
+      // var that = this
+      // that.getProjects();
+      wx.setNavigationBarTitle({
+        title:'首页'
+      });
+    }
+  }
+</script>

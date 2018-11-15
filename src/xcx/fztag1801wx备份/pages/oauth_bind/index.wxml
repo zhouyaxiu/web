@@ -1,0 +1,55 @@
+<view class="container">
+  <form bindsubmit="loginSubmit">
+    <view class="logo">
+      <image src="{{logo}}"></image>
+      <text class="wave"></text>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label mobile" for="mobile"></label>
+      </view>
+      <input id="mobile" type="text" placeholder="{{oauth_login.phone}}" value="{{form.mobile}}" name="mobile" bindinput="bindMobileInput" class="weui-input" />
+      <text bindtap="countrycode">+{{countryCode}}</text>
+    </view>
+    <view class="weui-cell sms">
+      <view class="weui-cell__hd">
+        <label class="weui-label yzm" for="code"></label>
+      </view>
+      <view class="weui-cell__bd">
+        <input id="code" type="text" placeholder="{{oauth_login.code}}" value="{{form.code}}" name="code" bindinput="bindCodeInput" class="weui-input" />
+        <view class="weui-cell_ft">
+          <button bindtap="checkMobile" data-name="mobile" size="mini" disabled="{{smsCodeDisabled}}" class="{{isactive?'isactive':'noactive'}}">
+            {{getSmsCode}}
+          </button>
+        </view>
+      </view>
+    </view>
+    <view class="button-sp-area">
+      <button class="weui-btn weui-btn_primary" formType="submit">{{oauth_login.confirm}}</button>
+    </view>
+    <view class="languages">
+      <picker bindchange="bindSelectLanguage" value="{{langIndex}}" range="{{lang}}">
+        <view>{{oauth_login.Language}}：{{lang[langIndex]}}</view>
+      </picker>
+    </view>
+    <view class="txt-area">
+      <navigator redirect url="../oauth_register/index">
+        <text class="register">{{oauth_login.noaccount}}</text>
+      </navigator>
+    </view>
+  </form>
+  <view class="country" wx:if="{{clickcountry}}">
+    <view class="countrycode">
+      <radio-group bindchange="choiceCountry">
+        <view wx:for="{{countrycode}}" wx:key="{{item.value}}" wx:for-item="item">
+          <text>{{item.name}} {{item.label}}</text>
+          <!-- <text>{{item.label}}</text> -->
+          <label class="radio">
+            <radio value="{{item.value}}" />
+            <!-- {{item.label}} -->
+          </label>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+</view>

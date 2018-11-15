@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="text_task">
+    <view style="margin-bottom:40rpx;">
+      <view class="task_title">{{task_title}}</view>
+      <view class="task_info">{{task_info}}</view>
+    </view>
+    <view class="process" wx:if="{{progress}}"><text>{{recordwav.progress}}{{progress}}%</text></view>
+    <view class="text_task_con">
+      <view class="radio-main">
+        <view class="time">
+          <text>{{formatedRecordTime}}</text>
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="speak-main">
+            <view disabled="{{disabled}}" bindtap="{{!disabled?'playRecord':''}}" class="playstatus {{src.length!=0?'active':'disabled'}}">
+              <image src="{{!startPlay?'../../images/pause_play.png':'../../images/play_01.png'}}"></image>
+            </view>
+            <image class="{{opacity?'opacity':''}}" wx:if="{{!isPlaying}}" src="../../images/startRecord.png" bindtap="startRecord"></image>
+            <image class="{{opacity?'opacity':''}}" wx:if="{{isPlaying}}" src="../../images/stopRecord.png" bindtap="stopRecord"></image>
+            <button disabled="{{reStart}}" class="playstatus" bindtap="reStart">{{recordwav.rerecord}}</button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="foot">
+      <button bindtap="submit" type="button" disabled="{{disableNext}}" class="{{disableNext?'nextDisabled':'nextActive'}}">
+        {{recordwav.next}}
+      </button>
+    </view>
+  </view>
+</view>

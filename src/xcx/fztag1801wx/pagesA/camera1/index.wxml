@@ -1,0 +1,31 @@
+<view>
+  <checkbox-group bindchange="choiceObject" class="objectgroup">
+    <label class="checkbox {{item.checked?'active':''}}" wx:for="{{objectType}}" wx:key="item">
+      <checkbox value="{{item.value}}" checked="{{item.checked}}" /> {{item.value}}
+    </label>
+  </checkbox-group>
+  <view class="process" wx:if="{{progress}}"><text>{{camera1.upload_progreess}}{{progress}}%</text></view>
+  <view>
+    <block wx:for="{{objectPhoto}}" wx:for-item="item" wx:key="item">
+      <view class="weui-uploader__input-box">
+        <view class="photo-item">
+          <view data-index="{{index}}">
+            <image data-id="{{index}}" mode="widthFix" class="weui-uploader__img" src="{{item.imgsrc||'../../images/add.png'}}" data-src="{{item.imgsrc}}"
+              bindtap="chooseImage"></image>
+          </view>
+          <view class="status">
+            <button type="primary" bindtap="previewImage" data-index="{{index}}" class="preview">
+              {{camera1.preview}}
+            </button>
+            <button type="default" bindtap="delcont" data-index="{{index}}" class="close">
+              {{camera1.delete}}
+            </button>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class="submit">
+      <button bindtap="submit">{{camera1.submit}}</button>
+    </view>
+  </view>
+</view>

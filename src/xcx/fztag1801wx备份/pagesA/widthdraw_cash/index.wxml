@@ -1,0 +1,43 @@
+<view class="">
+  <form bindsubmit="realnme_auth">
+    <view class="weui-cells">
+      <view class="weui-cell">
+        <view class="integral">
+          <em>{{widthdraw_cash.my_points}}</em>
+          <text>{{integral}}</text>
+        </view>
+      </view>
+      <view class="weui-cell tx">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{widthdraw_cash.alipayname}}</label>
+        </view>
+        <input name="alipayname" type="text" placeholder="{{widthdraw_cash.alipayname}}" class="weui-input" />
+      </view>
+      <view class="weui-cell tx">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{widthdraw_cash.alipayaccount}}</label>
+        </view>
+        <input name="alipayaccount" placeholder="{{widthdraw_cash.alipayaccount}}" class="weui-input" />
+      </view>
+      <view class="weui-cell tx">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{widthdraw_cash.txintegral}}</label>
+        </view>
+        <input name="points" value="{{points}}" style="max-width:40%;" placeholder="{{widthdraw_cash.integral}}" bindinput="bindIntegralName" class="weui-input" />
+        <text class="money" wx:if="{{money>0}}">{{widthdraw_cash.money}}{{money}}</text>
+      </view>
+      <view class="weui-panel__hd">{{widthdraw_cash.note}}</view>
+      <view class="button-sp-area">
+        <button class="weui-btn weui-btn_primary" formType="submit">
+          {{widthdraw_cash.submit}}
+        </button>
+      </view>
+      <view class="note">
+        <text> {{widthdraw_cash.incomes}}</text>
+        <view>
+           {{widthdraw_cash.incomesTit}}
+        </view>
+      </view>  
+    </view>
+  </form>
+</view>

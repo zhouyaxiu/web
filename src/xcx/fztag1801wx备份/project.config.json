@@ -1,0 +1,57 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"nodeModules": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.2.3",
+	"appid": "wx788f35a15aae3305",
+	"projectname": "fzxcx",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "12",
+					"pathName": "pagesA/camera4/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "12",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "45",
+					"pathName": "pages/index/index",
+					"query": ""
+				}
+			]
+		}
+	}
+}

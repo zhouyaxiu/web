@@ -1,0 +1,149 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 98rpx;
+  line-height: 98rpx;
+  background: #fff;
+  border-top: 2rpx solid #f0f0f0;
+  background: #fff;
+  clear: both;
+  padding: 0 40rpx;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.footer .foot-classfy {
+  height: 98rpx;
+  line-height: 98rpx;
+  padding: 19rpx 0;
+}
+
+.footer .foot-classfy-3 {
+  width: 31%;
+  display: inline-block;
+  height: 98rpx;
+  line-height: 98rpx;
+}
+
+.footer .tem-step {
+  margin: 0 3%;
+}
+
+.footer .tem-step button {
+  border: 1px solid red;
+  color: red;
+}
+
+.footer button {
+  font-size: 24rpx;
+  -webkit-border-radius: 10rpx;
+  -moz-border-radius: 10rpx;
+  -ms-border-radius: 10rpx;
+  -o-border-radius: 10rpx;
+  border-radius: 10rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.footer .sub-step button {
+  background: red;
+  color: #fff;
+}
+
+.upload_img {
+  padding: 40rpx;
+}
+
+.upload_img text {
+  font-size: 26rpx;
+  display: block;
+  margin-bottom: 20rpx;
+  padding: 20rpx 0 0 0;
+  color: #999;
+}
+
+.weui-uploader__input-box {
+  position: relative;
+  width: 50%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.exam {
+  position: absolute;
+  left: 8rpx;
+  top: 0;
+  background: rgba(220, 0, 0, 0.8);
+  font-size: 30rpx;
+  color: #fff;
+  padding: 0 12rpx;
+}
+
+.weui-uploader__input {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.weui-uploader__img {
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  margin: 0 8rpx;
+}
+
+.photo-item text {
+  right: 0;
+  position: absolute;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 0 4px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 24rpx;
+}
+
+.upload_img .weui-cell__bd {
+  width: 100%;
+}
+
+.upload_img .weui-upl {
+  position: relative;
+}
+
+.container {
+  padding-bottom: 50px;
+  overflow-x: hidden;
+}
+
+.del {
+  opacity: 0;
+  -webkit-opacity: 0;
+}
+
+.weui-cell {
+  padding: 20rpx 0;
+}
+
+.photo-title {
+  font-size: 36rpx;
+  padding: 20rpx 0;
+}

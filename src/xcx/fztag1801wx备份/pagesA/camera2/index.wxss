@@ -1,0 +1,147 @@
+@import '../../template/wxss/photo_task.wxss';
+.camera2 {}
+
+.weui-label {
+    font-size: 28rpx;
+    color: #666;
+}
+
+.radio {
+    width: 32%;
+    display: inline-block;
+    background: #fff;
+    padding: 16rpx 0;
+    color: #333;
+    position: relative;
+    text-align: center;
+    border: 2rpx solid #f8f8f8;
+    font-size: 28rpx;
+    border-radius: 10rpx;
+}
+
+.camera2 .radio radio {
+    opacity: 0;
+    position: absolute;
+}
+
+.camera2 .radio:nth-child(2) {
+    margin: 0 2%;
+}
+
+.photo-container {
+    padding: 0 20rpx
+}
+
+radio-group {
+    display: flex;
+    width: 100%;
+}
+
+radio-group .weui-cell:before {
+    border: 0 !important;
+    position: absolute
+}
+
+.weui-check__label {
+    flex: 1;
+    align-content: center;
+}
+
+.camera2 .active {
+    background: #7abdff !important;
+    color: #fff;
+    border: 2rpx solid #7abdff;
+}
+
+.radio .wx-radio-input {
+    margin-right: 15rpx;
+    width: 100%;
+    height: 100%;
+    background: none;
+    box-sizing: border-box;
+}
+
+.radio .wx-radio-input.wx-radio-input-checked {
+    background-color: red;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.text_task {
+    background: #fff;
+    border-radius: 20rpx;
+    padding: 0 40rpx 100rpx;
+}
+
+.progress2 {
+    position: absolute;
+    background: rgba(0, 0, 0, .3);
+    top: 0;
+    bottom: 0;
+    left: 8rpx;
+    right: 8rpx;
+    color: #fff;
+    font-size: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weui-cell:before {
+    display: none;
+    border: 0rpx solid #fff;
+}
+
+.weui-cell:after {
+    content: " ";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid #e5e5e5;
+    color: #e5e5e5;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    left: 0;
+    z-index: 2;
+}
+
+.foot {
+    margin-top: 40rpx;
+}
+
+.next {
+    display: flex;
+    position: absolute;
+    bottom: 40rpx;
+    left: 20px;
+    right: 20px;
+    font-size: 30rpx;
+    color: #999;
+}
+
+.next view {
+    flex: 1
+}
+
+.next view:last-child {
+    text-align: right;
+}
+
+.num {
+    text-align: right;
+    font-size: 30rpx;
+    color: #999;
+    padding: 20rpx 40rpx 20rpx 0;
+}
+
+.num em {
+    font-size: 40rpx;
+    color: #333;
+}
+
+.photo-title {
+    padding: 40rpx 0;
+}

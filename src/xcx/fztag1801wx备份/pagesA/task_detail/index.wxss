@@ -1,0 +1,46 @@
+@import '../../template/wxss/task_detail.wxss';
+.active {
+    background: #15b3e4;
+    color:#fff;
+}
+
+.weui-media-box__hd {
+    background: #ff7d3d;
+    box-sizing: border-box;
+    border-radius: 10rpx;
+    padding: 20rpx;
+}
+
+.weui-media-box__thumb {
+    width: 60rpx;
+    height: 60rpx;
+    background-size: 62rpx 60rpx;
+    display: inline-block;
+    background-image: url('data:image/png;base64,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')
+}
+.weui-article {
+    padding-bottom: 150rpx;
+}
+.foot{
+    bottom: 0;
+    display: flex;
+    width:100%;
+    left:0;
+    height: 100rpx;
+    line-height: 100rpx;
+    align-items:center;
+    justify-content: center;
+}
+.foot view{
+    font-size:34rpx;
+    color:#fff;
+}
+.foot view:first-child{
+    background:#15b3e4;
+    white-space:nowrap;
+    flex:1;
+}
+.foot view:last-child{
+    background:#ff7d3d;
+    flex: 1;
+}

@@ -1,0 +1,90 @@
+@import '../../template/wxss/photo_task.wxss';
+
+.objectgroup {
+  width: 100%;
+  padding: 40rpx 40rpx 10rpx;
+  box-sizing: border-box;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.objectgroup .checkbox {
+  width: 32%;
+  display: inline-block;
+  background: #fff;
+  border-radius: 10rpx;
+  position: relative;
+  padding: 16rpx 0;
+  text-align: center;
+  color: #333;
+  font-size: 28rpx;
+  margin-bottom: 36rpx;
+  /* box-shadow: 0px 2rpx 2rpx 0px #dedede; */
+  box-sizing: border-box;
+  border: 2rpx solid #dedede;
+}
+
+.objectgroup .checkbox:nth-child(2), .objectgroup .checkbox:nth-child(5) {
+  margin: 0 2%;
+}
+
+.objectgroup .checkbox checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.objectgroup .checkbox.active {
+  background: #7abdff !important;
+  color: #fff;
+  /* box-shadow: 0px 2rpx 2rpx 0px #7abdff; */
+  border: 2rpx solid #7abdff;
+}
+
+.weui-uploader__input-box {
+  width: 100%;
+}
+
+.photo-item {
+  text-align: center;
+  border-bottom: 2px solid #f0f0f0;
+  padding: 20px;
+}
+
+.status {
+  width: 80%;
+  text-align: center;
+  margin: 40rpx auto 0;
+}
+
+.close {
+  flex: 1;
+  margin-left: 10px;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  font-size: 28rpx;
+}
+
+.preview {
+  flex: 1;
+  margin-right: 10px;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  font-size: 28rpx;
+  background: #7abdff !important;
+}
+
+.submit {
+  width: 80%;
+  margin: 30px auto;
+}
+
+.submit button {
+  background: #15b3e4 !important;
+  color: #fff;
+}
+
+.submit button:hover {
+  background: #7abdff;
+  color: #fff;
+}

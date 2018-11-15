@@ -1,0 +1,29 @@
+<form bindsubmit="submit">
+  <view class="weui-panel weui-panel_access" wx:for="{{tests}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+    <view class="weui-panel__hd">
+      <em>Q.{{index+1}}</em>
+      ({{item.ansId}})
+    </view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_text">
+        <view class="weui-media-box__title">{{item.question}}</view>
+        <text class="weui-media-box__desc">{{item.answer}}</text>
+      </view>
+    </view>
+    <view class="weui-panel__ft">
+      <view class="weui-cell_access weui-cell_link">
+        <radio-group name="{{item.name}}" bindchange="choiceObject">
+          <label class="radiolabel">
+            <radio value="0" checked="{{checked}}" />
+          </label>
+          <label class="radiolabel">
+            <radio value="1" checked="{{checked}}" />
+          </label>
+        </radio-group>
+      </view>
+    </view>
+  </view>
+  <view class="txt-area">
+    <button form-type="submit" type="primary">{{text_10qc.submit}}</button>
+  </view>
+</form>

@@ -1,0 +1,55 @@
+<view wx:if="{{isShow===false}}">
+  <view class="weui-cell">
+    <view class="weui-cell__hd">
+      <label class="weui-label login" for="username"></label>
+    </view>
+    <input id="username" type="text" placeholder="{{camera.username}}" bindinput="bindNameInput" class="weui-input" />
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__hd">
+      <label class="weui-label yzm" for="age"></label>
+    </view>
+    <input id="age" maxlength="11" type="number" placeholder="{{camera.age}}" bindinput="bindAgeInput" class="weui-input" />
+  </view>
+  <view class="rem1">
+    <checkbox-group bindchange="bindAgreement">
+      <label class="checkbox rem">
+        <checkbox value="{{agree}}" checked="{{agreement}}" /> {{camera.isagree}}
+      </label>
+    </checkbox-group>
+  </view>
+  <view class="margin_bottom--100">
+    <block wx:for="{{items}}" wx:key="item">
+      <view class="photo-container" data-id="{{item.id}}">
+        <view class="photo-title">{{item.title}}</view>
+        <view class="photo-main">
+          <view class="weui-uploader__input-box">
+            <view class="photo-item">
+              <view class="exam">{{camera.exam}}</view>
+              <image class="weui-uploader__img" data-index="{{index}}" mode="widthFix" bindtap="previewImage" src="{{item.defaultImg}}" data-src="{{item.defaultImg}}"></image>
+            </view>
+          </view>
+          <view class="weui-uploader__input-box">
+            <view class="photo-item">
+              <view data-index="{{index}}">
+                <image data-id="{{index}}" mode="widthFix" class="weui-uploader__img" src="{{item.src||'../../images/add.png'}}" bindtap="chooseimage"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class="button-sp-area">
+      <button class="weui-btn weui-btn_primary" bindtap="submit">{{camera.complete}}</button>
+    </view>
+  </view>
+</view>
+<view wx:elif="{{isShow===true}}">
+  <camera id="ctx" device-position="{{devicePosition}}" flash="{{flash}}" binderror="error" style="width: 100%; height: 1000rpx;position:relative">
+    <cover-view class="controls">
+      <cover-image wx:if="{{needBorder===true}}" class="avatar" src="../../images/avatar.png"></cover-image>
+      <cover-image class="img" src="../../images/restart.png" bindtap="deviceRadioChange"></cover-image>
+      <cover-image class="photo" src="../../images/startRecord.png" bindtap="takePhoto"></cover-image>
+    </cover-view>
+  </camera>
+</view>

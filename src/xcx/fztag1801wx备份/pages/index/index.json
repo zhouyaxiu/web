@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "projects": "../../components/projects/projects",
+    "skeleton": "../../components/skeleton/skeleton"
+  }
+}

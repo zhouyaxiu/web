@@ -1,0 +1,29 @@
+<view class="camera3">
+  <block wx:for="{{wholeCfg.tagMutexLabels}}" wx:key="{{item}}">
+    <view class="title">{{item.title}}</view>
+    <view class="radio1">
+      <radio-group bindchange="choiceTagMutex">
+        <label wx:for="{{item.labels}}" wx:key="item">
+          <radio value="{{item.name}}" />
+          {{item.name}}
+        </label>
+      </radio-group>
+    </view>
+  </block>
+  <block wx:for="{{wholeCfg.tagNormalLabels}}" wx:key="item.title" wx:for-index="index">
+    <view class="title">{{item.title}}</view>
+    <view class="checkbox">
+      <checkbox-group data-index="{{index}}" data-title="{{item.title}}" bindchange="choiceTagNormal">
+        <label wx:for="{{item.labels}}" wx:key="item">
+          <checkbox value="{{item.name}}" checked="{{checked}}" />
+          {{item.name}}
+        </label>
+      </checkbox-group>
+    </view>
+  </block>
+  <view class="margin_bottom--100">
+    <view class="button-sp-area">
+      <button class="weui-btn weui-btn_primary" bindtap="submit">提交</button>
+    </view>
+  </view>
+</view>

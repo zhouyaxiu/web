@@ -1,0 +1,10 @@
+{
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 50,
+  "onPullDownRefresh": true,
+  "usingComponents": {
+    "skeleton": "../../components/skeleton/skeleton",
+    "projects": "../../components/projects/projects"
+  }
+}

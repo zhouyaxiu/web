@@ -1,0 +1,76 @@
+.annotation-canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+
+.annotation-content {
+	position: absolute;
+	top: 5px;
+	left: 0;
+	line-height: 35px;
+	z-index: 999;
+}
+
+.annotation-prompt {
+	background-color: white;
+	border: 1px solid #AEAEAE;
+	z-index: 1300;
+}
+
+.annotation-prompt button {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.annotation {
+	display: inline;
+	text-decoration: underline;
+	text-decoration-color: red;
+	position: relative;
+}
+
+.annotation-hidden {
+	text-decoration: none !important;
+}
+
+.annotation-selection {
+	background-color: #89D3FF;
+	display: inline;
+	position: relative;
+}
+
+.annotation-hidden .annotation-icon {
+	display: none !important;
+}
+
+.annotation-icon {
+	position: absolute;
+	right: 5px;
+	top: -14px;
+	font-size: 12px;
+	width: 12px;
+	height: 12px;
+	background-image: url(../img/arrow.png);
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.annotation-icon > div {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.annotation-id {
+	position: absolute;
+	right: -10px;
+	line-height: 13px;
+}
+
+.annotation-dialog {
+	background-color: white;
+	border: 2px solid black;
+}

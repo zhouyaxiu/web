@@ -1,0 +1,40 @@
+.radio1 {
+    padding: 20rpx 40rpx;
+    font-size: 30rpx;
+}
+
+.radio1 label {
+    margin-right: 20rpx;
+}
+
+.weui-label {
+    font-size: 28rpx;
+    color: #666;
+}
+
+.title {
+    padding: 16rpx 40rpx;
+    background: #f8f8f8;
+    color: #5e6d82;
+    font-size: 34rpx;
+}
+
+.checkbox {
+    padding: 30rpx 40rpx;
+    font-size: 30rpx;
+}
+
+.checkbox label {
+    margin-right: 20rpx;
+}
+
+radio .wx-radio-input {
+    width: 50rpx;
+    height: 50rpx;
+    overflow: hidden; 
+}
+
+checkbox .wx-checkbox-input{
+    width: 50rpx;
+    height: 50rpx;
+}

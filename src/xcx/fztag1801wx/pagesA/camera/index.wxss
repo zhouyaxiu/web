@@ -1,0 +1,60 @@
+@import '../../template/wxss/photo_task.wxss';
+@import '../../template/wxss/common.wxss';
+
+.controls {
+  width: 100%;
+  height: 1000rpx;
+  position: relative;
+}
+
+.photo-container {
+  margin-bottom: 40rpx;
+  position: relative;
+}
+
+.rem {
+  margin: 40rpx 0 40rpx 40rpx;
+  padding: 0;
+}
+
+.weui-cell {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 20rpx 40rpx;
+}
+
+.photo-title {
+  padding: 0 0 20rpx 40rpx;
+}
+
+.photo {
+  padding: 0px;
+  width: 200rpx;
+  height: 200rpx;
+  position: absolute;
+  top: 750rpx;
+  left: 0;
+  right: 0;
+  line-height: 200rpx;
+  border-radius: 50%;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 10000;
+}
+
+.img {
+  top: 40rpx;
+  right: 20rpx;
+  width: 80rpx;
+  height: 80rpx;
+  z-index: 9909;
+  position: absolute;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9990;
+  position: absolute;
+}

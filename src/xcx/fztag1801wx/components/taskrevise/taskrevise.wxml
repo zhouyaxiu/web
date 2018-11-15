@@ -1,0 +1,128 @@
+<view class="camera2">
+  <view class="num">
+    <em>{{account}}</em>
+    /{{allaccount}}
+  </view>
+  <view class="text_task" wx:if="{{account===0}}">
+    <block wx:for="{{wholeCfg.tagMutexLabels}}" wx:key="item" wx:for-index="index">
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{item.title}}</label>
+        </view>
+        <radio-group bindchange="choiceTagMutex" data-index="{{index}}">
+          <label class="radio {{item.checked?'active':''}}" wx:for="{{item.labels}}" wx:key="{{item}}" wx:for-index="inx">
+            <radio value="{{inx}}" checked="{{item.checked}}" />
+            {{item.name}}
+          </label>
+        </radio-group>
+      </view>
+    </block>
+    <block wx:for="{{wholeCfg.tagNormalLabels}}" wx:key="item.title" wx:for-index="index">
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{item.title}}</label>
+        </view>
+        <checkbox-group data-index="{{index}}" data-title="{{item.title}}" bindchange="choiceTagNormal">
+          <label class="checkbox {{item.checked?'active':''}}" wx:for="{{item.labels}}" wx:key="{{item}}" wx:for-index="inx">
+            <checkbox value="{{inx}}" checked="{{item.checked}}" />
+            {{item.name}}
+          </label>
+        </checkbox-group>
+      </view>
+    </block>
+    <block wx:for="{{wholeCfg.TextInputs}}" wx:key="item" wx:for-index="index">
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{item}}</label>
+        </view>
+        <input type="text" value="{{wholeInputContents[index]}}" placeholder-class="placeholdercss" placeholder="{{item}}" bindinput="choiceTextInput" data-index="{{index}}" class="weui-input"></input>
+      </view>
+    </block>
+  </view>
+  <view wx:else>
+    <block wx:for="{{data}}" wx:key="item" wx:for-item="item" wx:for-index="index">
+      <view class="photo-container" wx:if="{{item.type===1 && account-1 === index}}">
+        <view class="photo-title">{{index}} - {{item.name}}</view>
+        <view class="photo-main">
+          <view class="weui-uploader__input-box">
+            <image class="weui-uploader__img" data-id="{{index}}" mode="widthFix" lazy-load="{{true}}" src="{{item.sample}}"></image>
+          </view>
+          <view class="weui-uploader__input-box">
+            <text class="progress2" wx:if="{{item.progress>0}}">
+              {{taskrevise.progress}}{{item.progress || 0}}%
+            </text>
+            <view data-index="{{index}}">
+              <image data-id="{{index}}" mode="widthFix" class="weui-uploader__img" lazy-load="{{true}}" src="{{item.imgsrc||'../../images/add.png'}}" data-src="{{item.imgsrc}}" bindtap="chooseImage"></image>
+            </view>
+          </view>
+          <view wx:if="{{page==='revise'}}">
+            <view class="zhijian">
+              <view>{{taskrevise.results}}</view>
+              <view wx:if="{{comment.radioContents[index]===0}}" style="color:#1AAD19">
+                {{taskrevise.qualified}}
+              </view>
+              <view wx:if="{{comment.radioContents[index]===1}}" style="color:#E64340">
+                {{taskrevise.failed}}
+              </view>
+            </view>
+            <view wx:if="{{comment.radioContents[index]===1}}" class="comment">
+              {{comment.comment}}
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="photo-container" wx:if="{{item.type===2 && account-1 === index}}">
+        <view class="photo-title">{{index}} - {{item.name}}</view>
+        <view class="photo-main">
+          <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio" controls loop></audio>
+        </view>
+        <view class="photo-main">
+          <text wx:if="{{item.progress>0}}">上传进度12:{{item.progress || 0}}%</text>
+          <view class="video-item">
+            <view view class="weui-panel weui-panel_access">
+              <view class="weui-media-box weui-media-box_appmsg">
+                <view class="weui-media-box__hd" bindtap="playRecord">
+                  <image src="{{!startPlay?'../../images/pause_play.png':'../../images/play_01.png'}}" class="weui-media-box__thumb"></image>
+                </view>
+                <view class="weui-media-box__bd">
+                  <view class="weui-media-box__title">
+                    <text class="playtime">{{formatedPlayTime}}</text>
+                    / {{formatedRecordTime}}
+                  </view>
+                  <view class="weui-media-box__desc">
+                    <progress percent="{{playprocess}}" stroke-width="6" />
+                  </view>
+                </view>
+                <view class="fr" bindtap="clearRecord"></view>
+              </view>
+            </view>
+            <view class="videoBtn">
+              <image src="../../images/startRecord.png" bindtap="startRecord" wx:if="{{!isPlaying}}"></image>
+              <image src="../../images/stopRecord.png" data-index="{{index}}" bindtap="stopRecord" wx:if="{{isPlaying}}"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="photo-container" wx:if="{{item.type===3 && account-1 === index}}">
+        <view class="photo-title">{{index}} - {{item.name}}</view>
+        <view class="photo-main">
+          <video src="{{videosrc}}" poster="{{poster}}" controls></video>
+        </view>
+        <view class="photo-main">
+          <text wx:if="{{item.progress>0}}">上传进度2:{{item.progress || 0}}%</text>
+          <view class="photo-item">
+            <view data-index="{{index}}" bindtap="bindVideo" class="uploadvideo">上传视频</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="next">
+    <button bindtap="frontTask" type="danger" plain wx:if="{{account>0}}">
+      {{taskrevise.lasttask}}
+    </button>
+    <button bindtap="nextTask" type="danger" plain>
+      {{allaccount>account?taskrevise.nexttask:taskrevise.submit}}
+    </button>
+  </view>
+</view>

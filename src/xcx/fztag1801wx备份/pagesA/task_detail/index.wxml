@@ -1,0 +1,46 @@
+<view>
+  <view class="weui-article">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-media-box weui-media-box_appmsg">
+        <view class="weui-media-box__hd">
+          <text class="weui-media-box__thumb"></text>
+        </view>
+        <view class="weui-media-box__bd">
+          <view class="weui-media-box__title">{{project.id}}</view>
+          <view class="weui-media-box__desc">
+            {{task_detail.type}}{{project.status4QC}} | {{task_detail.price}}{{project.price}}
+          </view>
+          <view class="weui-media-box__info">
+            <text class="weui-media-box__info__meta">
+              {{task_detail.cycle}}{{project.duration}}{{task_detail.day}} | {{project.statusStr}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="task_info">
+      <view class="task_info">
+        <view class="weui-article_name">{{task_detail.intro}}</view>
+        <view class="weui-article_con">
+          <text>{{project.abstract}}</text>
+        </view>
+      </view>
+      <view class="task_info">
+        <view class="weui-article_name">{{task_detail.desc}}</view>
+        <view class="weui-article_con">
+          <text>{{project.description}}</text>
+        </view>
+      </view>
+      <view class="task_info">
+        <view class="weui-article_name">{{task_detail.require}}</view>
+        <view class="weui-article_con">
+          <text>...</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="foot">
+    <view bindtap="mySubmission">{{task_detail.mysubmission}}</view>
+    <view disabled="{{startflag}}" class="{{active?'active':''}}" bindtap="startbutton">{{task_detail.starttask}}</view>
+  </view>
+</view>

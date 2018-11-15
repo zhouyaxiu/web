@@ -1,0 +1,39 @@
+.placeholdercss {
+    color: #999;
+    font-size: 26rpx;
+}
+
+.zhijian {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    margin-top: 80rpx;
+    font-size: 34rpx;
+}
+
+.comment {
+    font-size: 28rpx;
+    color: #666;
+    display: block;
+    background: #f8f8f8;
+    margin-top: 30rpx;
+    padding: 20rpx;
+}
+.next button {
+    font-size: 32rpx;
+    width: 100%;
+    border-color: #15b3e4;
+    color: #15b3e4;
+}
+
+.next button:first-child {
+    margin-right: 20rpx;
+}
+
+.next button:last-child {
+    margin-left: 20rpx;
+}

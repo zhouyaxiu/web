@@ -1,0 +1,72 @@
+{
+  "pages": [
+    "pages/oauth_login/index",
+    "pages/index/index",
+    "pages/oauth_bind/index",
+    "pages/oauth_register/index",
+    "pages/usermoney/index"
+  ],
+  "subPackages": [
+    {
+      "root": "pagesA",
+      "pages": [
+        "recordwav/index",
+        "setting/index",
+        "text_10qc/index",
+        "camera/index",
+        "camera1/index",
+        "camera2/index",
+        "camera3/index",
+        "task_detail/index",
+        "test_upload/index",
+        "my_task/index",
+        "my_submission/index",
+        "task_revises/index",
+        "task_revise/index",
+        "real_name/index",
+        "widthdraw_cash/index"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": [
+        "__APP__"
+      ]
+    },
+    "pages/oauth_login/index": {
+      "network": "all",
+      "packages": [
+        "__APP__"
+      ]
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#15b3e4",
+    "navigationBarTitleText": "泛函科技",
+    "navigationBarTextStyle": "#fff"
+  },
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#15b3e4",
+    "backgroundColor": "#FFF",
+    "borderStyle": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./images/home.png",
+        "selectedIconPath": "./images/home_01.png"
+      },
+      {
+        "pagePath": "pages/usermoney/index",
+        "text": "我的",
+        "iconPath": "./images/user.png",
+        "selectedIconPath": "./images/user_01.png"
+      }
+    ]
+  },
+  "debug": true
+}

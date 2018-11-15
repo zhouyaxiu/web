@@ -1,0 +1,14 @@
+<view class="container">
+<navigator redirect url="../real_name/index">setting</navigator>
+<view bindtap="bind">返回我我威武</view>  
+  <view class="logo">
+    <image src="../../images/logo.png"></image>
+    <view>{{setting.developer}}</view>
+  </view>
+  <view class="setting">
+    <text>{{setting.get}} {{func}} {{setting.juris}}</text>
+  </view>
+  <view class="button-sp-area">
+    <button open-type="openSetting" type="primary" bindopensetting="hanlder">{{setting.allow}}</button>
+  </view>
+</view>

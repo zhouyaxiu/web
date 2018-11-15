@@ -1,0 +1,35 @@
+<import src="../../components/skeleton.wxml"></import>
+<skeleton selector="skeleton" loading="spin" bgcolor="#FFF" wx:if="{{showSkeleton}}"></skeleton>
+<view class="wrapper skeleton" wx:if="{{showSkeleton}}">
+  <template is="skeleton" data="{{...item}}" />
+</view>
+<view wx:else>
+  <view wx:if="{{tasks.length}}">
+    <view wx:for="{{tasks}}" wx:key="index" wx:for-item="item">
+      <navigator url="../task_revise/index?taskid={{item.taskid}}&uuid={{item.uuid}}&status={{item.status}}">
+        <!-- <view class="weui-media-box weui-media-box_appmsg" bindtap="bindRevise" data-taskid="{{item.taskid}}" data-uuid="{{item.uuid}}" data-status="{{item.status}}"> -->
+        <view class="weui-media-box weui-media-box_appmsg">
+          <view class="weui-media-box__hd">
+            <text class="weui-media-box__thumb"></text>
+          </view>
+          <view class="weui-media-box__bd">
+            <view class="weui-media-box__title">{{item.taskid}}</view>
+            <view class="weui-media-box__desc">{{item.uuid}}</view>
+          </view>
+          <view class="weui-media-box__desc color_primary text-right">
+            <text wx:if="{{item.checkres>=-999 && item.checkres<=-1}}" style="color:#E64340">
+              {{my_submission.pending}}
+            </text>
+            <text wx:if="{{item.checkres>=-0 && item.checkres<=999}}" style="color:#15b3e4">
+              {{my_submission.nopass}}
+            </text>
+            <text wx:if="{{item.checkres>=1001}}" style="color:#1AAD19">
+              {{my_submission.pass}}
+            </text>
+          </view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+  <text class="nodata" wx:else>{{my_submission.nodata}}</text>
+</view>

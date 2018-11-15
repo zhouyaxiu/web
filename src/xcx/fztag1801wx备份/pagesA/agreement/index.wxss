@@ -1,0 +1,22 @@
+.agreement{
+  padding:40rpx;
+}
+.agree-title{
+  font-size: 34rpx;
+  margin-bottom: 30rpx;
+}
+.agree-info,.agree-main text{
+  font-size: 30rpx;
+  color:#999;
+  line-height:50rpx;
+  display: block;
+  font-weight: normal;
+}
+.agree-main{
+  text-indent: 20rpx;
+}
+.agree-main view{
+  font-size: 32rpx;
+  font-weight: 600;
+  margin: 20rpx 0;
+}

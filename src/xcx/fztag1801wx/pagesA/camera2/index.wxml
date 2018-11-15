@@ -1,0 +1,86 @@
+<view class="camera2">
+  <!-- age -->
+  <view class="num">
+    <em>{{account}}</em>
+    /{{allaccount}}
+  </view>
+  <!-- image -->
+  <view class="text_task">
+    <view wx:if="{{account===0}}">
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label" for="age">年龄</label>
+        </view>
+        <input id="age" value="{{age}}" type="number" placeholder="请输入年龄" placeholder-style="font-size:28rpx;" max="100" min="1" bindinput="bindAgeInput" class="weui-input" />
+      </view>
+      <!-- teamid -->
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label" for="teamid">组号</label>
+        </view>
+        <input id="teamid" value="{{teamid}}" type="number" placeholder="组号" placeholder-style="font-size:28rpx;" max="100" min="1" bindinput="bindTeamidInput" class="weui-input" />
+      </view>
+      <!-- gender -->
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label">性别</label>
+        </view>
+        <radio-group bindchange="choiceGender">
+          <label class="radio {{item.checked?'active':''}}" wx:for="{{gender}}" wx:key="{{item.value}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" />
+            {{item.value}}
+          </label>
+        </radio-group>
+      </view>
+      <!-- cameratype -->
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label">摄像头</label>
+        </view>
+        <radio-group bindchange="choiceCamera">
+          <label class="radio {{item.checked?'active':''}}" wx:for="{{cameratype}}" wx:key="{{item.value}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" />
+            {{item.value}}
+          </label>
+        </radio-group>
+      </view>
+      <!-- model -->
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label" for="model">手机类型</label>
+        </view>
+        <radio-group bindchange="choiceModel">
+          <label class="radio {{item.checked?'active':''}}" wx:for="{{model}}" wx:key="{{item.value}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" />
+            {{item.value}}
+          </label>
+        </radio-group>
+      </view>
+    </view>
+    <block wx:for="{{photos}}" wx:key="item" wx:for-item="item" wx:for-index="index">
+      <view class="photo-container" wx:if="{{account>0 && (account-1 === index)}}">
+        <view class="photo-title">{{index}} - {{item.info}}</view>
+        <view class="photo-main">
+          <view class="weui-uploader__input-box">
+            <view class="photo-item">
+              <view class="exam">{{camera.exam}}</view>
+              <image class="weui-uploader__img" data-id="{{index}}" mode="widthFix" src="{{item.defaultImg}}"></image>
+            </view>
+          </view>
+          <view class="weui-uploader__input-box">
+          <text class="progress2" wx:if="{{item.progress>0}}">上传进度:{{item.progress || 0}}%</text>
+            <view class="photo-item">
+              <view data-index="{{index}}">
+                <image data-id="{{index}}" mode="widthFix" class="weui-uploader__img" src="{{item.imgsrc||'../../images/add.png'}}" data-src="{{item.imgsrc}}" bindtap="chooseImage"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="next">
+    <button bindtap="frontTask" type="danger" plain wx:if="{{account>0}}">上一步</button>
+    <button bindtap="nextTask" type="danger" plain>{{allaccount>account?'下一步':'提交'}}</button>
+  </view>
+</view>

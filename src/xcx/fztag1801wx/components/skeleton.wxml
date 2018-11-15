@@ -1,0 +1,20 @@
+<template name="skeleton">
+  <view class="channel">
+    <view view class="weui-panel weui-panel_access">
+      <view wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="index" wx:for-item="item">
+        <view class="weui-media-box weui-media-box_appmsg" bindtap="viewProject" data-id="{{item.id}}">
+          <view class="weui-media-box__hd skeleton-radius">
+            <text class="weui-media-box__thumb"></text>
+          </view>
+          <view class="weui-media-box__bd">
+            <view class="weui-media-box__title skeleton-rect">title</view>
+            <view class="weui-media-box__desc skeleton-rect">desc</view>
+          </view>
+          <view class="text-right">
+            <view class="fr"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

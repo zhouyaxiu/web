@@ -1,0 +1,844 @@
+  <template>
+   <div id="main" class="main push-task">
+    <Header/>
+    <div class="message" v-show="addExampleStatus === true">
+      <div class="uploadPage selExmPage">
+       <i class="el-icon-error" v-on:click="addExampleStatus=false"></i>
+       <el-form :model="addExampleForm" :rules="rules" ref="addExampleForm" label-width="80px">
+        <el-form-item :label="$t('pushtext.sample.name')" prop="name">
+         <el-input v-model="addExampleForm.name"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('pushtext.sample.describe')" prop="describe">
+         <el-input type="textarea" v-model="addExampleForm.describe"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('pushtext.sample.exampledata')" prop="selectExample">
+         <el-select v-model="addExampleForm.selectExample" :placeholder="$t('pushtext.sample.selectexamdata')">
+          <el-option v-for="(item,index) in dataList" :key="index" :label="item.name" :value="item.name">
+          </el-option>
+         </el-select>
+         <el-button type="success" plain="" @click="uploadPageStatus=true">
+          <!-- {{$t("pushtext.sample.uploadnewfile")}} -->
+          添加文本
+         </el-button>
+        </el-form-item>
+        <div class="uploadSubmit">
+         <el-button type="primary" @click="AddSampleItem('addExampleForm')">
+          {{$t("pushtext.sample.confirm")}}
+         </el-button>
+         <el-button plain="" @click="resetForm('addExampleForm')">
+          {{$t("pushtext.sample.reset")}}
+         </el-button>
+        </div>
+       </el-form>
+      </div>
+    </div>
+    <div class="message" v-show="uploadPageStatus === true">
+      <div class="uploadPage">
+       <i class="el-icon-error" v-on:click="uploadPageStatus=false"></i>
+       <el-form :model="uploadForm">
+        <el-table :data="dataList" height="280" style="width: 100%">
+         <el-table-column prop="name" label="名称">
+         </el-table-column>
+         <el-table-column :label="$t('pushtext.sample.operate')">
+          <template slot-scope="scope">
+           <el-button size="small" type="danger" plain="" @click.native.prevent="editSampleFile(scope.$index, scope.row)">
+            编辑
+           </el-button>
+           <el-button size="small" type="danger" plain="" @click.native.prevent="delData(scope.$index)">
+            {{$t("pushtext.sample.remove")}}
+           </el-button>
+          </template>
+         </el-table-column>
+        </el-table>
+        <div slot="tip" class="el-upload__tip">
+         {{$t("pushtext.sample.lessupload")}}
+        </div>
+        <div class="uploadSubmit" id="upload">
+          <el-button type="success" @click="dialogFormVisible = true">
+            添加文本数据
+          </el-button>
+          <el-button type="primary" v-on:click="uploadPageStatus=false">
+            {{$t("pushtext.sample.save")}}
+          </el-button>
+        </div>
+       </el-form>
+      </div>
+    </div>
+    <div class="message" v-show="dialogFormVisible === true">
+      <div class="uploadPage">
+       <i class="el-icon-error" v-on:click="resetData ()"></i>
+          <el-form :model="textForm" :rules="textRules" ref="textForm">
+            <el-form-item label="文本名称" prop="tname">
+            <el-input v-model="textForm.tname" :disabled="textEdit"></el-input>
+            </el-form-item>
+            <el-form-item label="文本内容" prop="value">
+            <el-input type="textarea" v-model="textForm.value"></el-input>
+            </el-form-item>
+            <div class="uploadSubmit">
+              <el-button type="primary" @click="AddData('textForm')">
+                {{$t("pushtext.sample.confirm")}}
+              </el-button>
+              <el-button plain="" @click="resetData ()">
+                {{$t("pushtext.sample.reset")}}
+              </el-button>
+            </div>
+          </el-form>
+      </div>
+    </div>
+    <Layout :selStep="3" :active="3" :type="'text'" :projectId="projectId" style="flex:1">
+      <el-form :model="listForm">
+       <div class="mb-5">
+        <div class="d-flex justify-content-between mb-3">
+          <p class="h4 text-secondary">{{$t("pushtext.sample.trueexample")}}</p>
+          <el-button type="primary" round v-on:click="addExampleStatus=true;addExampleForm.exampleType= 'trueExample';">
+            {{$t("pushtext.sample.addexample")}}
+          </el-button>
+        </div>
+        <el-table :data="trueData" stripe="" style="width: 100%">
+         <el-table-column prop="name" :label="$t('pushtext.sample.name')">
+         </el-table-column>
+         <el-table-column prop="describe" :label="$t('pushtext.sample.describe')">
+         </el-table-column>
+         <el-table-column :label="$t('pushtext.sample.operate')">
+          <template slot-scope="scope">
+           <el-button type="primary" plain size="small" @click.native.prevent="handleEdit(scope.$index, scope.row,true)">
+            {{scope.row.addStatus}}
+           </el-button>
+           <el-button type="danger" plain size="small" @click.native.prevent="deleteSampleItem(scope.$index, trueData)">
+            {{$t("pushtext.sample.delete")}}
+           </el-button>
+          </template>
+         </el-table-column>
+        </el-table>
+       </div>
+       <div class="mb-5">
+         <div class="d-flex justify-content-between mb-3">
+          <p class="h4 text-secondary">{{$t("pushtext.sample.errorexample")}}</p>
+          <el-button type="primary" round v-on:click="addExampleStatus=true;addExampleForm.exampleType= 'falseExample';">
+            {{$t("pushtext.sample.addexample")}}
+          </el-button>
+        </div>
+        <el-table :data="errorData" stripe="" style="width: 100%">
+         <el-table-column prop="name" :label="$t('pushtext.sample.name')">
+         </el-table-column>
+         <el-table-column prop="describe" :label="$t('pushtext.sample.describe')">
+         </el-table-column>
+         <el-table-column :label="$t('pushtext.sample.operate')">
+          <template slot-scope="scope">
+           <el-button type="primary" plain size="small" @click.native.prevent="handleEdit(scope.$index, scope.row,false)">
+            {{scope.row.addStatus}}
+           </el-button>
+           <el-button type="danger" plain size="small" @click.native.prevent="deleteSampleItem(scope.$index, errorData)">
+            {{$t("pushtext.sample.delete")}}
+           </el-button>
+          </template>
+         </el-table-column>
+        </el-table>
+       </div>
+       <div class="d-flex justify-content-end">
+        <el-button plain @click="goBack()">
+         {{$t("pushTask.goback")}}
+        </el-button>
+        <el-button type="primary" @click="forward()">
+         {{$t("pushTask.next")}}
+        </el-button>
+       </div>
+      </el-form>
+    </Layout>
+    <Footer>
+    </Footer>
+    <transition name="el-fade-in">
+      <div class="message2" v-show="messageStatus === 2">
+        <i class="el-icon-error" v-on:click="close()"></i>
+        <!-- <Text001 ref="Text001" :CommentVisible="true" :SopType="SopType" :messageStatus="messageStatus" @postTask="samplePostTask" :wholeRadios="wholeRadios" :wholeCheckBoxs="wholeCheckBoxs" :wholeInputs="wholeInputs" :itemRadios="itemRadios" :itemCheckBoxs="itemCheckBoxs" :itemInputs="itemInputs"/> -->
+        <Text001 v-if="templet==1" ref="Template"
+          :SopType="SopType"
+          @postTask="postTask"
+          :wholeRadios="wholeRadios"
+          :wholeCheckBoxs="wholeCheckBoxs"
+          :wholeInputs="wholeInputs"
+          :itemRadios="itemRadios"
+          :itemCheckBoxs="itemCheckBoxs"
+          :itemInputs="itemInputs"
+        />
+        <!-- 目前有个bug, text002模板必须在container显示的状态下初始化，否则canvas会出现定位错误 -->
+        <Text002 v-if="templet==2" ref="Template"
+          :SopType="SopType"
+          @postTask="postTask"
+          :wholeRadios="wholeRadios"
+          :wholeCheckBoxs="wholeCheckBoxs"
+          :wholeInputs="wholeInputs"
+          :itemRadios="itemRadios"
+          :itemCheckBoxs="itemCheckBoxs"
+          :itemInputs="itemInputs"
+        />
+      </div>
+    </transition>
+   </div>
+  </template>
+
+<script>
+import Header from 'components/header'
+import Footer from 'components/footer'
+import Text001 from 'template/text/Text001'
+import Text002 from 'template/text/Text002'
+import Layout from '../../components/layoutPage'
+import $ from 'jquery'
+import axios from 'axios'
+import * as util from 'assets/js/util.js'
+import {language} from 'lang'
+
+export default {
+  name: 'app',
+  components: {
+    Header,
+    Footer,
+    Layout,
+    Text001,
+    Text002
+  },
+  data () {
+    return {
+      dialogFormVisible: false,
+      textEdit: false,
+      textForm: {
+        tname: '',
+        value: '',
+        index: -1
+      },
+      textRules: {
+        tname: [
+          { required: true, message: '请输入文本名称', trigger: 'blur' },
+          { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
+        ],
+        value: [
+          { required: true, message: '请输入文本内容', trigger: 'change' }
+        ]
+      },
+      projectid: '',
+      question: {
+        uuid: '',
+        index: 0,
+        flag: true,
+        raw: ''
+      },
+      templet: 1,
+      SopType: 1001,
+      messageStatus: 2,
+      uploadPageStatus: false,
+      addExampleStatus: false,
+      wholeRadios: [], // 整图单选题
+      wholeCheckBoxs: [], // 整图多选题
+      wholeInputs: [], // 整图填空题
+      itemRadios: [], // 标注项单选题
+      itemCheckBoxs: [], // 标注项多选题
+      itemInputs: [], // 标注项填空题
+      addExampleForm: {
+        name: '',
+        describe: '',
+        selectExample: '',
+        exampleType: ''
+      },
+      listForm: {},
+      rules: {
+        name: [
+          { required: true, message: language('pushtext.sample.js.rules.name1'), trigger: 'blur' },
+          { min: 1, max: 10, message: language('pushtext.sample.js.rules.name2'), trigger: 'blur' }
+        ],
+        selectExample: [
+          { required: true, message: language('pushtext.sample.js.rules.selectExample'), trigger: 'change' }
+        ]
+      },
+      trueData: [
+
+      ],
+      errorData: [],
+      deleteConfirm: false,
+      dataList: [
+      ]
+    }
+  },
+  mounted: function () {
+    let vm = this
+    this.$nextTick(function () {
+      vm.messageStatus = 1
+      // get current page project id
+      let projectid = document.location.pathname.split('/')[3]
+      // let projectid = 'subW4i4KNWE001'
+      if (projectid !== '') {
+        vm.projectid = projectid
+      }
+      // 多个信息一起获取:filelist\samplelist\tags
+      // 获取filelist
+      let xsrftoken = $('meta[name=_xsrf]').attr('content')
+      axios
+        .post(
+          '/api/get-sample-info',
+          {
+            taskid: vm.projectid
+          },
+          {
+            headers: {
+              'X-Xsrftoken': xsrftoken
+            }
+          }
+        )
+        .then(function (response) {
+          let rsp = response.data
+          if (rsp.code === 0) {
+            if (rsp.datalist) {
+              vm.dataList = rsp.datalist
+              console.log(rsp.datalist)
+            }
+
+            for (let x in rsp.rightlist) {
+              let item = rsp.rightlist[x]
+              let result = ''
+              if (item.result) {
+                result = item.result
+              }
+
+              let exampleData = {
+                name: item.name,
+                describe: item.describe,
+                addStatus: language('pushtext.sample.js.addStatus.type1'),
+                raw: item.raw,
+                uuid: item.uuid,
+                commit: item.commit,
+                result: ''
+              }
+              if (result !== '') {
+                exampleData.result = JSON.parse(item.result)
+              }
+              vm.trueData.push(exampleData)
+            }
+
+            for (let x in rsp.wronglist) {
+              let item = rsp.wronglist[x]
+              let result = ''
+              if (item.result) {
+                result = item.result
+              }
+
+              let exampleData = {
+                name: item.name,
+                describe: item.describe,
+                addStatus: language('pushtext.sample.js.addStatus.type1'),
+                raw: item.raw,
+                uuid: item.uuid,
+                commit: item.commit,
+                result: ''
+              }
+              if (result !== '') {
+                exampleData.result = JSON.parse(item.result)
+              }
+              vm.errorData.push(exampleData)
+            }
+
+            if (rsp.SopType) {
+              vm.SopType = rsp.SopType
+            }
+
+            if (rsp.pageCfg) {
+              if (rsp.pageCfg.wholeCfg) {
+                let wholeCfg = rsp.pageCfg.wholeCfg
+                if (wholeCfg.tagMutexLabels) {
+                  vm.wholeRadios = wholeCfg.tagMutexLabels
+                }
+                console.log(vm.wholeRadios)
+                if (wholeCfg.tagNormalLabels) {
+                  vm.wholeCheckBoxs = wholeCfg.tagNormalLabels
+                }
+                if (wholeCfg.TextInputs) {
+                  vm.wholeInputs = wholeCfg.TextInputs
+                }
+              }
+              if (rsp.pageCfg.itemCfg) {
+                let itemCfg = rsp.pageCfg.itemCfg
+                if (itemCfg.tagMutexLabels) {
+                  vm.itemRadios = itemCfg.tagMutexLabels
+                }
+                if (itemCfg.tagNormalLabels) {
+                  vm.itemCheckBoxs = itemCfg.tagNormalLabels
+                }
+                if (itemCfg.TextInputs) {
+                  vm.itemInputs = itemCfg.TextInputs
+                }
+              }
+              if (rsp.pageCfg.templet) {
+                vm.templet = rsp.pageCfg.templet
+              }
+            }
+          } else {
+            console.log('code not 0??')
+            vm.$notify.error({
+              title: language('pushtext.sample.js.error.type1'),
+              message: rsp.message,
+              duration: 2000
+            })
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    })
+  },
+  methods: {
+    close () {
+      this.messageStatus = 1
+      // this.$refs.Template.clearAll()
+    },
+    goBack () {
+      util.Redirect('/push-project-business/text/' + this.projectid, 1000)
+    },
+    forward () {
+      util.Redirect('/push-project-qcprice/text/' + this.projectid, 1000)
+    },
+    // upload methods end
+    deleteSampleItem (index, rows) {
+      let vm = this
+      this.$confirm(language('pushtext.sample.js.deleteSampleItem'), language('pushtext.sample.js.error.type2'), {
+        confirmButtonText: language('pushtext.sample.js.success.type2'),
+        cancelButtonText: language('pushtext.sample.js.error.type3'),
+        type: 'warning'
+      })
+        .then(() => {
+          let xsrftoken = $('meta[name=_xsrf]').attr('content')
+          axios
+            .post(
+              '/api/del-task-sample-item',
+              {
+                taskid: vm.projectid,
+                uuid: rows[index].uuid
+              },
+              {
+                headers: {
+                  'X-Xsrftoken': xsrftoken
+                }
+              }
+            )
+            .then(function (response) {
+              let rsp = response.data
+              if (rsp.code === 0) {
+                vm.$notify.success({
+                  title: language('pushtext.sample.js.success.type1'),
+                  message: language('pushtext.sample.js.success.type3'),
+                  duration: 2000
+                })
+                rows.splice(index, 1)
+              } else {
+                vm.$notify.error({
+                  title: language('pushtext.sample.js.error.type1'),
+                  message: rsp.message,
+                  duration: 2000
+                })
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        })
+        .catch((error) => {
+          console.log(error)
+          console.log('取消')
+        })
+    },
+    // 提交表单
+    AddSampleItem (formName) {
+      let vm = this
+      this.$refs[formName].validate(valid => {
+        if (!valid) {
+          return false
+        }
+        console.group('AddSampleItem')
+        let exampleName = this.addExampleForm.name
+        let exampleDescribe = this.addExampleForm.describe
+        let dataName = this.addExampleForm.selectExample
+        let exampleData = {
+          name: exampleName,
+          describe: exampleDescribe,
+          addStatus: language('pushtext.sample.js.addStatus.type2'),
+          raw: dataName,
+          uuid: '',
+          result: ''
+        }
+        // 添加样例
+        let flag
+        if (this.addExampleForm.exampleType === 'trueExample') {
+          flag = true
+        } else {
+          flag = false
+        }
+
+        let xsrftoken = $('meta[name=_xsrf]').attr('content')
+        axios
+          .post(
+            '/api/add-task-sample-item',
+            {
+              taskid: vm.projectid,
+              name: exampleData.name,
+              description: exampleData.describe,
+              raw: exampleData.raw,
+              flag: flag
+            },
+            {
+              headers: {
+                'X-Xsrftoken': xsrftoken
+              }
+            }
+          )
+          .then(function (response) {
+            let rsp = response.data
+            if (rsp.code === 0) {
+              vm.$notify.success({
+                title: language('pushtext.sample.js.success.type1'),
+                message: language('pushtext.sample.js.success.type5'),
+                duration: 2000
+              })
+
+              exampleData.uuid = rsp.uuid
+              if (flag) {
+                vm.trueData.push(exampleData)
+              } else {
+                vm.errorData.push(exampleData)
+              }
+            } else {
+              vm.$notify.error({
+                title: language('pushtext.sample.js.error.type1'),
+                message: rsp.message,
+                duration: 2000
+              })
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+
+        this.addExampleStatus = false
+        this.addExampleForm.name = ''
+        this.addExampleForm.describe = ''
+        this.addExampleForm.selectExample = ''
+        this.addExampleForm.exampleType = ''
+        console.groupEnd()
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+      this.addExampleStatus = false
+    },
+    handleEdit (index, row, flag) {
+      let vm = this
+      console.log('handleEdit', index, row, flag)
+      this.messageStatus = 2
+      this.$nextTick(function () {
+        row.addStatus = language('pushtext.sample.js.addStatus.type1')
+        vm.question.uuid = row.uuid
+        vm.question.index = index
+        vm.question.flag = flag // 正确样例or错误样例
+        vm.question.raw = row.raw
+        // 在这里读详情
+        let notes = row.result
+        let name = row.raw
+        let data = ''
+        for (let i in vm.dataList) {
+          if (vm.dataList[i].name === name) {
+            data = vm.dataList[i].data
+            break
+          }
+        }
+        let commit = row.commit
+        console.log(data)
+        this.$refs.Template.load(data, notes, commit)
+      })
+    },
+    samplePostTask (params) {
+      console.log(params)
+      let vm = this
+      let url = '/api/set-task-sample-item/text'
+      let xsrftoken = $('meta[name=_xsrf]').attr('content')
+      // post 请求中的url 需要从当前页面的url获取
+      axios
+        .post(
+          url,
+          {
+            taskid: vm.projectid,
+            uuid: vm.question.uuid,
+            raw: vm.question.raw,
+            commit: params.commit,
+            result: JSON.stringify(params.result)
+          },
+          {
+            headers: {
+              'X-Xsrftoken': xsrftoken
+            }
+          }
+        )
+        .then(function (response) {
+          let rsp = response.data
+          if (rsp.code === 0) {
+            vm.$notify.success({
+              title: language('pushtext.sample.js.success.type1'),
+              message: rsp.message,
+              duration: 2000
+            })
+            console.log(vm.question)
+            if (vm.question.flag) {
+              vm.trueData[vm.question.index].result = params.result
+              vm.trueData[vm.question.index].commit = params.commit
+            } else {
+              vm.errorData[vm.question.index].result = params.result
+              vm.errorData[vm.question.index].commit = params.commit
+            }
+          } else {
+            vm.$notify.error({
+              title: language('pushtext.sample.js.error.type1'),
+              message: rsp.message,
+              duration: 2000
+            })
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    // 关闭文本数据
+    resetData () {
+      this.dialogFormVisible = false
+      this.textForm.tname = ''
+      this.textForm.value = ''
+      this.textForm.index = -1
+      this.textEdit = false
+    },
+    // 添加文本数据
+    AddData (formName) {
+      const vm = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let dataName = vm.textForm.tname
+          let dataContent = vm.textForm.value
+          let index = vm.textForm.index
+          let xsrftoken = $('meta[name=_xsrf]').attr('content')
+          axios
+            .post(
+              '/api/set-sample-data',
+              {
+                taskid: vm.projectid,
+                name: dataName,
+                data: dataContent
+              },
+              {
+                headers: {
+                  'X-Xsrftoken': xsrftoken
+                }
+              }
+            )
+            .then(function (response) {
+              let rsp = response.data
+              console.log(rsp)
+              if (rsp.code === 0) {
+                vm.$notify.success({
+                  title: language('pushtext.sample.js.success.type1'),
+                  message: language('pushtext.sample.js.success.type4'),
+                  duration: 2000
+                })
+                var data = {
+                  name: dataName,
+                  data: dataContent
+                }
+                console.log(index)
+                if (index < 0) {
+                  vm.dataList.push(data)
+                } else {
+                  vm.dataList[index].data = dataContent
+                }
+              } else {
+                vm.$notify.error({
+                  title: language('pushtext.sample.js.error.type1'),
+                  message: rsp.message,
+                  duration: 2000
+                })
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+          vm.resetData()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    // 编辑文本数据
+    editSampleFile (index, row) {
+      this.textEdit = true
+      this.textForm.tname = row.name
+      this.textForm.value = row.data
+      this.textForm.index = index
+      this.dialogFormVisible = true
+    },
+    delData (index) {
+      let vm = this
+      let data = vm.dataList[index]
+
+      // 异步确认。。。
+      this.$confirm(language('pushtext.sample.js.deleteSampleFile'), language('pushtext.sample.js.error.type2'), {
+        confirmButtonText: language('pushtext.sample.js.success.type2'),
+        cancelButtonText: language('pushtext.sample.js.error.type3'),
+        type: 'warning'
+      })
+        .then(() => {
+          let xsrftoken = $('meta[name=_xsrf]').attr('content')
+          axios
+            .post(
+              '/api/del-sample-data',
+              {
+                name: data.name,
+                taskid: vm.projectid
+              },
+              {
+                headers: {
+                  'X-Xsrftoken': xsrftoken
+                }
+              }
+            )
+            .then(function (response) {
+              let rsp = response.data
+              if (rsp.code === 0) {
+                vm.$notify.success({
+                  title: language('pushtext.sample.js.success.type1'),
+                  message: language('pushtext.sample.js.success.type3'),
+                  duration: 2000
+                })
+                vm.dataList.splice(index, 1)
+              } else {
+                vm.$notify.error({
+                  title: language('pushtext.sample.js.error.type1'),
+                  message: rsp.message,
+                  duration: 2000
+                })
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        })
+        .catch(() => {
+          console.log('取消')
+        })
+    }
+  }
+}
+</script>
+
+<style>
+.push-task {
+  background-color: #f0f2f5;
+}
+body {
+  padding-top: 56px;
+}
+.message {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1050;
+}
+.load-icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.uploadPage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -60%);
+  width: 50%;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem 3rem 0.5rem 3rem;
+  position: relative;
+}
+.selExmPage {
+  padding: 4.8rem 4.5rem 3rem 3rem;
+}
+.uploadPage > i {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  font-size: 1.5rem;
+  color: #666;
+}
+.uploadPage i:hover {
+  color: #333;
+}
+
+.uploadSubmit {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 3rem;
+}
+#upload .btn-info {
+  color: #fff;
+  background-color: #409eff;
+  border-color: #409eff;
+  font-size: 0.8rem;
+  padding: 9px 15px;
+}
+#upload .button-success {
+  color: #fff;
+  background-color: #67c23a;
+  border-color: #67c23a;
+}
+
+.message2 {
+  background: #fff;
+  position: fixed;
+  top: 3rem;
+  left: 4rem;
+  right: 4rem;
+  bottom: 5rem;
+  min-width: 320px;
+  z-index: 1050;
+  overflow: auto;
+  border-radius: 0.5rem 0 0 0.5rem;
+  box-shadow: 0 2px 52px 0 rgba(0, 0, 0, 0.5);
+  border: 1px solid #ebeef5;
+  display: flex;
+}
+.message2 .mb-5 {
+  padding-top: 2rem;
+}
+.message2 > i {
+  position: absolute;
+  cursor: pointer;
+  font-size: 24px;
+  right: 0.8rem;
+  top: 0.8rem;
+  color: #d1d4dc;
+  z-index: 1050;
+}
+/*滚动条样式*/
+.message2::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 4px;
+}
+.message2::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+}
+.message2::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
+</style>
