@@ -16,7 +16,7 @@
     <el-form-item prop="code">
       <el-input v-model="form.code" :placeholder="$t('register.code')"></el-input>
     </el-form-item>
-    <p class="login-other text-left">{{$t("oauth.agree")}}<a href="/agreement">{{$t("register.agreement")}}</a></p>
+    <p class="login-other text-left">{{$t("oauth.agree")}}<a href="/agreement/worker">{{$t("register.agreement")}}</a></p>
     <el-form-item>
       <el-button type="primary" @click="bind('form')" style="width: 100%;">确定{{$t("oauth.confirm")}}</el-button>
     </el-form-item>

@@ -1,7 +1,7 @@
 <template>
-    <transition name="el-fade-in">
+    <!-- <transition name="el-fade-in">
       <div class="message2" v-show="messageStatus === 2">
-        <i class="el-icon-error" v-on:click="closeVoice()"></i>
+        <i class="el-icon-error" v-on:click="closeVoice()"></i> -->
         <div class="container mb-5 content">
           <div class="userinfo clearfix">
             <p class="text-muted float-right" style="margin-bottom：0">{{$t("voiceExample.finish")}}：--</p>
@@ -67,8 +67,8 @@
             <el-button type="success" @click="postTask">{{$t("voiceExample.save")}}</el-button>
           </div>
         </div>
-      </div>
-    </transition>
+      <!-- </div>
+    </transition> -->
 </template>
 <script>
 import Quill from 'quill'
@@ -79,7 +79,7 @@ import {language} from 'lang'
 export default {
   name: 'app',
   props: {
-    messageStatus: '',
+    // messageStatus: '',
     tagMutexLabels: Array,
     tagNormalLabels: Array
   },
@@ -279,11 +279,11 @@ export default {
     voiceErrorOpen () {
       this.$message.error(language('voiceExample.js.errVoice'))
     },
-    closeVoice () {
-      this.$parent.messageStatus = 1
-      this.waveformStop()
-      this.clearAll()
-    },
+    // closeVoice () {
+    //   this.$parent.messageStatus = 1
+    //   this.waveformStop()
+    //   this.clearAll()
+    // },
     // 是否打开评论框
     changeCheckMode (visible) {
       this.CommentVisible = visible
@@ -656,7 +656,7 @@ export default {
 .ql-container {
   height: 150px;
 }
-.message2 {
+/* .message2 {
   background: #fff;
   position: fixed;
   top: 3rem;
@@ -691,30 +691,12 @@ export default {
   color: #777;
   letter-spacing: 2px;
   font-size: 14px;
-}
+} */
 span.annotation-lines {
   width: 100%;
   border: 1px solid #ccc;
 }
 span.annotation-actions {
   width: 220px !important;
-}
-/*滚动条样式*/
-.message2::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 4px;
-}
-.message2::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  border-radius: 5px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: rgba(0, 0, 0, 0.2);
-}
-.message2::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  border-radius: 0;
-  background: rgba(0, 0, 0, 0.1);
 }
 </style>

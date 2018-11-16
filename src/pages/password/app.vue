@@ -6,32 +6,37 @@
     <div class="row">
       <div class= "col-md-4 offset-md-4">
         <el-form :model="form" :rules="rules" ref="form">
-          <el-form-item prop="username">
-            <el-input v-model="form.username" :placeholder="$t('password.username')"></el-input>
-          </el-form-item>
-          <el-form-item prop="mobile" id="country-mobile">
-            <el-input v-model="form.mobile" :placeholder="$t('password.mobile')">
-              <el-select v-model="form.countryCode" slot="prepend">
-                <el-option v-for="item in options" :key="item.name" :label="item.label" :value="item.value">
-                  <span style="float:left;padding-right:1rem;">{{ item.name }}</span>
-                  <span style="float:right;color:#8492a6;font-size:13px">{{ item.label }}</span>
-                </el-option>
-              </el-select>
-              <ButtonPIN ref="sendSms" action="/api/account/smsverificationcode" @click.native="sendSms('form')" slot="append"/>
-            </el-input>
-          </el-form-item>
-          <el-form-item prop="code">
-            <el-input v-model="form.code" :placeholder="$t('password.code')"></el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input type="password" v-model="form.password" :placeholder="$t('password.password')"></el-input>
-          </el-form-item>
-          <el-form-item prop="confirm">
-            <el-input type="password" v-model="form.confirm" :placeholder="$t('password.confirm')"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="password('form')" style="width: 100%;">{{$t("password.form")}}</el-button>
-          </el-form-item>
+          <div v-if="step === 1">
+            <el-form-item prop="mobile" id="country-mobile">
+              <el-input v-model="form.mobile" :placeholder="$t('password.mobile')">
+                <el-select v-model="form.countryCode" slot="prepend">
+                  <el-option v-for="item in options" :key="item.name" :label="item.label" :value="item.value">
+                    <span style="float:left;padding-right:1rem;">{{ item.name }}</span>
+                    <span style="float:right;color:#8492a6;font-size:13px">{{ item.label }}</span>
+                  </el-option>
+                </el-select>
+              </el-input>
+            </el-form-item>
+            <el-form-item prop="code">
+              <el-input v-model="form.code" :placeholder="$t('password.code')">
+                <ButtonPIN ref="sendSms" action="/api/account/smsverificationcode" @click.native="sendSms('form')" slot="append"/>
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="password('form')" style="width: 100%;">确定</el-button>
+            </el-form-item>
+          </div>
+          <div v-if="step === 2">
+            <el-form-item prop="password">
+              <el-input type="password" v-model="form.password" :placeholder="$t('password.password')"></el-input>
+            </el-form-item>
+            <el-form-item prop="confirm">
+              <el-input type="password" v-model="form.confirm" :placeholder="$t('password.confirm')"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="password('form')" style="width: 100%;">{{$t("password.form")}}</el-button>
+            </el-form-item>
+          </div>
         </el-form>
       </div>
     </div>
@@ -51,7 +56,6 @@ import {language} from 'lang'
 import country from 'assets/js/country-code.js'
 import ButtonPIN from 'components/private/PIN'
 
-var url = '/api/password'
 var http = axios.create({})
 
 export default {
@@ -72,20 +76,6 @@ export default {
       } else {
         callback()
       }
-    }
-    // 验证用户名是否存在
-    let validateUsername = (rule, value, callback) => {
-      http.get('/api/account/username?username=' + value)
-        .then(function (response) {
-          if (response.data !== true) {
-            callback(new Error(language('validator.username.rule6')))
-          } else {
-            callback()
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
     }
     // 验证手机号码是否存在
     let validateMobile = (rule, value, callback) => {
@@ -108,7 +98,6 @@ export default {
     return {
       // 表单数据
       form: {
-        username: '',
         countryCode: '86',
         mobile: '',
         code: '',
@@ -117,13 +106,6 @@ export default {
       },
       // 表单验证规则
       rules: {
-        username: [
-          {required: true, message: language('validator.username.rule1'), trigger: 'blur'},
-          {type: 'string', min: 5, message: language('validator.username.rule2'), trigger: 'blur'},
-          {type: 'string', max: 30, message: language('validator.username.rule3'), trigger: 'blur'},
-          {type: 'string', message: language('validator.username.rule4'), pattern: /^[a-zA-Z][a-zA-Z0-9_-]{4,29}$/, trigger: 'blur'},
-          {validator: validateUsername, trigger: 'blur'}
-        ],
         mobile: [
           {required: true, message: language('validator.mobile.rule1'), trigger: 'blur'},
           {type: 'string', pattern: /^\d+$/, message: language('validator.mobile.rule3'), trigger: 'blur'},
@@ -142,7 +124,8 @@ export default {
           {validator: validateConfirm, trigger: 'blur'}
         ]
       },
-      options: country
+      options: country,
+      step: 1 // 1手机验证2设置新密码
     }
   },
   methods: {
@@ -167,19 +150,39 @@ export default {
       this.$refs[form].validate((valid) => {
         // 表单验证
         if (valid) {
-          vm.passwordPost(vm.form)
+          return vm.step === 1 ? vm.mobilePost(vm.form)
+            : (vm.step === 2 ? vm.passwordPost(vm.form) : false)
         }
       })
     },
+    mobilePost (form) {
+      let vm = this
+      let url = '/api/password/verify'
+      console.log('mobilePost')
+      http.post(url, {
+        phone: vm.form.countryCode + '-' + vm.form.mobile,
+        code: vm.form.code
+      })
+        .then(function (response) {
+          let rsp = response.data
+          if (rsp.code === 0) {
+            // vm.notify('success', rsp.message, 2000)
+            vm.step = 2
+          } else {
+            vm.notify('error', rsp.message, 2000)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     passwordPost (form) {
       let vm = this
+      let url = '/api/password/new'
+      console.log('passwordPost')
       http.post(url, {
-        username: vm.form.username,
-        countryCode: vm.form.countryCode,
-        mobile: vm.form.mobile,
-        code: vm.form.code,
-        password: md5(vm.form.password),
-        confirm: md5(vm.form.confirm)
+        phone: vm.form.countryCode + '-' + vm.form.mobile,
+        password: md5(vm.form.password)
       })
         .then(function (response) {
           let rsp = response.data

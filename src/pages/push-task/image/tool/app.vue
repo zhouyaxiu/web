@@ -1,8 +1,26 @@
 <template>
   <div id="main" class="main push-task">
     <Header/>
-    <Layout :selStep="2" :active="2" :type="'image'" :projectId="projectId">
+    <Layout>
       <el-form :model="paramForm" :rules="rules" ref="paramForm" label-position="top" class="demo-paramForm">
+        <div class="taskTit">
+          <h3>加载</h3>
+        </div>
+        <div class="taskInfos">
+          <el-form-item label="题目配置输入" prop="pagestr">
+            <el-input type="textarea" :rows="15" v-model="pagestr"></el-input>
+            <el-button type="primary" @click="loadpage()">加载配置</el-button>
+          </el-form-item>
+          <el-form-item label="选择图片">
+            <input type="file" @change="AddFile">
+          </el-form-item>
+        </div>
+        <div class="taskInfos">
+          <el-form-item label="题目配置输出" prop="pagestrout">
+            <el-button type="primary" @click="getpage()">生成配置</el-button>
+            <el-input type="textarea" :rows="15" v-model="pagestrout" readonly></el-input>
+          </el-form-item>
+        </div>
         <!-- 整图问题 -->
         <div class="taskTit">
           <h3>{{$t("pushimage.business.wholemap")}}</h3>
@@ -62,7 +80,6 @@
           </div>
           <el-button icon="el-icon-plus" size="small" @click="addColorItem(itemRadios, 0)"></el-button>
         </div>
-        <el-button type="text" v-on:click="showTemplate()" icon="el-icon-view">{{$t("pushimage.business.preview")}}</el-button>
         <!-- 工具属性 -->
         <div class="taskTit mt-3">
           <h3>工具属性(选填)</h3>
@@ -140,11 +157,6 @@
             </el-form-item>
           </section>
         </div>
-        <el-form-item class="d-flex justify-content-center">
-          <el-button @click="goBack()">{{$t("pushTask.goback")}}</el-button>
-          <el-button type="primary" @click="submitForm('paramForm',false)">{{$t("pushTask.submit")}}</el-button>
-          <el-button type="primary" @click="submitForm('paramForm',true)">{{$t("pushTask.next")}}</el-button>
-        </el-form-item>
       </el-form>
     </Layout>
     <Footer/>
@@ -157,7 +169,6 @@
         </div>
         <Image007 v-if="templet==1" ref="Template"
           :SopType="SopType"
-          @postTask="templetPostTask"
           :wholeRadios="wholeRadios"
           :wholeCheckBoxs="wholeCheckBoxs"
           :wholeInputs="wholeInputs"
@@ -173,10 +184,12 @@
           :vQuesDo="vQuesDo"
           :vQuesCheckContents="vQuesCheckContents"
           :PostButtonVisible="false"
-        />
+        >
+          <button type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="toolPostTask">获取结果</button>
+        </Image007>
         <Image002 v-if="templet==2" ref="Template"
           :SopType="SopType"
-          @postTask="templetPostTask"
+          @postTask="toolPostTask"
           :wholeRadios="wholeRadios"
           :wholeCheckBoxs="wholeCheckBoxs"
           :wholeInputs="wholeInputs"
@@ -188,12 +201,8 @@
       </div>
     </transition>
     <div class="speake-box">
-      <div class="speake">{{$t("pushimage.business.unsatisfy")}}<br/>{{$t("pushimage.business.service")}}</div>
-      <div class="speake-icon">
-        <div class="speake-icon-in" @click="speakeStatus = true"><i class="el-icon-service"></i></div>
-      </div>
+      <el-button type="primary" @click="showTemplate()">{{$t("pushimage.business.preview")}}</el-button>
     </div>
-    <sendmail @hidePanel = "hidePanel" :speakeStatus="speakeStatus"/>
   </div>
 </template>
 
@@ -203,10 +212,6 @@ import Footer from 'components/footer'
 import Layout from '../../components/layoutPage'
 import Ques001 from '../../components/question001'
 // import helpinfo from './help-info'
-import Sendmail from 'components/private/sendmail'
-import $ from 'jquery'
-import axios from 'axios'
-import * as util from 'assets/js/util.js'
 import Image007 from 'template/image/Image007'
 import Image002 from 'template/image/Image002'
 import {language} from 'lang'
@@ -223,8 +228,7 @@ export default {
     Layout,
     Ques001,
     Image007,
-    Image002,
-    Sendmail
+    Image002
   },
   data () {
     /**
@@ -243,6 +247,8 @@ export default {
       }
     }
     return {
+      pagestrout: '',
+      pagestr: '',
       request: '',
       vQuesDo: [],
       vQuesCheck: [],
@@ -257,8 +263,10 @@ export default {
       itemRadios: [], // 标注项单选题
       itemCheckBoxs: [], // 标注项多选题
       itemInputs: [], // 标注项填空题
-      SopType: 1001,
+      SopType: 1003,
       pointSetRest: {},
+      localfile: '',
+      filename: '',
       // 表单验证
       paramForm: {
         rectMinW: 5,
@@ -288,138 +296,183 @@ export default {
       }
     }
   },
-  mounted: function () {
-    let vm = this
-    let projectId = document.location.pathname.split('/')[3]
-    // projectId = 'subsdRGf1KQ001'
-    if (projectId !== '') {
-      vm.projectId = projectId
-    }
-    this.$nextTick(function () {
-      // 获取基本信息（可能是新建任务后，自动跳转过来，也可能是从控制台跳转过来）
-      let xsrftoken = $('meta[name=_xsrf]').attr('content')
-      axios.post('/api/get-business-info/image',
-        {
-          taskid: vm.projectId
-        },
-        {
-          headers: {
-            'X-Xsrftoken': xsrftoken
-          }
+  methods: {
+    funDownload (content, filename) {
+      var eleLink = document.createElement('a')
+      eleLink.download = filename
+      eleLink.style.display = 'none'
+      // 字符内容转变成blob地址
+      var blob = new Blob([content])
+      eleLink.href = URL.createObjectURL(blob)
+      // 触发点击
+      document.body.appendChild(eleLink)
+      eleLink.click()
+      // 然后移除
+      document.body.removeChild(eleLink)
+    },
+    AddFile (e) {
+      let vm = this
+      let file = e.target.files[0]
+      vm.localfile = file
+      var reader = new FileReader()
+      // 转化成base64数据类型
+      reader.readAsDataURL(file)
+      reader.onload = function (e) {
+        console.log(file)
+        vm.localfile = this.result
+        vm.filename = file.name
+      }
+    },
+    getpage () {
+      let vm = this
+      let pagecfg = {
+      }
+      let wholeCfg = {}
+      if (vm.wholeRadios && vm.wholeRadios.length > 0) {
+        wholeCfg.tagMutexLabels = vm.wholeRadios
+      }
+      if (vm.wholeCheckBoxs && vm.wholeCheckBoxs.length > 0) {
+        wholeCfg.tagNormalLabels = vm.wholeCheckBoxs
+      }
+      if (vm.wholeInputs && vm.wholeInputs.length > 0) {
+        wholeCfg.TextInputs = vm.wholeInputs
+      }
+      pagecfg.wholeCfg = wholeCfg
+      let itemCfg = {}
+      if (vm.itemRadios && vm.itemRadios.length > 0) {
+        itemCfg.tagMutexLabels = vm.itemRadios
+      }
+      if (vm.itemCheckBoxs && vm.itemCheckBoxs.length > 0) {
+        itemCfg.tagNormalLabels = vm.itemCheckBoxs
+      }
+      if (vm.itemInputs && vm.itemInputs.length > 0) {
+        itemCfg.TextInputs = vm.itemInputs
+      }
+      pagecfg.itemCfg = itemCfg
+      pagecfg.templet = vm.templet
+
+      let Restrictions = {}
+      Restrictions.SopType = vm.SopType
+      Restrictions.ImgRest = {}
+      Restrictions.ImgRest.rectMinW = vm.paramForm.rectMinW
+      Restrictions.ImgRest.rectMinH = vm.paramForm.rectMinH
+      Restrictions.ImgRest.rectMinArea = vm.paramForm.rectMinArea
+      if (vm.paramForm.pointsetmax || vm.paramForm.pointsetmin || vm.paramForm.pointset.length > 0) {
+        Restrictions.ImgRest.pointSetRest = {}
+        if (vm.paramForm.pointsetmax) {
+          Restrictions.ImgRest.pointSetRest.max = vm.paramForm.pointsetmax
         }
-      ).then(function (response) {
-        let rsp = response.data
-        if (rsp.code === 0) {
-          if (rsp.SopType) {
-            vm.SopType = rsp.SopType
-            switch (vm.SopType) {
-              case 1001:
-              case 1002:
-              case 1003:
-                vm.templet = 1
-                break
-              case 1005:
-                vm.templet = 2
-                break
-              default:
-                console.log('SopType err')
-                vm.error('SopType err')
+        if (vm.paramForm.pointsetmin) {
+          Restrictions.ImgRest.pointSetRest.min = vm.paramForm.pointsetmin
+        }
+        console.log(vm.paramForm.pointset)
+        if (vm.paramForm.pointset.length > 0) {
+          Restrictions.ImgRest.pointSetRest.connLines = vm.paramForm.pointset
+        }
+      }
+
+      pagecfg.Restrictions = Restrictions
+
+      if (vm.request !== '') {
+        pagecfg.request = vm.request
+      }
+
+      vm.pagestrout = JSON.stringify(pagecfg)
+    },
+    loadpage () {
+      let vm = this
+      console.log(vm.pagestr)
+      try {
+        let pagecfg = JSON.parse(vm.pagestr)
+        console.log(pagecfg)
+        if (pagecfg) {
+          if (pagecfg.wholeCfg) {
+            let wholeCfg = pagecfg.wholeCfg
+            if (wholeCfg.tagMutexLabels) {
+              vm.wholeRadios = wholeCfg.tagMutexLabels
+            }
+            if (wholeCfg.tagNormalLabels) {
+              vm.wholeCheckBoxs = wholeCfg.tagNormalLabels
+            }
+            if (wholeCfg.TextInputs) {
+              vm.wholeInputs = wholeCfg.TextInputs
             }
           }
-          if (rsp.pageCfg) {
-            if (rsp.pageCfg.wholeCfg) {
-              let wholeCfg = rsp.pageCfg.wholeCfg
-              if (wholeCfg.tagMutexLabels) {
-                vm.wholeRadios = wholeCfg.tagMutexLabels
+          if (pagecfg.itemCfg) {
+            let itemCfg = pagecfg.itemCfg
+            if (itemCfg) {
+              if (itemCfg.tagMutexLabels) {
+                vm.itemRadios = itemCfg.tagMutexLabels
               }
-              if (wholeCfg.tagNormalLabels) {
-                vm.wholeCheckBoxs = wholeCfg.tagNormalLabels
+              if (itemCfg.tagNormalLabels) {
+                vm.itemCheckBoxs = itemCfg.tagNormalLabels
               }
-              if (wholeCfg.TextInputs) {
-                vm.wholeInputs = wholeCfg.TextInputs
-              }
-            }
-            if (rsp.pageCfg.itemCfg) {
-              let itemCfg = rsp.pageCfg.itemCfg
-              if (itemCfg) {
-                if (itemCfg.tagMutexLabels) {
-                  vm.itemRadios = itemCfg.tagMutexLabels
-                }
-                if (itemCfg.tagNormalLabels) {
-                  vm.itemCheckBoxs = itemCfg.tagNormalLabels
-                }
-                if (itemCfg.TextInputs) {
-                  vm.itemInputs = itemCfg.TextInputs
-                }
-              }
-            } else {
-              if (vm.templet === 2) {
-                vm.addQuestion(vm.itemRadios)
+              if (itemCfg.TextInputs) {
+                vm.itemInputs = itemCfg.TextInputs
               }
             }
-            if (rsp.pageCfg.Restrictions) {
-              let Restrictions = rsp.pageCfg.Restrictions
-              if (Restrictions.ImgRest) {
-                vm.paramForm.rectMinW = Restrictions.ImgRest.rectMinW
-                vm.paramForm.rectMinH = Restrictions.ImgRest.rectMinH
-                vm.paramForm.rectMinArea = Restrictions.ImgRest.rectMinArea
-                if (Restrictions.ImgRest.pointSetRest) {
-                  let _pointSetRest = Restrictions.ImgRest.pointSetRest
-                  vm.paramForm.pointsetmax = _pointSetRest.max ? _pointSetRest.max : 0
-                  vm.paramForm.pointsetmin = _pointSetRest.min ? _pointSetRest.min : 0
-                  if (_pointSetRest.connLines) {
-                    vm.paramForm.point = 1
-                    vm.paramForm.pointset = _pointSetRest.connLines
-                    for (let i = 0; i < vm.paramForm.pointset.length; i++) {
-                      if (!vm.paramForm.pointset[i].type) {
-                        vm.paramForm.pointset[i].type = 0
-                      }
+          } else {
+            // if (vm.templet === 2) {
+            //   vm.addQuestion(vm.itemRadios)
+            // }
+          }
+          if (pagecfg.Restrictions) {
+            let Restrictions = pagecfg.Restrictions
+            if (Restrictions.ImgRest) {
+              vm.paramForm.rectMinW = Restrictions.ImgRest.rectMinW
+              vm.paramForm.rectMinH = Restrictions.ImgRest.rectMinH
+              vm.paramForm.rectMinArea = Restrictions.ImgRest.rectMinArea
+              if (Restrictions.ImgRest.pointSetRest) {
+                let _pointSetRest = Restrictions.ImgRest.pointSetRest
+                vm.paramForm.pointsetmax = _pointSetRest.max ? _pointSetRest.max : 0
+                vm.paramForm.pointsetmin = _pointSetRest.min ? _pointSetRest.min : 0
+                if (_pointSetRest.connLines) {
+                  vm.paramForm.point = 1
+                  vm.paramForm.pointset = _pointSetRest.connLines
+                  for (let i = 0; i < vm.paramForm.pointset.length; i++) {
+                    if (!vm.paramForm.pointset[i].type) {
+                      vm.paramForm.pointset[i].type = 0
                     }
                   }
                 }
               }
             }
-            // if (rsp.pageCfg.templet) {
-            //   vm.templet = rsp.pageCfg.templet
-            // }
-            // console.log(vm.templet)
-            if (rsp.pageCfg.request) {
-              vm.request = rsp.pageCfg.request
-            }
-            vm.vflag = rsp.pageCfg.vflag
-            if (vm.vflag > 1) {
-              vm.TagDisabled = true
-              // console.log(vm.TagDisabled)
-            }
-            if (rsp.pageCfg.vQues) {
-              let vQues = rsp.pageCfg.vQues
-              vm.vQuesCheck = []
-              vm.vQuesDo = []
-              for (let i = 0; i < vQues.length; i++) {
-                if (i < vm.vflag - 1) {
-                  vm.vQuesCheck.push(vQues[i])
-                  // console.log('Check', vm.vQuesCheck)
-                } else {
-                  vm.vQuesDo.push(vQues[i])
-                  // console.log('Do', vm.vQuesDo)
-                }
+          }
+          // if (pagecfg.templet) {
+          //   vm.templet = pagecfg.templet
+          // }
+          // console.log(vm.templet)
+          if (pagecfg.request) {
+            vm.request = pagecfg.request
+          }
+          vm.vflag = pagecfg.vflag
+          if (vm.vflag > 1) {
+            vm.TagDisabled = true
+            // console.log(vm.TagDisabled)
+          }
+          if (pagecfg.vQues) {
+            let vQues = pagecfg.vQues
+            vm.vQuesCheck = []
+            vm.vQuesDo = []
+            for (let i = 0; i < vQues.length; i++) {
+              if (i < vm.vflag - 1) {
+                vm.vQuesCheck.push(vQues[i])
+                // console.log('Check', vm.vQuesCheck)
+              } else {
+                vm.vQuesDo.push(vQues[i])
+                // console.log('Do', vm.vQuesDo)
               }
             }
           }
-        } else {
-          vm.$notify.error({
-            title: language('pushTask.js.error'),
-            message: rsp.message,
-            duration: 2000
-          })
         }
-      })
-        .catch(function (error) {
-          console.log(error)
+      } catch (err) {
+        vm.$notify.error({
+          title: '失败',
+          message: '解析失败',
+          duration: 2000
         })
-    })
-  },
-  methods: {
+      }
+    },
     // 增加辅助线
     addPointSet () {
       this.paramForm.pointset.push({
@@ -440,18 +493,38 @@ export default {
         duration: 2000
       })
     },
-    templetPostTask (param) {
-      console.log(JSON.stringify(param))
+    toolPostTask () {
+      let vm = this
+      if (vm.filename === '') {
+        vm.$notify.error({
+          title: '失败',
+          message: '没有选择文件',
+          duration: 2000
+        })
+        return
+      }
+      if (!this.$refs.Template.valid()) {
+        vm.$notify.error({
+          title: '失败',
+          message: '标注结果未完成',
+          duration: 2000
+        })
+        return
+      }
+      let result = this.$refs.Template.getResult()
+      console.log(this.filename, JSON.stringify(result))
+      this.funDownload(JSON.stringify(result), this.filename + '.txt')
     },
     // stringToDate (fDate) {
     //   var fullDate = fDate.split('-')
     //   return new Date(fullDate[0], fullDate[1] - 1, fullDate[2], 0, 0, 0)
     // },
     showTemplate () {
+      let vm = this
       this.messageStatus = 2
       this.pointSetRest = this.submitJson().Restrictions.ImgRest.pointSetRest
       this.$nextTick(function () {
-        this.$refs.Template.imageload('https://s302.fanhantech.com/samplefiledir/L7wPToxfGNRo7G56tHzcXXtYvDGAzhlt.jpg')
+        this.$refs.Template.imageload(vm.localfile)
         // this.$refs.Template.imageload('../../../../static/test/' + tmpurl)
       })
     },
@@ -496,51 +569,6 @@ export default {
         submit.Restrictions.ImgRest.pointSetRest.connLines = vm.paramForm.pointset
       }
       return submit
-    },
-    // 提交请求
-    submitForm (formName, forward) {
-      let vm = this
-      this.$refs[formName].validate(valid => {
-        if (!valid) {
-          return false
-        }
-        console.log(vm.submitJson())
-        axios
-          .post(
-            '/api/push-project-business/image', vm.submitJson(),
-            {
-              headers: {
-                'X-Xsrftoken': $('meta[name=_xsrf]').attr('content')
-              }
-            }
-          )
-          .then(function (response) {
-            let rsp = response.data
-            if (rsp.code === 0) {
-              vm.$notify.success({
-                title: language('pushTask.js.success'),
-                message: language('pushTask.js.successNote'),
-                duration: 2000
-              })
-              // 延时500ms跳转
-              if (forward) {
-                util.Redirect(
-                  '/push-project-sample/image/' + vm.projectId,
-                  1000
-                )
-              }
-            } else {
-              vm.$notify.error({
-                title: language('pushTask.js.error'),
-                message: rsp.message,
-                duration: 2000
-              })
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-      })
     },
     // 模板关闭预览
     close () {
@@ -609,9 +637,6 @@ export default {
         name: language('pushimage.business.js.label'),
         content: '#ff0000'
       })
-    },
-    goBack () {
-      util.Redirect('/push-project-profile/image/' + this.projectId, 1000)
     }
   }
 }
@@ -744,5 +769,11 @@ label {
   .g-tag-describe .choice{
     width: 120px;
   }
+}
+.speake-box {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 1051;
 }
 </style>

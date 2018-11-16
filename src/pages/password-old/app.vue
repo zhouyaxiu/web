@@ -2,15 +2,15 @@
 <div class="main">
   <Header location="register"/>
   <div class="container">
-    <p class="text-center my-5" style="font-size: 1.5rem;">{{$t("register.title")}}</p>
+    <p class="text-center my-5" style="font-size: 1.5rem;">{{$t("password.title")}}</p>
     <div class="row">
       <div class= "col-md-4 offset-md-4">
         <el-form :model="form" :rules="rules" ref="form">
           <el-form-item prop="username">
-            <el-input v-model="form.username" :placeholder="$t('register.username')"></el-input>
+            <el-input v-model="form.username" :placeholder="$t('password.username')"></el-input>
           </el-form-item>
           <el-form-item prop="mobile" id="country-mobile">
-            <el-input v-model="form.mobile" :placeholder="$t('register.mobile')">
+            <el-input v-model="form.mobile" :placeholder="$t('password.mobile')">
               <el-select v-model="form.countryCode" slot="prepend">
                 <el-option v-for="item in options" :key="item.name" :label="item.label" :value="item.value">
                   <span style="float:left;padding-right:1rem;">{{ item.name }}</span>
@@ -21,23 +21,16 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="code">
-            <el-input v-model="form.code" :placeholder="$t('register.code')"></el-input>
+            <el-input v-model="form.code" :placeholder="$t('password.code')"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input type="password" v-model="form.password" :placeholder="$t('register.password')"></el-input>
+            <el-input type="password" v-model="form.password" :placeholder="$t('password.password')"></el-input>
           </el-form-item>
           <el-form-item prop="confirm">
-            <el-input type="password" v-model="form.confirm" :placeholder="$t('register.confirm')"></el-input>
-          </el-form-item>
-          <el-form-item prop="email">
-            <el-input v-model="form.email" :placeholder="$t('register.email')"></el-input>
-          </el-form-item>
-          <el-form-item prop="agree">
-            <el-checkbox v-model="form.agree">{{$t("register.agree")}}</el-checkbox>
-            <a href="/agreement/worker" style="color:#0000ff">{{$t("register.agreement")}}</a>
+            <el-input type="password" v-model="form.confirm" :placeholder="$t('password.confirm')"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="register('form')" style="width: 100%;">{{$t("register.register")}}</el-button>
+            <el-button type="primary" @click="password('form')" style="width: 100%;">{{$t("password.form")}}</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -51,14 +44,15 @@
 import Header from 'components/header'
 import Footer from 'components/footer'
 import axios from 'axios'
+// import $ from 'jquery'
 import md5 from 'js-md5'
 import * as util from 'assets/js/util.js'
 import {language} from 'lang'
 import country from 'assets/js/country-code.js'
 import ButtonPIN from 'components/private/PIN'
 
-var url = '/api/register'
-var http = axios.create()
+var url = '/api/password'
+var http = axios.create({})
 
 export default {
   name: 'app',
@@ -69,14 +63,6 @@ export default {
   },
   data () {
     // 自定义表单验证规则
-    // 必须勾选同意用户服务协议
-    let validateAgree = (rule, value, callback) => {
-      if (value !== true) {
-        callback(new Error(language('validator.agree.rule1')))
-      } else {
-        callback()
-      }
-    }
     // 验证两次密码是否一致
     let validateConfirm = (rule, value, callback) => {
       if (value === '') {
@@ -91,8 +77,8 @@ export default {
     let validateUsername = (rule, value, callback) => {
       http.get('/api/account/username?username=' + value)
         .then(function (response) {
-          if (response.data === true) {
-            callback(new Error(language('validator.username.rule5')))
+          if (response.data !== true) {
+            callback(new Error(language('validator.username.rule6')))
           } else {
             callback()
           }
@@ -107,9 +93,9 @@ export default {
       var countryCode = vm.form.countryCode
       http.get('/api/account/mobile?countryCode=' + countryCode + '&mobile=' + value)
         .then(function (response) {
-          if (response.data === true) {
+          if (response.data !== true) {
             vm.$refs.sendSms.sendCodeDisabled = true
-            callback(new Error(language('validator.mobile.rule2')))
+            callback(new Error(language('validator.mobile.rule4')))
           } else {
             vm.$refs.sendSms.sendCodeDisabled = false
             callback()
@@ -127,9 +113,7 @@ export default {
         mobile: '',
         code: '',
         password: '',
-        confirm: '',
-        email: '',
-        agree: true
+        confirm: ''
       },
       // 表单验证规则
       rules: {
@@ -156,14 +140,6 @@ export default {
         confirm: [
           {required: true, message: language('validator.confirm.rule1'), trigger: 'blur'},
           {validator: validateConfirm, trigger: 'blur'}
-        ],
-        email: [
-          { required: true, message: language('validator.email.rule1'), trigger: 'blur' },
-          { type: 'email', message: language('validator.email.rule2'), trigger: ['blur', 'change'] }
-        ],
-        agree: [
-          {required: true, type: 'boolean', message: language('validator.agree.rule1'), trigger: 'change'},
-          {validator: validateAgree, trigger: 'change'}
         ]
       },
       options: country
@@ -186,16 +162,16 @@ export default {
         vm.$refs.sendSms.sendSmsPost()
       }
     },
-    register (form) {
+    password (form) {
       let vm = this
       this.$refs[form].validate((valid) => {
         // 表单验证
         if (valid) {
-          vm.registerPost(vm.form)
+          vm.passwordPost(vm.form)
         }
       })
     },
-    registerPost (form) {
+    passwordPost (form) {
       let vm = this
       http.post(url, {
         username: vm.form.username,
@@ -203,9 +179,7 @@ export default {
         mobile: vm.form.mobile,
         code: vm.form.code,
         password: md5(vm.form.password),
-        confirm: md5(vm.form.confirm),
-        email: vm.form.email,
-        agree: vm.form.agree
+        confirm: md5(vm.form.confirm)
       })
         .then(function (response) {
           let rsp = response.data
@@ -224,13 +198,13 @@ export default {
       let vm = this
       if (type === 'success') {
         vm.$notify.success({
-          title: language('register.js.success'),
+          title: language('password.js.success'),
           message: message,
           duration: duration
         })
       } else if (type === 'error') {
         vm.$notify.error({
-          title: language('register.js.error'),
+          title: language('password.js.error'),
           message: message,
           duration: duration
         })

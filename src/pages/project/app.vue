@@ -53,10 +53,10 @@
               <h3>项目背景描述</h3>
               <div v-html="description"></div>
             </div>
-            <div class="content">
+            <div v-if="ruleSrc !== ''" class="content">
               <h3>标注规则</h3>
               <!-- <p>...</p> -->
-              <pdf v-if="ruleSrc !== ''" :src="ruleSrc"></pdf>
+              <pdf v-for="i in numPages" :key="i" :src="ruleSrc" :page="i"></pdf>
             </div>
             <div v-if="checkValid" class="content">
               <h3>有效性判断准则</h3>
@@ -116,6 +116,7 @@ export default {
       endTime: '',
       qualified: '',
       checkValid: false,
+      numPages: undefined,
       criterion: ''
     }
   },
@@ -145,10 +146,20 @@ export default {
           // TODO 异常处理
           vm.project = rsp.project
           if (vm.project) {
-            if (vm.project.taskProfile) {
-              if (vm.project.taskProfile.ruleSrc) {
-                vm.ruleSrc = vm.project.taskProfile.ruleSrc
-                vm.description = vm.project.taskProfile.desc
+            vm.project = rsp.project
+            if (vm.project) {
+              vm.description = vm.project.description
+              if (vm.project.taskProfile) {
+                if (vm.project.taskProfile.ruleSrc) {
+                  // vm.ruleSrc = vm.project.taskProfile.ruleSrc
+                  vm.ruleSrc = pdf.createLoadingTask(vm.project.taskProfile.ruleSrc)
+                  vm.ruleSrc.then(pdf => {
+                    vm.numPages = pdf.numPages
+                  })
+                }
+                if (vm.project.taskProfile.desc && vm.project.taskProfile.desc !== '') {
+                  vm.description = vm.project.taskProfile.desc
+                }
                 vm.checkValid = vm.project.taskProfile.checkValid
                 vm.criterion = vm.project.taskProfile.criterion
                 vm.qualified = vm.project.taskProfile.qualified

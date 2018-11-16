@@ -1,31 +1,10 @@
 {
   "pages": [
     {
-      "entry": "login",
+      "entry": "push-task/image/tool",
       "cdn": {}
     },{
-      "entry": "projects",
-      "cdn": {}
-    },{
-      "entry": "workbench",
-      "cdn": {}
-    },{
-      "entry": "push-text/business",
-      "cdn": {}
-    },{
-      "entry": "push-task/collect/business",
-      "cdn": {}
-    },{
-      "entry": "workbench",
-      "cdn": {}
-    },{
-      "entry": "task-reviews",
-      "cdn": {}
-    },{
-      "entry": "taskcheck",
-      "cdn": {}
-    },{
-      "entry": "password-new",
+      "entry": "push-task/image/business",
       "cdn": {}
     }
   ],

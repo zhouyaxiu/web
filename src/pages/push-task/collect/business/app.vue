@@ -85,19 +85,27 @@
     </Layout>
     <Footer/>
     <transition name="el-fade-in">
-      <div class="message2" v-show="messageStatus === 2" style="overflow: auto;">
-        <i class="el-icon-error" v-on:click="close()"></i>
-        <collect :wholeRadios="wholeRadios"
-          :wholeCheckBoxs="wholeCheckBoxs"
-          :wholeInputs="wholeInputs"
-          :itemRadios="itemRadios"
-          :itemCheckBoxs="itemCheckBoxs"
-          :itemInputs="itemInputs"
-          :data="data"
-          :projectId="projectId"
-          @postTask="templetPostTask"
-        >
-        </collect>
+      <div class="message2 push-task" v-show="messageStatus === 2" style="overflow: auto;">
+        <div class="position-fixed w-100 bg-white d-flex align-items-center justify-content-between p-3" style="height:56px;z-index: 2">
+          <div></div>
+          <span class="d-flex align-items-center text-dark"><i class="fa fa-desktop fa-2x pr-2"></i>PC端预览</span>
+          <el-button round @click="close()" size="medium">关闭预览</el-button>
+        </div>
+        <div class="d-flex justify-content-center pb-5" style="padding-top: 80px">
+          <div class="bg-white p-4 rounded" style="width:50%">
+            <collect :wholeRadios="wholeRadios"
+              :wholeCheckBoxs="wholeCheckBoxs"
+              :wholeInputs="wholeInputs"
+              :itemRadios="itemRadios"
+              :itemCheckBoxs="itemCheckBoxs"
+              :itemInputs="itemInputs"
+              :data="data"
+              :projectId="projectId"
+              @postTask="templetPostTask"
+            >
+            </collect>
+          </div>
+        </div>
       </div>
     </transition>
     <div class="speake-box">
@@ -533,31 +541,13 @@ export default {
 body {
   padding-top: 56px;
 }
-.el-date-editor .el-range-separator {
-  width: 8%;
-}
 .message2 {
-  background: #fff;
   position: fixed;
-  top: 3rem;
-  left: 4rem;
-  right: 4rem;
-  bottom: 5rem;
-  min-width: 320px;
-  z-index: 1050;
-  overflow: hidden;
-  border-radius: 0.5rem 0 0 0.5rem;
-  box-shadow: 0 2px 52px 0 rgba(0, 0, 0, 0.5);
-  border: 1px solid #ebeef5;
-}
-.message2 > i {
-  position: absolute;
-  cursor: pointer;
-  font-size: 24px;
-  right: 0.8rem;
-  top: 0.8rem;
-  color: #d1d4dc;
-  z-index: 1050;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1999;
 }
 /*滚动条样式*/
 .message2::-webkit-scrollbar {

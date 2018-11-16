@@ -213,7 +213,7 @@
         </el-form-item>
         <el-form-item prop="agree">
             <el-checkbox v-model="form.agree">{{$t("register.agree")}}</el-checkbox>
-            <a href="/agreement-publish.html" style="color:#0000ff">{{$t("register.agreement")}}</a>
+            <a href="/agreement/requester" style="color:#0000ff">{{$t("register.agreement")}}</a>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -152,12 +152,20 @@
     </Layout>
     <Footer/>
     <!-- 语音标注：1 语音转写：2 语音切割：3 默认为2-->
-    <Wav001
-      ref = "Wav001"
-      :messageStatus = "messageStatus"
-      :tagMutexLabels = "tagMutexLabels"
-      @postTask = "templetPostTask"
-      :tagNormalLabels = "tagNormalLabels" />
+     <div class="message2 bg-white" v-show="messageStatus === 2" style="overflow: auto;">
+        <div class="position-fixed bg-light w-100 d-flex align-items-center justify-content-between p-3" style="height:56px;z-index: 2">
+          <div></div>
+          <span class="d-flex align-items-center text-dark"><i class="fa fa-desktop fa-2x pr-2"></i>PC端预览</span>
+          <el-button type="primary" round @click="close()" size="medium">关闭预览</el-button>
+        </div>
+        <div class="d-flex justify-content-center pb-5" style="padding-top: 80px">
+          <Wav001
+            ref = "Wav001"
+            :tagMutexLabels = "tagMutexLabels"
+            @postTask = "templetPostTask"
+            :tagNormalLabels = "tagNormalLabels" />
+        </div>
+     </div>
     <div class="speake-box">
       <div class="speake">{{$t("pushTask.note1")}}<br/>{{$t("pushTask.note2")}}</div>
       <div class="speake-icon">
@@ -198,7 +206,7 @@ export default {
       // entire view has been rendered
       // get current page project id
       var projectid = document.location.pathname.split('/')[3]
-      // var projectid = 'sub361LvNq7001'
+      // projectid = 'subybxN273z001'
       // console.log('projectid:', projectid)
       if (projectid !== '') {
         vm.projectid = projectid
@@ -299,6 +307,11 @@ export default {
     }
   },
   methods: {
+    close () {
+      this.messageStatus = 1
+      this.$refs.Wav001.clearAll()
+      this.$refs.Wav001.waveformStop()
+    },
     stringToDate (fDate) {
       var fullDate = fDate.split('-')
       return new Date(fullDate[0], fullDate[1] - 1, fullDate[2], 0, 0, 0)
@@ -435,56 +448,32 @@ body {
 .push-task {
   background-color: #f0f2f5;
 }
-.message {
-  background: #fff;
+.message2 {
   position: fixed;
-  top: 3rem;
-  left: 4rem;
-  right: 4rem;
-  bottom: 3rem;
-  z-index: 1050;
-  overflow: auto;
-  border-radius: 0.5rem 0 0 0.5rem;
-  box-shadow: 0 2px 52px 0 rgba(0, 0, 0, 0.5);
-  border: 1px solid #ebeef5;
-}
-.message i {
-  position: absolute;
-  cursor: pointer;
-  font-size: 24px;
-  right: 0.8rem;
-  top: 0.8rem;
-  color: #d1d4dc;
-}
-.messageInLab {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-.messageInLab > span {
-  padding-right: 0.3rem;
-  color: #777;
-  letter-spacing: 2px;
-  font-size: 14px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1999;
 }
 /*滚动条样式*/
-.message::-webkit-scrollbar {
+.message2::-webkit-scrollbar {
   /*滚动条整体样式*/
   width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
   height: 4px;
 }
-.message::-webkit-scrollbar-thumb {
+.message2::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 5px;
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: rgba(0, 0, 0, 0.2);
 }
-.message::-webkit-scrollbar-track {
+.message2::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 0;
   background: rgba(0, 0, 0, 0.1);
 }
-
 .speake-box {
   position: fixed;
   right: 2rem;
@@ -552,7 +541,7 @@ body {
 }
 .choice-have-content {
   display: inline-block;
-  width: 320px;
+  width: 270px;
 }
 .q-group-btn{
   margin-top: 10px;

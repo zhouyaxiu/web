@@ -153,6 +153,9 @@
       "entry": "push-task/image/sample",
       "cdn": {}
     },{
+      "entry": "push-task/image/tool",
+      "cdn": {}
+    },{
       "entry": "push-task/tutorial",
       "cdn": {}
     },{
