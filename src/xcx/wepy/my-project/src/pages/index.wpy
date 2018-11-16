@@ -35,6 +35,7 @@
               <view class='fr'></view>
             </view>
           </navigator>
+          {{data}}
         </block>
       </view>
     </view>
@@ -97,37 +98,71 @@
     }
 
     methods = {
-      filterSopType: function(tasklist) {
-        var tmp = []
-        for(var k in tasklist) {
-          if (tasklist[k].sopType.indexOf('COLLECT') != -1 ||
-            tasklist[k].sopType.indexOf('TEXTTRANS') != -1) {
-            tmp.push(tasklist[k])
-          }
+      // filterSopType: function(tasklist) {
+      //   var tmp = []
+      //   for(var k in tasklist) {
+      //     if (tasklist[k].sopType.indexOf('COLLECT') != -1 ||
+      //       tasklist[k].sopType.indexOf('TEXTTRANS') != -1) {
+      //       tmp.push(tasklist[k])
+      //     }
+      //   }
+      //   return tmp
+      // },
+      // getProjects: function() {
+      //   var that = this
+      //   wx.request({
+      //     url: 'https://www.fanhantech.com/api/projects',
+      //     method: 'get',
+      //     header: app.globalData.header,
+      //     success: function(response){
+      //       that.setData({
+      //         projects: that.filterSopType(response.data.projects)
+      //       });
+      //     },
+      //     fail: function(response) {
+      //       console.log(response)
+      //       wx.showToast({
+      //         title: '882',
+      //         icon: 'none',
+      //         duration: 1500
+      //       });
+      //     } 
+      //   });
+      // },
+    }
+    filterSopType(tasklist) {
+      var tmp = []
+      for(var k in tasklist) {
+        if (tasklist[k].sopType.indexOf('COLLECT') != -1 ||
+          tasklist[k].sopType.indexOf('TEXTTRANS') != -1) {
+          tmp.push(tasklist[k])
         }
-        return tmp
-      },
-      getProjects: function() {
-        var that = this
-        wx.request({
-          url: cfg.getAPIURL()+'/api/projects',
-          method: 'get',
-          header: app.globalData.header,
-          success: function(response){
-            that.setData({
-              projects: that.filterSopType(response.data.projects)
-            });
-          },
-          fail: function(response) {
-            console.log(response)
-            wx.showToast({
-              title: '882',
-              icon: 'none',
-              duration: 1500
-            });
-          } 
-        });
-      },
+      }
+      return tmp
+    }
+    getProjects() {
+      wx.request({
+        url: 'https://www.fanhantech.com/api/projects',
+        method: 'get',
+        header: {
+          "Content-Type": "application/json;charset=utf-8",
+          "Cookie": ""
+        },
+        success: response=>{
+          this.setData({
+            projects: this.filterSopType(response.data.projects)
+          });
+          console.log(this.data.projects)
+        },
+        fail: response=> {
+          console.log(response)
+          wx.showToast({
+            title: '882',
+            icon: 'none',
+            duration: 1500
+          });
+        } 
+      })
     }
     events = {
       'index-emit': (...args) => {
@@ -135,12 +170,18 @@
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
       }
     }
-    onLoad() {
+    getData(){
+      return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+          resolve({data:123})
+        }, 3000);
+      })
+    }
+    async onLoad() {
       // var that = this
-      // that.getProjects();
-      wx.setNavigationBarTitle({
-        title:'首页'
-      });
+      this.getProjects();
+      let data=await this.getData();
+      console.log(data)
     }
   }
 </script>
