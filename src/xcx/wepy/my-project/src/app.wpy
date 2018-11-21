@@ -22,7 +22,11 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/login',
+      'pages/register',
+      'pages/bind',
+      'pages/index',
+      'pages/detail'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -33,7 +37,12 @@ export default class extends wepy.app {
   }
 
   globalData = {
-    userInfo: null
+    userInfo: null,
+    Sid: '',
+    header: {
+      "Content-Type": "application/json;charset=utf-8",
+      "Cookie": ""
+    }
   }
 
   constructor () {
@@ -59,7 +68,7 @@ export default class extends wepy.app {
     console.log(data)
   }
 
-  getUserInfo(cb) {
+  getUserInfo (cb) {
     const that = this
     if (this.globalData.userInfo) {
       return this.globalData.userInfo
@@ -71,5 +80,22 @@ export default class extends wepy.app {
       }
     })
   }
+
+  setSid (sid) {
+    this.globalData.Sid = sid
+  }
+
+  getSid () {
+    return this.globalData.Sid
+  }
+
+  setCookie (cookie) {
+    this.globalData.header["Cookie"] = cookie
+  }
+
+  getCookie () {
+    return this.globalData.header["Cookie"]
+  }
+
 }
 </script>

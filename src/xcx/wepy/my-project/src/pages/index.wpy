@@ -1,19 +1,5 @@
 <style lang='less'>
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
-  .userinfo-avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
-  }
-
-  .userinfo-nickname {
-    color: #aaa;
-  }
 </style>
 <template>
   <view class='container'>
@@ -22,9 +8,9 @@
     </picker>
     <view class='channel'>
       <view view class='weui-panel weui-panel_access'>
-        <block wx:for='{{projects}}' wx:key='index' wx:for-item='item' wx:for-index='id'>
-          <navigator url='../task_detail/index?taskid={{item.id}}'>
-            <view class='weui-media-box weui-media-box_appmsg'>
+        <repeat for='{{projects}}' key='index' index='id'>
+          <!-- <navigator url='../task_detail/index?taskid={{item.id}}'> -->
+            <view class='weui-media-box weui-media-box_appmsg' @tap="tapName(id)">
               <view class='weui-media-box__hd'>
                 <text class='weui-media-box__thumb'></text>
               </view>
@@ -34,12 +20,20 @@
               </view>
               <view class='fr'></view>
             </view>
-          </navigator>
-          {{data}}
-        </block>
+          <!-- </navigator> -->
+        </repeat>
       </view>
     </view>
-    <toast />
+    <repeat for='{{tests}}' key='index'>
+      <view wx:if="{{item.name===undefined || item.name === ''}}">111</view>
+      <view wx:if="{{item.name && item.name !== ''}}">222</view>
+    </repeat>
+    <repeat for='{{TextInputs}}' key='index'>
+      <view>
+        <input type="text" value="{{wholeInputContents[index] || ''}}" placeholder="{{item}}" bindinput="choiceTextInput({{index}})"  />
+      </view>
+    </repeat>
+    <!-- <toast /> -->
   </view>
 </template>
 
@@ -53,8 +47,8 @@
   import Group from '../components/group'
   import Toast from 'wepy-com-toast'
   import testMixin from '../mixins/test'
-
-  console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
+  var api = require('../api/api.js');
+  // console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
 
   @connect({
     num (state) {
@@ -73,15 +67,15 @@
       navigationBarTitleText: 'test'
     }
     components = {
-      panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
-      group: Group,
-      toast: Toast
+      // panel: Panel,
+      // counter1: Counter,
+      // counter2: Counter,
+      // list: List,
+      // group: Group,
+      // toast: Toast
     }
 
-    mixins = [testMixin]
+    // mixins = [testMixin]
 
     data = {
       projects: [],
@@ -91,6 +85,9 @@
       langCode: ['zh', 'en'],
       showData: [],
       jsonData: [{ zh: '首页', en: 'Home' }, { zh: '我的', en: 'Me' }],
+      tests:[{age:18}],
+      wholeInputContents:[],
+      TextInputs: ["年龄","组号","性别","爱好"]
     }
 
     computed = {
@@ -98,37 +95,17 @@
     }
 
     methods = {
-      // filterSopType: function(tasklist) {
-      //   var tmp = []
-      //   for(var k in tasklist) {
-      //     if (tasklist[k].sopType.indexOf('COLLECT') != -1 ||
-      //       tasklist[k].sopType.indexOf('TEXTTRANS') != -1) {
-      //       tmp.push(tasklist[k])
-      //     }
-      //   }
-      //   return tmp
-      // },
-      // getProjects: function() {
-      //   var that = this
-      //   wx.request({
-      //     url: 'https://www.fanhantech.com/api/projects',
-      //     method: 'get',
-      //     header: app.globalData.header,
-      //     success: function(response){
-      //       that.setData({
-      //         projects: that.filterSopType(response.data.projects)
-      //       });
-      //     },
-      //     fail: function(response) {
-      //       console.log(response)
-      //       wx.showToast({
-      //         title: '882',
-      //         icon: 'none',
-      //         duration: 1500
-      //       });
-      //     } 
-      //   });
-      // },
+      tapName(e){
+        console.log(e)
+      },
+      choiceTextInput (index,e) {
+        this.wholeInputContents[index]=e.detail.value
+        for(let i=0;i<this.wholeInputContents.length;i++){
+          if(this.wholeInputContents[i]===undefined){
+            this.wholeInputContents[i]=''
+          }
+        }
+      }
     }
     filterSopType(tasklist) {
       var tmp = []
@@ -141,27 +118,17 @@
       return tmp
     }
     getProjects() {
-      wx.request({
-        url: 'https://www.fanhantech.com/api/projects',
-        method: 'get',
+      wepy.request({
+        url: api.apiURL() + '/api/projects',
+        method: 'GET',
         header: {
           "Content-Type": "application/json;charset=utf-8",
-          "Cookie": ""
+          "Cookie": "gosessionID=84c389f82f3ad09775e251537ba35b6a; Path=/; HttpOnly"
         },
-        success: response=>{
-          this.setData({
-            projects: this.filterSopType(response.data.projects)
-          });
-          console.log(this.data.projects)
-        },
-        fail: response=> {
-          console.log(response)
-          wx.showToast({
-            title: '882',
-            icon: 'none',
-            duration: 1500
-          });
-        } 
+      })
+      .then(response => {
+        this.projects=this.filterSopType(response.data.projects)
+        console.log(this.projects)
       })
     }
     events = {
@@ -170,18 +137,18 @@
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
       }
     }
-    getData(){
-      return new Promise((resolve,reject)=>{
-        setTimeout(() => {
-          resolve({data:123})
-        }, 3000);
-      })
-    }
+    // getData(){
+    //   return new Promise((resolve,reject)=>{
+    //     setTimeout(() => {
+    //       resolve({data:123})
+    //     }, 3000);
+    //   })
+    // }
     async onLoad() {
       // var that = this
-      this.getProjects();
-      let data=await this.getData();
-      console.log(data)
+      await this.getProjects();
+      // let data=await this.getData();
+      // console.log(data)
     }
   }
 </script>

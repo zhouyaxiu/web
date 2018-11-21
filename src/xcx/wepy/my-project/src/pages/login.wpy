@@ -1,0 +1,56 @@
+<template>
+
+</template>
+
+<script>
+  import wepy from 'wepy'
+  var api=require("../api/api.js")
+  export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: 'Login'
+    }
+    async onLoad() {
+      await wepy.login()
+      .then((res)=>{
+        if (res.code) {
+          wepy.request({
+            url: api.apiURL()+ '/api/oauth/login/xiaochengxu',
+            data: {
+              code: res.code,
+            },
+            method: 'GET',
+            header: { 'content-type': 'application/json' },
+          })
+          .then((response)=>{
+            console.log(response)
+            let Sid= ''
+            let header= {
+              "Content-Type": "application/json;charset=utf-8",
+              "Cookie": ""
+            }
+            if (response.data.code === 0) {
+              // api.setSid(response.data.data)
+              Sid=response.data.data
+              header["Cookie"]=response.header["Set-Cookie"]
+              // api.setCookie(response.header["Set-Cookie"])
+              this.$navigate('/pages/index')
+              // this.$switch('/pages/index')
+            } else if (response.data.code === 1) {
+              header["Cookie"]=response.header["Set-Cookie"]
+              // api.setCookie(response.header["Set-Cookie"])
+              this.$navigate('/pages/register')
+            } else {
+              wepy.showToast({
+                title: response.errMsg,
+              })
+            }
+          })
+        } else {
+          wepy.showToast({
+            title: '45',
+          })
+        }
+      })
+    }
+  }
+</script>
