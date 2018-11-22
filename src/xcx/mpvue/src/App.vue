@@ -5,8 +5,27 @@ export default {
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
     console.log('app created and cache logs by setStorageSync')
+  },
+  globalData: {
+    userInfo: null,
+    header: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Cookie': ''
+    },
+    Sid: ''
+  },
+  setCookie: function (cookie) {
+    this.globalData.header['Cookie'] = cookie
+  },
+  getCookie: function () {
+    return this.globalData.header['Cookie']
+  },
+  setSid: function (sid) {
+    this.globalData.Sid = sid
+  },
+  getSid: function () {
+    return this.globalData.Sid
   }
 }
 </script>
