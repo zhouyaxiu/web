@@ -68,6 +68,47 @@ import bus from './eventBus.js'
 var http = axios.create({
   headers: {'X-Xsrftoken': $('meta[name=_xsrf]').attr('content')}
 })
+
+function getsec (str) {
+  let str1 = str.substring(1, str.length) * 1
+  let str2 = str.substring(0, 1)
+  if (str2 === 's') {
+    return str1 * 1000
+  } else if (str2 === 'h') {
+    return str1 * 60 * 60 * 1000
+  } else if (str2 === 'd') {
+    return str1 * 24 * 60 * 60 * 1000
+  }
+}
+
+function setCookie (name, value, time) {
+  let strsec = getsec(time)
+  let exp = new Date()
+  exp.setTime(exp.getTime() + strsec * 1)
+  document.cookie = name + '=' + escape(value) + ';expires=' + exp.toGMTString()
+}
+
+function delCookie (name) {
+  let exp = new Date()
+  exp.setTime(exp.getTime() - 1)
+  let cval = getCookie(name)
+  if (cval !== null) {
+    document.cookie = name + '=' + cval + ';expires=' + exp.toGMTString()
+  }
+}
+
+function getCookie (name) {
+  let arr
+  let reg
+  reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
+  arr = document.cookie.match(reg)
+  if (arr) {
+    return unescape(arr[2])
+  } else {
+    return null
+  }
+}
+
 export default {
   name: 'app',
   props: ['location'],
@@ -89,6 +130,24 @@ export default {
     current () {
       let vm = this
       let url = '/api/user/current'
+      let userstr = getCookie('user')
+      if (userstr) {
+        try {
+          let user = JSON.parse(userstr)
+          vm.user = user
+          // console.log('get user from cookie', userstr)
+          bus.$emit('user', user)
+          this.$emit('getusername', vm.user.username)
+          vm.isLogin = true
+        } catch (e) {
+          console.log('cookie user json str err')
+          console.log(e)
+        }
+      }
+      if (vm.isLogin) {
+        return
+      }
+
       http.get(url)
         .then(function (response) {
           let rsp = response.data
@@ -96,13 +155,24 @@ export default {
             vm.isLogin = false
           } else {
             vm.isLogin = true
-            vm.user = rsp.data
-            bus.$emit('user', rsp.data) // 传信给侧边导航组件
+            vm.user = {
+              username: rsp.data.username,
+              avatar: rsp.data.avatar
+            }
+            // 设置10h的cookie
+            setCookie('user', JSON.stringify(vm.user), 'h10')
+            // console.log('set user in cookie')
+            bus.$emit('user', vm.user) // 传信给侧边导航组件
+            this.$emit('getusername', vm.user.username)
           }
         })
         .catch(function (error) {
           console.log(error)
         })
+    },
+    updateCookie () {
+      delCookie('user')
+      this.current()
     },
     logout () {
       let vm = this
@@ -114,6 +184,8 @@ export default {
             title: language('navbar.js.success'),
             message: rsp.message
           })
+          delCookie('user')
+          // console.log('remove user from cookie')
           // 延时1000ms跳转
           setTimeout(() => {
             window.location.href = '/login'
@@ -122,6 +194,11 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    userSet (val) {
+      const vm = this
+      vm.user.avatar = val
+      console.log(val)
     }
   }
 }

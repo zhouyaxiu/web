@@ -1,44 +1,27 @@
-import profile from './components/profile'
-import profileForm from './components/profile-form'
-import skill from './components/skill'
-import skillForm from './components/skill-form'
+import archives from './components/archives'
+import accountSet from './components/accountSet'
+import realShow from './components/realShow'
 import real from './components/real'
-import realForm from './components/real-form'
 
 export default [
   {
     path: '/',
-    name: 'profile',
-    component: profile
+    name: 'archives',
+    component: archives
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: profile
+    path: '/accountSet',
+    name: 'accountSet',
+    component: accountSet
   },
   {
-    path: '/profileForm',
-    name: 'profileForm',
-    component: profileForm
-  },
-  {
-    path: '/skill',
-    name: 'skill',
-    component: skill
-  },
-  {
-    path: '/skillForm',
-    name: 'skillForm',
-    component: skillForm
+    path: '/realShow',
+    name: 'realShow',
+    component: realShow
   },
   {
     path: '/real',
     name: 'real',
     component: real
-  },
-  {
-    path: '/realForm',
-    name: 'realForm',
-    component: realForm
   }
 ]

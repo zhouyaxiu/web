@@ -1,14 +1,15 @@
 import Vue from 'vue'
-import App from './app'
 import VueRouter from 'vueRouter'
+import App from './app'
 import routes from './routes'
 import 'assets/css/sticky-footer.css'
 import i18n from 'lang'
 
 const router = new VueRouter({routes})
+
 new Vue({ // eslint-disable-line
   el: '#app',
-  i18n,
   router,
+  i18n,
   render: h => h(App)
 })

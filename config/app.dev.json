@@ -1,10 +1,10 @@
 {
   "pages": [
     {
-      "entry": "push-task/image/tool",
+      "entry": "login",
       "cdn": {}
     },{
-      "entry": "push-task/image/business",
+      "entry": "task-image-review",
       "cdn": {}
     }
   ],

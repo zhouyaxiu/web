@@ -1,0 +1,75 @@
+<style lang="less">
+</style>
+<template>
+  <view class="list">
+    {{item.id}}--{{item.title}}--<br/>
+    {{title}}<br/>
+    {{titles}}<br/>
+    <view @tap="tap">Click me</view>
+    <slot></slot>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class text extends wepy.component {
+    data = {
+    }
+    props={
+      title:String,
+      item:Object,
+      titles:String,
+      // 父向子单向动态传值
+      syncTitle:{
+        type:String,
+        default:'null'
+      },
+      twoWayTitle:{
+        type:String,
+        default:'nothing',
+        twoWay:true
+      }
+    }
+    events={
+      'index-broadcast':(...args)=>{
+        console.log(args)
+        let $event = args[args.length - 1]
+        console.log($event)
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)//text receive index-broadcast from wxs
+      }
+    }
+    onLoad(){
+      this.$emit('some-event',1,2,3,4)
+      console.log(this.titles) //parentTitle
+      console.log(this.syncTitle)//parentTitle
+      console.log(this.twoWayTitle)//parentTitle
+      this.titles='titles 改变了'
+      console.log(this.titles)//titles 改变了
+      console.log(this.syncTitle)//parentTitle
+      console.log(this.twoWayTitle)//parentTitle
+      console.log(this.$parent.parentTitle)//parentTitle
+      this.twoWayTitle='two way title'
+      console.log(this.titles)//titles 改变了
+      console.log(this.syncTitle)//parentTitle
+      console.log(this.twoWayTitle)//two way title
+       console.log(this.$parent.parentTitle)//parentTitle
+      // this.$apply()
+       console.log(this.$parent.parentTitle)//parentTitle
+       this.$parent.parentTitle='parenttitle改变了'
+      //  this.$parent.$apply()
+       console.log(this.titles)//titles 改变了
+       console.log(this.syncTitle)//parentTitle
+       console.log(this.twoWayTitle)//two way title
+       console.log(this.$parent.parentTitle)//parenttitle改变了
+    }
+    testFun(a){
+      console.log('testFun方法',a)
+    }
+    methods={
+      tap(){
+        console.log('自定义事件处理函数')
+        this.$emit('childFn',100)
+      }
+    }
+  }
+</script>

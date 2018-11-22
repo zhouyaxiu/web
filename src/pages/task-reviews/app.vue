@@ -1,6 +1,6 @@
 <template>
 <div id="main">
-  <Header/>
+  <Header @getusername="getusername"/>
   <div class="container mb-5">
     <div class="userinfo clearfix">
       <p class="font-italic">项目ID：{{tasks.length !== 0 ? tasks[0].taskid : "-"}}</p>
@@ -77,7 +77,7 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="primary" size="small" @click="check(scope.row, 'review')" v-if="getReview">审核</el-button>
-            <el-button type="danger" size="small" @click="check(scope.row, 'revise')"  v-if="getEditable">修改</el-button>
+            <el-button type="danger" size="small" @click="check(scope.row, 'revise')"  v-if="getEditable && scope.row.username === curuser">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -122,6 +122,7 @@ export default {
       pager: {},
       tasks: [],
       username: '',
+      curuser: '',
       tuflag: '',
       query: {
         uuid: '',
@@ -164,7 +165,6 @@ export default {
     }
   },
   computed: {
-    // 质检标签内容
     getCheckres () {
       return (checkres) => {
         let result = ''
@@ -231,6 +231,10 @@ export default {
     })
   },
   methods: {
+    // 质检标签内容
+    getusername (username) {
+      this.curuser = username
+    },
     // 获取tuflag和username
     getTuFlag () {
       let vm = this

@@ -1,0 +1,25 @@
+<style lang='less'>
+</style>
+<template>
+  <view class='container'>
+    {{m1.text}}<br/> 
+    {{m1.filter(num)}}<br/>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import mywxs from '../components/mywxs.wxs';
+export default class wxs extends wepy.page {
+  config = {
+    navigationBarTitleText: 'wxs'
+  };
+  wxs = {
+    m1: mywxs
+  };
+
+  data = {
+    num: 1000,
+  };
+}
+</script>

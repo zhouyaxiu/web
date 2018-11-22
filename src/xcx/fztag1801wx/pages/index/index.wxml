@@ -9,3 +9,6 @@
   </picker>
   <projects id="singlist" value1="str" value2="{{obj}}" isShow="{{isShow}}" bindaction='wxFun'></projects>
 </view>
+<navigator redirect url="../../pagesA/testparam/index">
+  <text class="register">testparam</text>
+</navigator>

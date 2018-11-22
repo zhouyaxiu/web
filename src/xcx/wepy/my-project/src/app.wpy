@@ -20,12 +20,16 @@ const store = configStore()
 setStore(store)
 
 export default class extends wepy.app {
+ 
   config = {
     pages: [
       'pages/login',
       'pages/register',
       'pages/bind',
       'pages/index',
+      'pages/mixin',
+      'pages/text',
+      'pages/wxs',
       'pages/detail'
     ],
     window: {
@@ -42,17 +46,55 @@ export default class extends wepy.app {
     header: {
       "Content-Type": "application/json;charset=utf-8",
       "Cookie": ""
-    }
+    },
+    interceptid:1
   }
-
+ // 拦截器
   constructor () {
     super()
     this.use('requestfix')
     this.use('promisify')
+    //onLaunch和constructor写法一样
+    this.intercept('request',{
+      config(p){
+        p.timestamp=+new Date()
+        wepy.showToast({title:'正在请求数据中'})
+        console.log('config request',p)
+        return p
+      },
+      success(p){
+        console.log('config success request',p)
+        wepy.showToast({title:'请求成功了'})
+        return p
+      },
+      fail(p){
+        wepy.showToast({title:'请求失败了'})
+        console.log('config fail request',p)
+        return p
+      },
+    })
   }
 
   onLaunch() {
     this.testAsync()
+    //拦截器
+    // this.intercept('request',{
+    //   config(p){
+    //     if(this.globalData.interceptid===1){
+    //       p.timestamp=+new Date()
+    //       console.log('config request',p)
+    //       return p
+    //     }
+    //   },
+    //   success(p){
+    //     console.log('config success request',p)
+    //     return p
+    //   },
+    //   fail(p){
+    //     console.log('config fail request',p)
+    //     return p
+    //   },
+    // })
   }
 
   sleep (s) {

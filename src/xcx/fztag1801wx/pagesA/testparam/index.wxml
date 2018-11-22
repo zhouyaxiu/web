@@ -1,0 +1,4 @@
+<testparam response="{{comment_list}}" is_loadmore="{{is_loadmore}}" bind:myevent="get_emit"></testparam>
+<testparam paramFuToZi="{{id}}"></testparam>
+{{paramZiToFu}}这是父组件
+<testparam paramZiToFu="我是子向父传参" bind:myevent="onMyEvent"></testparam>

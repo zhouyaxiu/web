@@ -21,6 +21,8 @@
             <li>按住alt		进入移动图片模式，松开后切换为原有模式</li>
             <li>按住shift	进入预览模式，松开后切换为原有模式</li>
             <li>在矩形模式下，按住ctrl进入矩形选中和移动模式，可以对矩形进行选中和移动，松开后进入绘制矩形模式</li>
+            <li>滑动鼠标滚轮会以鼠标所指坐标为中心，放大缩小图片</li>
+            <li>鼠标右键，会以鼠标所指坐标为中心，顺时针旋转图片</li>
           </ul>
           <button type="button" class="btn btn-secondary rounded-0" slot="reference">
             <i class="el-icon-info"></i>
@@ -90,13 +92,13 @@
             </div>
           </div>
           <div style="flex:1">
-            <p style="font-size: .75rem">选中点颜色</p>
+            <p style="font-size: .75rem">选中点</p>
             <div class="pl-2">
               <el-color-picker v-model="filstySP" :predefine="precolors" size="medium"></el-color-picker>
             </div>
           </div>
           <div style="flex:1">
-            <p style="font-size: .75rem">选中集颜色</p>
+            <p style="font-size: .75rem">选中集</p>
             <div class="pl-2">
               <el-color-picker v-model="filstySPs" :predefine="precolors" size="medium"></el-color-picker>
             </div>
@@ -113,7 +115,7 @@
           </div>
           <p class="mb-0" style="font-size: .875rem">标注线宽</p>
           <div class="pl-2 pr-2">
-            <el-slider :min=0 :max=10 v-model="linewidth"></el-slider>
+            <el-slider :min=1 :max=10 v-model="linewidth"></el-slider>
           </div>
           </section>
         <section class="mb-4">
@@ -121,7 +123,7 @@
           <el-tooltip content="ctrl + D" placement="top" :enterable="false">
             <button id="delpt" type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="Delpt">删除点</button>
           </el-tooltip>
-          <button id="delset" type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="Delset">删除集</button>
+          <!-- <button id="delset" type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="Delset">删除集</button> -->
           <button id="reset" type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="Reset">重置图片</button>
           <el-tooltip content="ctrl + Z" placement="top" :enterable="false">
             <button id="undo" type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="Undo">撤销</button>
@@ -130,6 +132,7 @@
           <el-tooltip content="ctrl + A" placement="top" :enterable="false">
             <button id="comp" type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="Complete">完成</button>
           </el-tooltip>
+          <!-- <button id="test" type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="test">测试</button> -->
         </section>
         <section class="mb-4">
           <p class="mb-3 mt-3" style="font-size: .875rem">任务</p>
@@ -238,14 +241,14 @@
 <script>
 import $ from 'jquery'
 import Quill from 'quill'
-import * as EXIF from './exif.js'
-import * as RECT from './rect.js'
-import * as PT from './pointset.js'
-import * as POLY from './polygon.js'
-import * as BEZIER from './bezier.js'
-import * as PIC from './picop.js'
+import * as EXIF from './009/exif.js'
+import * as RECT from './009/rect.js'
+import * as PT from './009/pointset.js'
+import * as POLY from './009/polygon.js'
+import * as BEZIER from './009/bezier.js'
+import * as PIC from './009/picop.js'
 // import * as FIT from './pathfit.js'
-import * as SPLINE from './spline.js'
+import * as SPLINE from './009/spline.js'
 import {language} from 'lang'
 
 // 解除浏览器右键事件
@@ -307,7 +310,7 @@ var inittopi, initlefti
 // 判断所处元素位置，避免鼠标从一个元素位移到另一个元素时触发错误事件
 var fromnavtools = false
 var fromworkbench = false
-
+var mytestsrc
 export default {
   name: 'app',
   props: {
@@ -587,6 +590,10 @@ export default {
     })
   },
   methods: {
+    test: function () {
+      var sres = vm.getResult()
+      vm.imageload(mytestsrc, sres, '')
+    },
     sizeChange (ev) {
       let oEvent = ev || window.event
       $('#mask').css('display', 'block')
@@ -789,16 +796,16 @@ export default {
         }
         topctx.beginPath()
         if (connlines[i].type === 1 || connlines[i].type === 2) {
-          topctx.moveTo(pts[connlines[i]['s'] - 1].x * scalei, pts[connlines[i]['s'] - 1].y * scalei)
+          topctx.moveTo(pts[connlines[i]['s'] - 1].x, pts[connlines[i]['s'] - 1].y)
           for (var j = 1; j < connlines[i]['d'] - connlines[i]['s'] + 1; j++) {
-            topctx.lineTo(pts[connlines[i]['s'] + j - 1].x * scalei, pts[connlines[i]['s'] + j - 1].y * scalei)
+            topctx.lineTo(pts[connlines[i]['s'] + j - 1].x, pts[connlines[i]['s'] + j - 1].y)
           }
           if (connlines[i].type === 2) {
             topctx.closePath()
           }
         } else if (connlines[i].type === 0) {
-          topctx.moveTo(pts[connlines[i]['s'] - 1].x * scalei, pts[connlines[i]['s'] - 1].y * scalei)
-          topctx.lineTo(pts[connlines[i]['d'] - 1].x * scalei, pts[connlines[i]['d'] - 1].y * scalei)
+          topctx.moveTo(pts[connlines[i]['s'] - 1].x, pts[connlines[i]['s'] - 1].y)
+          topctx.lineTo(pts[connlines[i]['d'] - 1].x, pts[connlines[i]['d'] - 1].y)
         }
         topctx.stroke()
       }
@@ -822,22 +829,22 @@ export default {
         topctx.beginPath()
         if (connlines[i].type === 1 || connlines[i].type === 2) {
           // 从s 依次画到 d
-          topctx.moveTo(sP.x * scalei, sP.y * scalei)
+          topctx.moveTo(sP.x, sP.y)
           for (let j = 1; j < d - s + 1; j++) {
             let NextI = pointIndex[s + j]
             if (NextI === undefined) {
               continue
             }
             let NestP = pts[NextI]
-            topctx.lineTo(NestP.x * scalei, NestP.y * scalei)
+            topctx.lineTo(NestP.x, NestP.y)
           }
           if (connlines[i].type === 2) {
             topctx.closePath()
           }
         } else if (connlines[i].type === 0) {
           // 只画sd
-          topctx.moveTo(sP.x * scalei, sP.y * scalei)
-          topctx.lineTo(dP.x * scalei, dP.y * scalei)
+          topctx.moveTo(sP.x, sP.y)
+          topctx.lineTo(dP.x, dP.y)
         }
         topctx.stroke()
       }
@@ -869,13 +876,13 @@ export default {
         for (var i = 0; i < ptset.length; i++) {
           ctx.font = vm.numsize + 'px Arial'
           ctx.fillStyle = vm.filstyNor
-          ctx.fillText(ptset[i].index, ptset[i].x * scalei, ptset[i].y * scalei)
+          ctx.fillText(ptset[i].index, ptset[i].x, ptset[i].y)
         }
       } else {
         for (i = 0; i < ptset.length; i++) {
           ctx.font = vm.numsize + 'px Arial'
           ctx.fillStyle = vm.filstyNor
-          ctx.fillText(i + 1, ptset[i].x * scalei, ptset[i].y * scalei)
+          ctx.fillText(i + 1, ptset[i].x, ptset[i].y)
         }
       }
     },
@@ -884,7 +891,7 @@ export default {
       ctx.beginPath()
       ctx.font = vm.numsize + 'px Arial'
       ctx.fillStyle = vm.filstySPs
-      ctx.fillText(i, x * scalei, y * scalei)
+      ctx.fillText(i, x, y)
     },
     // 绘制矩形信息
     DrawRectInfo: function (rect) {
@@ -894,7 +901,7 @@ export default {
       topctx.beginPath()
       topctx.font = vm.numsize + 'px Arial'
       topctx.fillStyle = rect.color
-      topctx.fillText(Math.round(rect.width * rate) + ' * ' + Math.round(rect.height * rate) + ' S:' + Math.round(rect.width * rect.height * rate * rate), rect.x * scalei + vm.numsize, rect.y * scalei)
+      topctx.fillText(Math.round(rect.width * rate) + ' * ' + Math.round(rect.height * rate) + ' S:' + Math.round(rect.width * rect.height * rate * rate), rect.x + vm.numsize, rect.y)
       topctx.stroke()
       topctx.fill()
       topctx.closePath()
@@ -904,17 +911,18 @@ export default {
       var pointsets = PT.GetPointsets()
       topctx.save()
       topctx.translate(lefti, topi)
+      topctx.scale(scalei, scalei)
       topctx.rotate(vm.rotateangle * Math.PI / 2)
-      PT.Draw(topctx, points, vm.filstyNor, -1, vm.filstySP, vm.pointradius, scalei)
+      PT.Draw(topctx, points, vm.filstyNor, -1, vm.filstySP, vm.pointradius / scalei)
       vm.DrawPTNum(topctx, points)
       for (var i = 0; i < pointsets.length; i++) {
         if (res !== null && i === res.selectset) {
           vm.drawConnline(vm.pointSetRest, pointsets[i].pointset)
-          PT.Draw(topctx, pointsets[i].pointset, vm.filstySPs, res.selectpt, vm.filstySP, vm.pointradius, scalei)
+          PT.Draw(topctx, pointsets[i].pointset, vm.filstySPs, res.selectpt, vm.filstySP, vm.pointradius / scalei)
           vm.DrawPTNum(topctx, pointsets[i].pointset)
         } else {
           vm.drawConnline(vm.pointSetRest, pointsets[i].pointset)
-          PT.Draw(topctx, pointsets[i].pointset, pointsets[i].color, -1, vm.filstySP, vm.pointradius, scalei)
+          PT.Draw(topctx, pointsets[i].pointset, pointsets[i].color, -1, vm.filstySP, vm.pointradius / scalei)
           vm.DrawSetNum(topctx, pointsets[i].pointset[0].x, pointsets[i].pointset[0].y, vm.getoptionsindex(i, 'pointset'))
         }
       }
@@ -925,15 +933,16 @@ export default {
       var rects = RECT.GetRects()
       topctx.save()
       topctx.translate(lefti, topi)
+      topctx.scale(scalei, scalei)
       topctx.rotate(vm.rotateangle * Math.PI / 2)
-      RECT.Draw(topctx, rect, vm.filstyNor, vm.filstyZone, vm.linewidth, vm.pointradius, rate, scalei)
+      RECT.Draw(topctx, rect, vm.filstyNor, vm.filstyZone, vm.linewidth / scalei, vm.pointradius / scalei)
       vm.DrawRectInfo(rect)
       for (var i = 0; i < rects.length; i++) {
         if (res !== null && i === res.i) {
-          RECT.Draw(topctx, rects[i], vm.filstySP, vm.filstyZone, vm.linewidth, vm.pointradius, rate, scalei)
+          RECT.Draw(topctx, rects[i], vm.filstySP, vm.filstyZone, vm.linewidth / scalei, vm.pointradius / scalei)
           vm.DrawRectInfo(rects[i])
         } else {
-          RECT.Draw(topctx, rects[i], rects[i].color, vm.filstyZone, vm.linewidth, vm.pointradius, rate, scalei)
+          RECT.Draw(topctx, rects[i], rects[i].color, vm.filstyZone, vm.linewidth / scalei, vm.pointradius / scalei)
         }
         vm.DrawSetNum(topctx, rects[i].x, rects[i].y, vm.getoptionsindex(i, 'rect'))
       }
@@ -944,17 +953,18 @@ export default {
       var polygons = POLY.GetPolygons()
       topctx.save()
       topctx.translate(lefti, topi)
+      topctx.scale(scalei, scalei)
       topctx.rotate(vm.rotateangle * Math.PI / 2)
       if (res !== null) {
-        POLY.Draw(topctx, polygon, vm.filstyNor, vm.filstyZone, res.selectpt, vm.filstySPs, vm.pointradius, vm.linewidth, false, scalei)
+        POLY.Draw(topctx, polygon, vm.filstyNor, vm.filstyZone, res.selectpt, vm.filstySPs, vm.pointradius / scalei, vm.linewidth / scalei, false)
       } else {
-        POLY.Draw(topctx, polygon, vm.filstyNor, vm.filstyZone, -1, vm.filstySPs, vm.pointradius, vm.linewidth, false, scalei)
+        POLY.Draw(topctx, polygon, vm.filstyNor, vm.filstyZone, -1, vm.filstySPs, vm.pointradius / scalei, vm.linewidth / scalei, false)
       }
       for (var i = 0; i < polygons.length; i++) {
         if (res !== null && res.selectset === i) {
-          POLY.Draw(topctx, polygons[i].pointset, vm.filstySP, vm.filstyZone, res.selectpt, vm.filstySPs, vm.pointradius, vm.linewidth, polygons[i].flag, scalei)
+          POLY.Draw(topctx, polygons[i].pointset, vm.filstySP, vm.filstyZone, res.selectpt, vm.filstySPs, vm.pointradius / scalei, vm.linewidth / scalei, polygons[i].flag)
         } else {
-          POLY.Draw(topctx, polygons[i].pointset, polygons[i].color, vm.filstyZone, -1, polygons[i].color, vm.pointradius, vm.linewidth, polygons[i].flag, scalei)
+          POLY.Draw(topctx, polygons[i].pointset, polygons[i].color, vm.filstyZone, -1, polygons[i].color, vm.pointradius / scalei, vm.linewidth / scalei, polygons[i].flag)
         }
         vm.DrawSetNum(topctx, polygons[i].pointset[0].x, polygons[i].pointset[0].y, vm.getoptionsindex(i, 'polygon'))
       }
@@ -965,17 +975,18 @@ export default {
       var bezierlines = BEZIER.GetBezierlines()
       topctx.save()
       topctx.translate(lefti, topi)
+      topctx.scale(scalei, scalei)
       topctx.rotate(vm.rotateangle * Math.PI / 2)
       if (res !== null && res.selectset === -1) {
-        BEZIER.Draw(topctx, bezierline, vm.filstyNor, vm.filstyZone, vm.pointradius, vm.linewidth, res.selectpt, vm.filstySPs, scalei)
+        BEZIER.Draw(topctx, bezierline, vm.filstyNor, vm.filstyZone, vm.pointradius / scalei, vm.linewidth / scalei, res.selectpt, vm.filstySPs)
       } else {
-        BEZIER.Draw(topctx, bezierline, vm.filstyNor, vm.filstyZone, vm.pointradius, vm.linewidth, -1, vm.filstySPs, scalei)
+        BEZIER.Draw(topctx, bezierline, vm.filstyNor, vm.filstyZone, vm.pointradius / scalei, vm.linewidth / scalei, -1, vm.filstySPs)
       }
       for (var i = 0; i < bezierlines.length; i++) {
         if (res !== null && res.selectset === i) {
-          BEZIER.Draw(topctx, bezierlines[i].pointset, vm.filstySPs, vm.filstyZone, vm.pointradius, vm.linewidth, res.selectpt, vm.filstySP, scalei)
+          BEZIER.Draw(topctx, bezierlines[i].pointset, vm.filstySPs, vm.filstyZone, vm.pointradius / scalei, vm.linewidth / scalei, res.selectpt, vm.filstySP)
         } else {
-          BEZIER.Draw(topctx, bezierlines[i].pointset, bezierlines[i].color, vm.filstyZone, vm.pointradius, vm.linewidth, -1, vm.filstySP, scalei)
+          BEZIER.Draw(topctx, bezierlines[i].pointset, bezierlines[i].color, vm.filstyZone, vm.pointradius / scalei, vm.linewidth / scalei, -1, vm.filstySP)
         }
         vm.DrawSetNum(topctx, bezierlines[i].pointset[0].x, bezierlines[i].pointset[0].y, vm.getoptionsindex(i, 'bezierline'))
       }
@@ -986,19 +997,23 @@ export default {
       var bezierlines = SPLINE.GetBezierlines()
       topctx.save()
       topctx.translate(lefti, topi)
+      topctx.scale(scalei, scalei)
       topctx.rotate(vm.rotateangle * Math.PI / 2)
-      BEZIER.Draw(topctx, bezierline, vm.filstyNor, vm.filstyZone, vm.pointradius, vm.linewidth, -1, vm.filstySPs, scalei)
+      BEZIER.Draw(topctx, bezierline, vm.filstyNor, vm.filstyZone, vm.pointradius / scalei, vm.linewidth / scalei, -1, vm.filstySPs)
       for (var i = 0; i < bezierlines.length; i++) {
         if (res !== null && res.selectset === i) {
-          BEZIER.Draw(topctx, bezierlines[i].pointset, vm.filstySPs, vm.filstyZone, vm.pointradius, vm.linewidth, res.selectpt, vm.filstySP, scalei)
+          BEZIER.Draw(topctx, bezierlines[i].pointset, vm.filstySPs, vm.filstyZone, vm.pointradius / scalei, vm.linewidth / scalei, res.selectpt, vm.filstySP)
         } else {
-          BEZIER.Draw(topctx, bezierlines[i].pointset, bezierlines[i].color, vm.filstyZone, vm.pointradius, vm.linewidth, -1, vm.filstySP, scalei)
+          BEZIER.Draw(topctx, bezierlines[i].pointset, bezierlines[i].color, vm.filstyZone, vm.pointradius / scalei, vm.linewidth / scalei, -1, vm.filstySP)
         }
         vm.DrawSetNum(topctx, bezierlines[i].pointset[0].x, bezierlines[i].pointset[0].y, vm.getoptionsindex(i, 'spline'))
       }
       topctx.restore()
     },
     DrawTmpmode: function (tmpmode) {
+      if (tmpmode === 0) {
+        topctx.clearRect(0, 0, topcanvas.width, topcanvas.height)
+      }
       if (tmpmode === 1) {
         topctx.clearRect(0, 0, topcanvas.width, topcanvas.height)
         vm.DrawPTs()
@@ -1189,6 +1204,7 @@ export default {
       return submit
     },
     imageload: function (src, result, commit) {
+      mytestsrc = src
       vm.getAngle(src, function (angle) {
         /************************************************************/
         lefti = $('#navtools')[0].clientWidth
@@ -1419,7 +1435,7 @@ export default {
         }
         var pointset = PT.GetPointseti(num - 1)
         if (pointset !== null && pointset.pointset.length > 0) {
-          res = PT.CanvasClick(pointset.pointset[0].x, pointset.pointset[0].y, vm.pointradius / scalei, vm.PTindex)
+          res = PT.CanvasClick(pointset.pointset[0].x, pointset.pointset[0].y, 1, vm.PTindex)
           res.selectset = num - 1
           res.selectpt = 0
         }
@@ -1435,7 +1451,7 @@ export default {
         }
         var rect = RECT.GetRecti(num - 1)
         if (rect !== null) {
-          res = RECT.CanvasClick(rect.x, rect.y, vm.pointradius / scalei, res)
+          res = RECT.CanvasClick(rect.x, rect.y, 1, res)
           res.i = num - 1
         }
         vm.cleantopcanvas()
@@ -1450,7 +1466,7 @@ export default {
         }
         var poly = POLY.GetPolygoni(num - 1)
         if (poly !== null) {
-          res = POLY.CanvasClick(poly.pointset[0].x, poly.pointset[0].y, vm.pointradius / scalei)
+          res = POLY.CanvasClick(poly.pointset[0].x, poly.pointset[0].y, 1)
           res.selectset = num - 1
           res.selectpt = 0
         }
@@ -1466,7 +1482,7 @@ export default {
         }
         var bezierline = BEZIER.GetBezierlinei(num - 1)
         if (bezierline !== null) {
-          res = BEZIER.CanvasClick(bezierline.pointset[0].x, bezierline.pointset[0].y, vm.pointradius / scalei)
+          res = BEZIER.CanvasClick(bezierline.pointset[0].x, bezierline.pointset[0].y, 1)
           res.selectset = num - 1
           res.selectpt = 0
         }
@@ -1482,7 +1498,7 @@ export default {
         }
         var spline = SPLINE.GetSplinei(num - 1)
         if (spline !== null) {
-          res = SPLINE.CanvasClick(spline.pointset[0].x, spline.pointset[0].y, vm.pointradius / scalei)
+          res = SPLINE.CanvasClick(spline.pointset[0].x, spline.pointset[0].y, 1)
           res.selectset = num - 1
           res.selectpt = 0
         }
@@ -1640,8 +1656,10 @@ export default {
           vm.cleantopcanvas()
           topctx.save()
           topctx.translate(lefti, topi)
+          topctx.scale(scalei, scalei)
           topctx.rotate(vm.rotateangle * Math.PI / 2)
-          RECT.DrawCrossline(topctx, pos.moveclickX * scalei, pos.moveclickY * scalei, width0 * scalei, height0 * scalei, vm.filstyNor, scalei)
+          topctx.lineWidth = vm.linewidth / scalei
+          RECT.DrawCrossline(topctx, pos.moveclickX, pos.moveclickY, width0, height0, vm.filstyNor)
           topctx.restore()
           vm.DrawRect()
         } else {
@@ -1692,8 +1710,10 @@ export default {
           if (res.i < 0) {
             topctx.save()
             topctx.translate(lefti, topi)
+            topctx.scale(scalei, scalei)
             topctx.rotate(vm.rotateangle * Math.PI / 2)
-            RECT.DrawCrossline(topctx, pos.moveclickX * scalei, pos.moveclickY * scalei, width0 * scalei, height0 * scalei, vm.filstyNor, scalei)
+            topctx.lineWidth = vm.linewidth / scalei
+            RECT.DrawCrossline(topctx, pos.moveclickX, pos.moveclickY, width0, height0, vm.filstyNor, scalei)
             topctx.restore()
           }
           vm.DrawRect()
@@ -1716,8 +1736,9 @@ export default {
           var points = SPLINE.Getpoints()
           topctx.save()
           topctx.translate(lefti, topi)
+          topctx.scale(scalei, scalei)
           topctx.rotate(vm.rotateangle * Math.PI / 2)
-          POLY.Draw(topctx, points, '#FF0000', vm.filstyZone, -1, vm.filstySP, vm.pointradius, vm.linewidth, false, scalei)
+          POLY.Draw(topctx, points, '#FF0000', vm.filstyZone, -1, vm.filstySP, vm.pointradius / scalei, vm.linewidth / scalei, false)
           topctx.restore()
           vm.DrawSpline()
           break
@@ -2064,11 +2085,6 @@ export default {
       } else if (vm.mode === 2) {
         vm.cleantopcanvas()
         RECT.Del(res)
-        if (vm.optionindex > -1) {
-          vm.options.splice(vm.optionindex, 1)
-          vm.optionstype.splice(vm.optionindex, 1)
-          vm.optionindex = -1
-        }
         res.i = -1
         vm.DrawRect()
       } else if (vm.mode === 3) {

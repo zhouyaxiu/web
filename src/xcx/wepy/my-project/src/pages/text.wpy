@@ -1,0 +1,59 @@
+<style lang='less'>
+</style>
+<template>
+  <view class='container'>
+    <view>
+      {{text}}--{{nextticks}}
+    </view>
+    <repeat for="{{list}}" key="index" index="index" item="item">
+      <text :item="item" title="myTitle" :titles="parentTitle" :syncTitle.sync="parentTitle" :twoWayTitle="parentTitle"></text>
+    </repeat>
+    <text @childFn.user="parentFn">sfdf</text>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import text from '../components/text';
+export default class wxs extends wepy.page {
+  config = {
+    navigationBarTitleText: 'wxs'
+  };
+  components={
+    text
+  }
+
+  data = {
+    text:'textxxxtxxtxxt',
+    list: [{id: 1, title: 'title1'}, {id: 2, title: 'title2'}],
+    myTitle:'myTitlemyTitlemyTitle',
+    parentTitle:'parentTitle',
+    nextticks:'nexttick测试哈'
+  };
+  methods={
+    parentFn(num,evt){
+      console.log('parent received emit event, number is: ' + num)//parent received emit event, number is: 100
+    }
+  }
+  onLoad(){
+    this.$broadcast('index-broadcast','broad测试用法')
+    this.$invoke('text','testFun','param1')
+    this.nextticks='我是nexttick'
+    // this.$apply()
+    this.$apply(()=>{
+      this.nextticks='我是nexttick第二次修改'
+    })
+    this.$nextTick().then(function(){
+      console.log(this.nextticks)
+    })
+  }
+  events={
+      'some-event':(...args)=>{
+        let $event = args[args.length - 1]
+        console.log($event)
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)//wxs receive some-event from text
+        console.log(999)
+      }
+    }
+}
+</script>

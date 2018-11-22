@@ -99,7 +99,7 @@
 <script>
 // import $ from 'jquery'
 import * as qiniu from 'qiniu-js'
-// import {language} from 'lang'
+import {language} from 'lang'
 import Quill from 'quill'
 
 function startsWith (str, prefix) {
@@ -212,7 +212,65 @@ export default {
     }
   },
   methods: {
+    errInfo (msg) {
+      let vm = this
+      vm.$notify.error({
+        title: '错误',
+        message: msg,
+        duration: 2000
+      })
+    },
     valid () {
+      let vm = this
+      for (let i = 0; i < vm.data.length; i++) {
+        if (!vm.result[i]) {
+          return false
+        }
+        if (vm.result[i].raw === '') {
+          vm.errInfo('id为' + (i + 1) + '处没有数据')
+          return false
+        }
+      }
+      let i = 0
+      if (vm.wholeRadios.length > 0 && Array.isArray(vm.wholeRadioContents)) {
+        if (vm.wholeRadioContents.length !== vm.wholeRadios.length) {
+          vm.errInfo((language('labelTool.radio') + '未完成'))
+          return false
+        }
+        for (i = 0; i < vm.wholeRadioContents.length; i++) {
+          if (!vm.wholeRadioContents[i] && vm.wholeRadioContents[i] !== 0) {
+            vm.errInfo((language('labelTool.radio'), i, language('labelTool.noChoice')))
+            return false
+          }
+        }
+      }
+
+      if (vm.wholeCheckBoxs.length > 0 && Array.isArray(vm.wholeCheckBoxContents)) {
+        if (vm.wholeCheckBoxContents.length !== vm.wholeCheckBoxs.length) {
+          vm.errInfo(language('labelTool.checkbox') + '未完成')
+          return false
+        }
+        for (i = 0; i < vm.wholeCheckBoxContents.length; i++) {
+          if (vm.wholeCheckBoxContents[i].length === 0) {
+            vm.errInfo((language('labelTool.checkbox'), i, language('labelTool.noChoice')))
+            return false
+          }
+        }
+      }
+
+      if (vm.wholeInputs.length > 0 && Array.isArray(vm.wholeInputContents)) {
+        if (vm.wholeInputContents.length !== vm.wholeInputs.length) {
+          vm.errInfo(language('labelTool.input') + '未完成')
+          return false
+        }
+        for (i = 0; i < vm.wholeInputContents.length; i++) {
+          if (vm.wholeInputContents[i].trim() === '') {
+            vm.errInfo(language('labelTool.input'), i, language('labelTool.noNull'))
+            return false
+          }
+        }
+      }
+      // TODO item的题目验证
       return true
     },
     getUploadToken (file) {
@@ -278,14 +336,9 @@ export default {
     },
     postTask: function (form) {
       let vm = this
-      // if (!vm.valid()) {
-      //   vm.$notify.error({
-      //     title: language('taskPublic.error'),
-      //     message: language('labelTool.errorMessage'),
-      //     duration: 2000
-      //   })
-      //   return
-      // }
+      if (!vm.valid()) {
+        return
+      }
       let result = vm.getResult()
       let params = {
         result: result,
@@ -310,6 +363,15 @@ export default {
         if (!startsWith(vm.result[i].raw, 'http')) {
           vm.result[i].raw = 'https://s301.fanhantech.com/' + vm.result[i].raw
         }
+      }
+      for (let i = vm.result.length; i < vm.data.length; i++) {
+        vm.result.push({
+          type: vm.data[i].type,
+          raw: '',
+          itemRadioContents: [],
+          itemCheckBoxContents: [[]],
+          itemInputContents: []
+        })
       }
       try {
         let commentRes = JSON.parse(comments)

@@ -1,6 +1,6 @@
 <template>
 <div class="main login-new">
-  <Header location="login"/>
+  <Header ref="Header" location="login"/>
   <div class="container">
     <!-- Content here -->
     <p class="text-center my-5" style="font-size: 1.5rem">{{$t("login.title")}}</p>
@@ -225,6 +225,8 @@ export default {
           let rsp = response.data
           if (rsp.code === 0) {
             vm.notify('success', rsp.message, 2000)
+            // 更新cookie
+            vm.$refs.Header.updateCookie()
             util.Redirect('/projects', 1000)
           } else {
             vm.notify('error', rsp.message, 2000)
