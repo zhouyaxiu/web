@@ -1,0 +1,54 @@
+<view>
+  <view class="usericonView">
+    <text class="userinfo-l">用户头像</text>
+    <image src="{{avatar}}" class="img userinfo-r"></image>
+  </view>
+  <view class="usericonView">
+    <text class="userinfo-l">用户名</text>
+    <text class="userinfo-r">{{username}}</text>
+  </view>
+  <view class="usernameView p30">
+    <text class="userinfo-l">性别</text>
+    <text class="userinfo-r">{{gender}}</text>
+  </view>
+  <view class="usericonView">
+    <text class="userinfo-l">出生日期</text>
+    <text class="userinfo-r">{{birthday}}</text>
+  </view>
+  <view class="usernameView p30">
+    <text class="userinfo-l">所在地</text>
+    <text class="userinfo-r">{{country}}</text>
+  </view>
+  <view class="usericonView">
+    <text class="userinfo-l">国籍</text>
+    <text class="userinfo-r">{{nationality}}</text>
+  </view>
+  <view class="usernameView p30">
+    <text class="userinfo-l">种族</text>
+    <text class="userinfo-r">{{ethnicity}}</text>
+  </view>
+  <view class="usericonView">
+    <text class="userinfo-l">婚姻状态</text>
+    <text class="userinfo-r">{{marital}}</text>
+  </view>
+  <view class="usernameView p30">
+    <text class="userinfo-l">母语</text>
+    <text class="userinfo-r">{{motherLanguage}}</text>
+  </view>
+  <view class="usericonView">
+    <text class="userinfo-l">学历</text>
+    <text class="userinfo-r">{{education}}</text>
+  </view>
+  <view class="usernameView p30">
+    <text class="userinfo-l">行业</text>
+    <text class="userinfo-r">{{industry}}</text>
+  </view>
+  <view class="usericonView">
+    <text class="userinfo-l">收入</text>
+    <text class="userinfo-r">{{income}}</text>
+  </view>
+  <view class="button-sp-area">
+    <button class="weui-btn weui-btn_primary" bindtap="editinfo" size="mini">编辑个人信息</button>
+    <button class="weui-btn weui-btn_default" bindtap="logout" size="mini">退出登录</button>
+  </view>
+</view>

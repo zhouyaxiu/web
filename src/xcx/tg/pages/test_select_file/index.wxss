@@ -1,0 +1,20 @@
+@import '../../template/wxss/photo_task.wxss';
+.selectfile picker {
+    padding:40rx 20rpx;
+    background: #fff;
+}
+
+page {
+    background: #f0f0f0;
+}
+.selectfile view:first-of-type{
+  padding: 20rpx;
+  color:#333;
+  font-size: 30rpx;
+}
+.selectfile text{
+  font-size: 26rpx;
+  color:#333;
+  margin: 30rpx 20rpx;
+  display: inline;
+}

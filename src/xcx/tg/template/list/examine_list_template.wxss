@@ -1,0 +1,9 @@
+@import '../../pages/task/index.wxss';
+
+.id {
+  font-size: 24rpx;
+  padding: 20rpx 20rpx 20rpx 0;
+  border-bottom: 2rpx dashed #f0f0f0;
+  margin: 0rpx 20rpx 0;
+  color: #737373;
+}

@@ -1,0 +1,41 @@
+<!-- <import src="../../template/taskclassfy/taskcommon.wxml" /> -->
+<view class="container upload_img">
+  <view wx:for="{{photo}}" wx:for-item="item" wx:key="index">
+    <view>{{item.title}}</view>
+    <text>{{item.intro}}</text>
+  </view>
+  <form catchsubmit="formSubmit" catchreset="formRest">
+    <block wx:for="{{imagePhotos}}" wx:for-item="item" wx:key="item">
+      <view class="photo-title">{{item.title}}</view>
+      <view class="photo-main">
+        <view class="weui-uploader__input-box">
+          <view class="photo-item">
+            <view class="exam">示例</view>
+            <image class="weui-uploader__img" data-index="{{index}}" mode="widthFix" bindtap="previewImage" src="{{item.defaultImg}}" data-src="{{item.defaultImg}}"></image>
+          </view>
+        </view>
+        <view class="weui-uploader__input-box">
+          <view class="photo-item">
+            <view data-index="{{index}}">
+              <image data-id="{{index}}" mode="widthFix" class="weui-uploader__img" src="{{item.uploadImg||'../../images/add.png'}}" bindtap="chooseimage"></image>
+            </view>
+            <view class="del" data-index="{{index}}" catchtap="delcont">删除</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </form>
+  <view class="footer">
+    <view class="foot-classfy">
+      <view class="foot-classfy-3 last-step">
+        <button bindtap="last_step">上一步</button>
+      </view>
+      <view class="foot-classfy-3 tem-step">
+        <button bindtap="modalTap">暂时保存</button>
+      </view>
+      <view class="foot-classfy-3 sub-step">
+        <button bindtap="sub_step">提交凭证</button>
+      </view>
+    </view>
+  </view>
+</view>

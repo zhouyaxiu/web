@@ -1,0 +1,26 @@
+<view class="container">
+  <icon type="success" size="80" class="icon" />
+  <view class="title">{{status}}</view>
+  <view class="con">{{info}}</view>
+  <view class="page__bd">
+    <view class="weui-form-preview">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <label class="weui-form-preview__label">{{use}}</label>
+          <em class="weui-form-preview__value">¥{{money}}</em>
+        </view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <block wx:for-items="{{widthdraw}}" wx:key="index">
+          <view class="weui-form-preview__item">
+            <label class="weui-form-preview__label">{{item.title}}</label>
+            <view class="weui-form-preview__value">{{item.con}}</view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+  <view class="button-sp-area">
+    <button bindtap="indexTap">完成</button>
+  </view>
+</view>

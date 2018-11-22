@@ -1,0 +1,23 @@
+<view class="container">
+  <picker value="{{langIndex}}" bindchange="bindSelectLanguage" range="{{lang}}">
+    <image src="../../images/switch.png" alt="" class="switch" />
+  </picker>
+  <view class="channel">
+    <view view class="weui-panel weui-panel_access">
+      <block wx:for="{{projects}}" wx:key="index" wx:for-item="item" wx:for-index="id">
+        <navigator url="../task_detail/index?taskid={{item.id}}">
+          <view class="weui-media-box weui-media-box_appmsg">
+            <view class="weui-media-box__hd">
+              <text class="weui-media-box__thumb"></text>
+            </view>
+            <view class="weui-media-box__bd">
+              <view class="weui-media-box__title">{{item.abstract}}</view>
+              <view class="weui-media-box__desc">{{item.id}}</view>
+            </view>
+            <view class="fr"></view>
+          </view>
+        </navigator>
+      </block>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,23 @@
+.icon-box {
+  padding: 75rpx 0 0;
+  text-align: center;
+}
+
+.icon-box-ctn {
+  display: block;
+  padding-top: 40rpx;
+}
+
+.icon-box-title {
+  font-size: 34rpx;
+}
+
+.icon-box-desc {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #888;
+}
+
+.commit-info {
+  padding: 60rpx 0;
+}

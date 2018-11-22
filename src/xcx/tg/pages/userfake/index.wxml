@@ -1,0 +1,4 @@
+<view class="logo">
+  <image src="../../images/logo.png"></image>
+  <view>泛函科技</view>
+</view>

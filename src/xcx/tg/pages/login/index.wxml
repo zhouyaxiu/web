@@ -1,0 +1,36 @@
+<view class="container">
+  <view>
+    <view class="logo">
+      <image src="../../images/logo.png"></image>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label login" for="username"></label>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" id="username" bindinput="bindNameInput" type="text" placeholder="{{login.username}}" />
+      </view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label password" for="password"></label>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" id="password" password="true" bindinput="bindPasswordInput" type="text" placeholder="{{login.password}}" />
+      </view>
+    </view>
+    <view class="button-sp-area">
+      <button bindtap="login">{{login.login}}</button>
+    </view>
+    <view class="registercount">
+      <navigator open-type="redirect" url="../register/index">
+        <text class="register">{{login.register}}</text>
+      </navigator>
+    </view>
+    <view class="changeLanguage">
+        <picker bindchange="bindSelectLanguage" value="{{langIndex}}" range="{{lang}}">
+          <view>{{login.Language}}：{{lang[langIndex]}}</view>
+        </picker>
+    </view>
+  </view>
+</view>

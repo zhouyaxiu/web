@@ -1,0 +1,157 @@
+.bg {
+  background: #f8f8f8;
+}
+
+.yu {
+  background: #15b3e4;
+  padding: 50rpx 0 200rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 36rpx;
+}
+
+.yu text {
+  font-size: 60rpx;
+  padding: 0 10rpx;
+}
+
+.rmbBtn {
+  padding: 0 40rpx;
+  font-size: 0;
+}
+
+.rmbBtn_con {
+  padding-left: 2%;
+}
+
+.rmbBtn button {
+  width: 30%;
+  display: inline-block;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+  margin-right: 3%;
+}
+
+.widthdraw_con {
+  padding: 0 40rpx;
+}
+
+.widthdraw_rmb {
+  position: relative;
+}
+
+.rmbBtn {
+  top: 0;
+  left: 20rpx;
+  right: 20rpx;
+  margin: auto;
+  background: #fff;
+  z-index: 100;
+  margin-top: -120rpx;
+  padding: 40rpx 40rpx 20rpx 40rpx;
+  -webkit-border-radius: 12rpx;
+  -moz-border-radius: 12rpx;
+  -ms-border-radius: 12rpx;
+  -o-border-radius: 12rpx;
+  border-radius: 12rpx;
+}
+
+.weui-cells {
+  margin-top: 1.17647059em;
+  background-color: #fff;
+  line-height: 1.47058824;
+  font-size: 30rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.weui-cell__bd {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.weui-cell_access .weui-cell__ft {
+  padding-right: 13px;
+  position: relative;
+}
+
+.weui-cell__ft {
+  text-align: right;
+  color: #808080;
+  font-size: 28rpx;
+}
+
+.rmbBtn button {
+  margin-bottom: 20rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: transparent;
+}
+
+.rmbBtn button.active {
+  background: #15b3e4;
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.weui-cell_access .weui-cell__ft:after {
+  content: " ";
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+  border-width: 2px 2px 0 0;
+  border-color: #c8c8cd;
+  border-style: solid;
+  -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+  transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+  top: -2px;
+  position: absolute;
+  top: 50%;
+  margin-top: -4px;
+  right: 2px;
+}
+
+.width_btn {
+  width: 100%;
+  text-align: center;
+  padding: 0 10%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-top: 40rpx;
+}
+
+.width_btn button {
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 32rpx;
+}
+
+.pic {
+  padding: 10%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.pic image {
+  width: 100%;
+}
+
+.note {
+  font-size: 30rpx;
+  padding: 60rpx 0 0 0;
+  color: #999;
+  text-align: center;
+  line-height: 80rpx;
+}
+
+.note_con {
+  line-height: 40rpx;
+  text-align: left;
+}

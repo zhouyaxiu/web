@@ -1,0 +1,7 @@
+<view class="selectfile">
+  <view>选择文件名：</view>
+  <picker bindchange="bindSelectFile" value="{{index}}" range="{{selectFileInfo}}" range-key="{{'filename'}}">
+    <view>选择文件名：{{selectFileInfo[index].filename}}</view>
+  </picker>
+  <text>文件名为：{{selectFileInfo[index].filename}}</text>
+</view>

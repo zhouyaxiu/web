@@ -1,0 +1,58 @@
+<view class="agreement">
+  <view class="agree-title">Fanhan Tech User (Task Executor) Service Protocol</view>
+  <view  class="agree-info">This service agreement is an agreement between you and Fanhan Tech data service platform (hereafter referred to as the "service platform") in relation to the data services provided by the service platform.If you select "I agree to comply with the Fanhan Tech User (Data Annotation) Service Protocol" and click registration, this service agreement is binding on you. You should read carefully before using service platform and fully understand the contents of all the terms, if you have any questions about the terms, please consult us in time.</view>
+  <view class="agree-main">
+    <view>
+      <view>I. Definitions</view>
+      <text>1.Service platform: this service platform is a data service platform that helps the task issuer and the Task executor to reach the cooperation intention and complete the cooperation.</text>
+      <text>2.Task executor: "you" in this agreement refers to the natural person with full civil right capacity and capacity to act after providing data tagging service on the service platform and receiving payment for data tagging.</text>
+      <text>3.Task issuer: the person who publishes a data annotation task on a service platform and pays for the data annotation.</text>
+    </view>
+    <view>
+      <view>II. Confirmation and acceptance of this Agreement</view>
+      <text>1.Please read all the terms and conditions carefully before you sign up for the service platform.Once you register and use the service platform, it means that you have fully read, understand and accept the full contents of this Agreement, and this Agreement is binding on you.At that time, you shall not claim the invalidity of this Agreement or request its rescission on the grounds that you have not read (understand or agree) the contents of this Agreement.</text>
+      <text>2.All rules that have been issued or may be issued in the future shall be an integral part of this Agreement and shall have the same legal effect as the text of this Agreement.You undertake to accept and abide by the terms of this Agreement, and if you do not agree to this Agreement, you shall immediately cease to register and use the service platform.</text>
+      <text>3.The service platform shall have the right to make and amend this agreement or various rules from time to time in accordance with the updating of national laws and regulations, the adjustment of products and service rules, and to notify you in
+          the service platform or to send a message to your account.If you continue to use the services of the service platform, you accept the revised agreements and rules.</text>
+    </view>
+    <view>
+      <view>III. Content of cooperation</view>
+      <text>1.The task issuer will publish the text, picture, language, video and other data items in the service platform at any time. The task executor has the right to execute the data project on the service platform independently, complete the task according to the specific requirements of the project and obtain corresponding remuneration.</text>
+      <text>2.The task executor provides relevant data service according to project, specific requirements and is responsible for the service content and quality. If the task executor provides service does not conform to project requirement or infringe third-party legal rights, that cause losses of service platform, task issuers or any third parties, the task executor will be responsible for all consequences.</text>
+      <text>3.The service platform only provides broker service for task issuer and task executive.All rights and obligations arising from the process of data service between the task issuer and the task executive, including, but not limited to, overtime completion of the task, differences in the quality and value of the task, and obligations of confidentiality, etc. Both task issuers and task executors are responsible.</text>
+    </view>
+    <view>
+      <view>IV. Rights and obligations of mandate holders</view>
+      <text>1.In the actual use of the service platform, the task executor shall have the civil capacity provided by the law of the people's Republic of China which is appropriate to the acts of the task executor. Otherwise, the task executor and the guardian of the task executive shall bear all the consequences arising therefrom in accordance with the provisions of the law, and the service platform shall have the right to cancel the account of the task executive or to stop providing the service to the task executive.</text>
+      <text>2.The task executor shall fill in the specific information truthfully, accurately, completely and in detail. Any liability or loss caused by the false and incomplete information provided by the task executor shall be borne by the task executor himself.</text>
+      <text>3.The task executor shall carefully and reasonably preserve, use his user name and password and take full responsibiviewty for all actions, activities and events carried out through his own account and password.If the task executor discovers any improper use of the user account or other situations that may endanger the security of the account of the task executor, he should immediately notify the service platform in an effective manner and ask the service
+          platform to suspend the related service.It takes reasonable time for the service platform to take action on the request of the task executor, and the service platform is not liable for any consequences (including but not limited to any loss by the task executor) that have occurred before the action is taken.</text>
+      <text>4.The task operator shall not lend (rent) the service platform account to others, otherwise he or she shall bear the full responsibiviewty arising therefrom.</text>
+      <text>5.If the system crashes or cannot be used normally due to force majeure or other factors beyond the control of the service platform, the service platform will not be responsible for the failure to complete or lose relevant information, records,and so on.But the service platform will assist in handling the aftermath as much as possible and strive to protect the task issuer from financial loss.</text>
+      <text>6.The task executor shall strictly abide by this Agreement and other rules, instructions or agreements issued by the service platform. If damage is caused to third parties or service platforms as a result of breach of this Agreement or other rules,instructions or agreements by the task executive, the task executive shall be liable.</text>
+      <text>7.Task executor is not an employee of our company. Differences in data service shall be resolved by negotiation between task executor and task issuer.</text>
+    </view>
+    <view>
+      <view>V. Intellectual property attribution</view>
+      <text>1.Ownership and intellectual property rights of software tools, texts, etc. provided by the service platform during the performance of the agreement are owned by the service platform; ownership and intellectual property rights of software tools, texts, etc. provided by the task issuer are owned by the task issuer. </text>
+      <text>2.The results of the project completed and submitted by the Task Execution under this Agreement, and all the results produced by the Task issuer using its technical research and development, including but not limited to all intellectual property and ownership of the Services and Products are owned by the Task issuer.</text>
+    </view>
+    <view>
+      <view>VI. Warranty clause</view>
+      <text>1.The task executor declares and warrants that all products delivered by it do not infringe the legal rights of third party (including but not limited to intellectual property rights, privacy rights, etc.) and must obtain corresponding authorization from third parties, No unresolved claims, claims or pending litigation related to privacy rights.</text>
+      <text>2.For any claim against the service platform arising from the infringement of the third party's intellectual property rights, privacy rights and other legal rights caused by the product of the task executor, the task executor shall be responsible for responding to the case and defending the service platform, or cooperate with the defense at the request of the service platform to protect the interests of the service platform from damage, and compensate the service platform for expenses including but not limited to legal fees.</text>
+    </view>
+    <view>
+      <view>VII. Confidentiality matters</view>
+      <text>1.If the real name, address, contact phone number and other privacy information of the task executor are involved, the service platform will be strictly confidential unless authorized by the task executor or otherwise stipulated by the laws and regulations. </text>
+      <text>2.Task executors should take the duty of careful attention and pay attention to protecting its privacy in the process of releasing information or communicating with the task issuer.</text>
+      <text>3.The task executor undertakes to keep the contents and results of the data tagged item strictly confidential and not to disclose it to a third party in any way, otherwise full responsibility will be borne.</text>
+    </view>
+    <view>
+      <view>VIII. Dispute resolution</view>
+      <text>1.The law of the people's Republic of China shall apply to the conclusion, execution, interpretation and settlement of this Agreement.</text>
+      <text>2.In case of inconsistency between the Chinese and English versions of this Agreement, the Chinese version shall prevail.</text>
+      <text>3.Any disputes arising during the execution of this Agreement shall be settled through friendly negotiation. When negotiation fails, both parties can bring a lawsuit to the court where the service platform is located.</text>
+    </view>
+  </view>
+</view>

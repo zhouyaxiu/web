@@ -1,0 +1,25 @@
+@import '../../template/wxss/index.wxss';
+@import '../index/index.wxss';
+
+.nodata{
+    display: block;
+}
+.see{
+    color:#fff;
+    background:#15b3e4;
+    color:#fff;
+    padding:4rpx 10rpx;
+    font-size:30rpx;
+    border-radius:10rpx;
+}
+.fr{
+    display: inline-block;
+    height: 15rpx;
+    width: 15rpx;
+    transform: rotate(-45deg) translate(-50%, -50%);
+    border-right: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    position: absolute;
+    right: 15rpx;
+    top: 45%;
+}

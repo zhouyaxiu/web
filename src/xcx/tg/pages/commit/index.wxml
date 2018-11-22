@@ -1,0 +1,22 @@
+<view class="container">
+  <view wx:for="{{commit}}" wx:if="{{item.code==0}}" wx:for-item="item">
+    <view class="icon-box">
+      <view class="icon-view">
+        <icon class="icon-box-img" type="{{item.status==0?'success':'warn'}}" size="93"></icon>
+      </view>
+      <view class="icon-box-ctn">
+        <view class="icon-box-title">{{item.commit_info}}</view>
+      </view>
+      <view class="commit-info">
+        <view class="icon-box-desc">{{commit.id}}{{item.id}}</view>
+        <view class="icon-box-desc">{{commit.username}}{{item.userinfo}}</view>
+      </view>
+      <view class="icon-box-desc">{{item.time}}</view>
+      <view class="button-sp-area">
+        <navigator url="../index/index">
+          <button type="button">{{commit.again}}</button>
+        </navigator>
+      </view>
+    </view>
+  </view>
+</view>

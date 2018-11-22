@@ -1,0 +1,108 @@
+.weui-panel__hd {
+    background: #f8f8f8;
+    padding-left:140rpx;
+}
+
+.weui-media-box__title {
+    white-space: normal;
+    margin-bottom: 20rpx;
+}
+
+.weui-panel__ft {
+    padding: 20rpx;
+    text-align: center;
+    font-size: 30rpx;
+}
+
+em {
+    background: #ebfbff;
+    padding: 0 40rpx 0 20rpx;
+    margin-right: 20rpx;
+    font-size: 32rpx;
+    color: #10d2ff;
+    border-radius: 0 40rpx 40rpx 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+}
+
+.weui-panel__ft{
+    position: relative;
+}
+.radiolabel{
+    position: relative;
+    display: inline;
+}
+radio {
+    box-sizing: border-box;
+    background: none;
+    height:80rpx;
+    width:200rpx;
+    line-height:80rpx;
+    margin-right:10px;
+}
+
+radio .wx-radio-input {
+    height:80rpx;
+    width:200rpx;
+    top:0;
+    left:0;
+    bottom: 0;
+    right:0;
+    background: none;
+    border-radius: 60rpx;
+    box-sizing: border-box;
+    border:1px solid #f0f0f0
+}
+.radiolabel radio  .wx-radio-input::before{
+    background: #fff;
+    font-size:36rpx;
+    color: #666;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    transform:translate(0, 0) scale(1);
+    -webkit-transform:translate(0, 0) scale(1);
+}
+.radiolabel:nth-child(1) radio .wx-radio-input::before{
+    content: '\2714';
+}
+.radiolabel:nth-child(2) radio .wx-radio-input::before{
+    content: '\2716';
+}
+.radiolabel radio .wx-radio-input.wx-radio-input-checked {
+    background-color:transparent;
+    overflow: hidden;
+    box-sizing: border-box;
+    border:0;
+}
+.radiolabel  radio .wx-radio-input.wx-radio-input-checked::before{
+    background: #15b3e4;
+    font-family:"iconfont" !important;
+    font-size:36rpx;
+    color: #fff;
+    border:0;
+    width: 200rpx;
+    height:80rpx;
+    line-height: 80rpx;
+    transform:translate(0, 0) scale(1);
+    -webkit-transform:translate(0, 0) scale(1);
+}
+.radiolabel:nth-child(1) radio .wx-radio-input.wx-radio-input-checked::before {
+    content: '\2714';
+}
+.radiolabel:nth-child(2) radio .wx-radio-input.wx-radio-input-checked::before {
+    content: '\2716';
+    background: #e46d15;
+}
+.txt-area{
+    width: 80%;
+    margin: 40rpx auto;
+}
+.txt-area button{
+    background: #15b3e4
+}

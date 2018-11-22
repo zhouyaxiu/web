@@ -1,0 +1,67 @@
+@import '../../template/wxss/task.wxss';
+
+.remain_header {
+  padding: 20px;
+  background: #15b3e4;
+  color: rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+.income_price .weui-media-box__title {
+  color: #15b3e4;
+}
+
+.remain-money {
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 20rpx;
+}
+
+.remain_header button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 20px;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin: auto;
+  border: 2rpx solid #bcefff;
+  color: #bcefff;
+  background: transparent;
+}
+
+.navbar .select.active:after {
+  display: none;
+}
+
+.navbar {
+  margin: 40rpx auto;
+  width: 60%;
+  -webkit-border-radius: 50rpx;
+  -moz-border-radius: 50rpx;
+  -ms-border-radius: 50rpx;
+  -o-border-radius: 50rpx;
+  border-radius: 50rpx;
+  border: 2rpx solid #15b3e4;
+  color: #15b3e4;
+  position: initial;
+}
+
+.navbar text:first-child.select.active {
+  background: #15b3e4;
+  -webkit-border-radius: 50rpx 0 0 50rpx;
+  -moz-border-radius: 50rpx 0 0 50rpx;
+  -ms-border-radius: 50rpx 0 0 50rpx;
+  -o-border-radius: 50rpx 0 0 50rpx;
+  border-radius: 50rpx 0 0 50rpx;
+  color: #fff;
+}
+
+.navbar text:last-child.select.active {
+  background: #15b3e4;
+  -webkit-border-radius: 0 50rpx 50rpx 0;
+  -moz-border-radius: 0 50rpx 50rpx 0;
+  -ms-border-radius: 0 50rpx 50rpx 0;
+  -o-border-radius: 0 50rpx 50rpx 0;
+  border-radius: 0 50rpx 50rpx 0;
+  color: #fff;
+}

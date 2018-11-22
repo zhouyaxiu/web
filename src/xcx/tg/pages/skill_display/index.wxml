@@ -1,0 +1,12 @@
+<view>
+  <view class="usericonView">
+    <text class="userinfo-l">擅长的语言：</text>
+    <block wx:for="{{language}}" wx:key="index" wx:for-item="item" wx:for-index="id">
+      <view class="weui-media-box weui-media-box_appmsg" bindtap="discoverTap" data-id="{{id}}">
+        <view class="weui-media-box__bd">
+          <view class="weui-media-box__title">No.{{id}}{{item}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

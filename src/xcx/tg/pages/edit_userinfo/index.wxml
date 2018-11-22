@@ -1,0 +1,114 @@
+<view>
+    <form bindsubmit="formSubmit" bindreset="formReset">
+        <view class="usericonView">
+            <text class="userinfo-l">{{edit_userinfo.userimg}}</text>
+            <image src="{{avatar}}" class="img userinfo-r"></image>
+        </view>
+        <view class="usericonView">
+            <text class="userinfo-l">{{edit_userinfo.username}}</text>
+            <text class="userinfo-r" readonly>{{username}}</text>
+        </view>
+        <view class="usernameView p30">
+            <view class="userinfo-l">
+                <em>*</em>
+                {{edit_userinfo.sex}}
+            </view>
+            <picker class="userinfo-r" value="gender" bindchange="bindPickerChange" range="{{gender}}" range-key="{{'name'}}">
+                <view class="weui-input">{{gender[gindex].name}}</view>
+            </picker>
+        </view>
+        <view class="usernameView p30">
+            <view class="userinfo-l">
+                <em>*</em>
+                {{edit_userinfo.birth}}
+            </view>
+            <picker class="userinfo-r" mode="date" value="date" start="2018-05-14" end="2022-05-14" bindchange="bindDateChange">
+                <view class="weui-input">{{date}}</view>
+            </picker>
+        </view>
+        <view class="usernameView p30">
+            <view class="userinfo-l">
+                <em>*</em>
+                {{edit_userinfo.location}}
+            </view>
+            <picker class="userinfo-r" range="{{location}}" range-key="value" value="{{index}}" bindchange="bindLocationTap">
+              <view>{{location[index].value}}</view>
+            </picker>
+        </view>
+        <view class="usernameView p30">
+            <text class="userinfo-l" bindtap="actionSheetTap">{{edit_userinfo.nationality}}</text>
+            <input class="userinfo-r" name="type" value="{{addTypeData}}" disabled="{{addTypeDis}}" bindfocus="addType" />
+            <action-sheet hidden="{{actionType}}" bindchange="actionSheetChange">
+                <!-- <block wx:for="{{actionSheetItems}}" wx:key="index" wx:for-item="item" wx:for-index="id">
+                    <view class="weui-media-box weui-media-box_appmsg" bindtap="nationalTap" data-id="{{id}}">
+                        <view class="weui-media-box__bd">
+                            <view class="weui-media-box__title">{{id}}{{item.national}}</view>
+                        </view>
+                    </view>
+                </block> -->
+                <block wx:for="{{actionSheetItems}}" wx:key="{{index}}">
+                    <action-sheet-item bindtap="bindNationTap" data-name="{{item}}">
+                        {{item}}
+                    </action-sheet-item>
+                </block>
+                <action-sheet-cancel>{{edit_userinfo.cancel}}</action-sheet-cancel>
+            </action-sheet>
+        </view>
+        <view class="usernameView p30">
+            <text class="userinfo-l">{{edit_userinfo.race}}</text>
+            <picker class="userinfo-r" value="ethnicity" bindchange="bindCountryChange" range="{{countries}}" range-key="{{'name'}}">
+                <view class="weui-select weui-select_in-select-after">
+                     {{countries[cindex].name}}
+                </view>
+            </picker>
+        </view>
+        <view class="usericonView">
+            <text class="userinfo-l">{{edit_userinfo.marital}}</text>
+            <picker class="userinfo-r" value="getMarital" bindchange="bindgetMaritalChange" range="{{getMarital}}" range-key="{{'name'}}">
+                <view class="weui-select weui-select_in-select-after">
+                    {{getMarital[mindex].name}}
+                </view>
+            </picker>
+        </view>
+        <view class="usernameView p30">
+            <text class="userinfo-l">{{edit_userinfo.mothertongue}}</text>
+            <!-- <picker class="userinfo-r" value="moindex" bindchange="bindgetmotherLanguageChange" range="{{motherLanguage}}">
+                <view class="weui-select weui-select_in-select-after">
+                    选择：{{motherLanguage[moindex]}}
+                </view>
+            </picker> -->
+            <picker class="userinfo-r" name="selector" value="{{moindex}}" data-current="{{idx}}" range-key="{{'name'}}" bindchange="bindgetmotherLanguageChange" range="{{motherLanguage}}">
+                <view class="weui-select weui-select_in-select-after">
+                    {{motherLanguage[moindex].name}}
+                </view>
+            </picker>
+        </view>
+        <view class="usericonView">
+            <text class="userinfo-l">{{edit_userinfo.education}}</text>
+            <picker class="userinfo-r" value="education" bindchange="bindeducationChange" range="{{education}}" range-key="{{'name'}}">
+                <view class="weui-select weui-select_in-select-after">
+                    {{education[eindex].name}}
+                </view>
+            </picker>
+        </view>
+        <view class="usernameView p30">
+            <text class="userinfo-l">{{edit_userinfo.industry}}</text>
+            <picker class="userinfo-r" value="industry" bindchange="bindindustryChange" range="{{industry}}" range-key="{{'name'}}">
+                <view class="weui-select weui-select_in-select-after">{{industry[iindex].name}}</view>
+            </picker>
+        </view>
+        <view class="usericonView">
+            <text class="userinfo-l">{{edit_userinfo.income}}</text>
+            <picker class="userinfo-r" value="income" bindchange="bindincomeChange" range="{{income}}" range-key="{{'name'}}">
+                <view class="weui-select weui-select_in-select-after">{{income[nindex].name}}</view>
+            </picker>
+        </view>
+        <view class="button-sp-area">
+            <button class="weui-btn weui-btn_primary" formType="submit" size="mini">{{edit_userinfo.save}}</button>
+            <button class="weui-btn weui-btn_default" formType="reset" size="mini">{{edit_userinfo.cancel}}</button>
+        </view>
+    </form>
+    <!-- <view>
+        结果为{{result}}
+    </view> -->
+</view>

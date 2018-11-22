@@ -1,0 +1,16 @@
+<view class="fileInfo" wx:for="{{fileInfo}}" wx:for-item="item" wx:key="item">
+  <view>
+    <image data-id="{{index}}" mode="widthFix" class="weui-uploader__img" src="{{item.imgsrc||'../../images/add.png'}}" data-src="{{item.imgsrc}}" bindtap="chooseImage"></image>
+  </view>
+  <view class="status">
+    <button type="primary" bindtap="previewImage" data-id="{{index}}" class="preview">{{task_save_file.preview}}</button>
+    <button type="default" bindtap="delcont" data-id="{{index}}" class="close">{{task_save_file.preview}}</button>
+  </view>
+</view>
+<view class="fileitem">
+  <input type="text" value="{{filename}}" placeholder="{{task_save_file.filename}}" bindinput="bindNameInput" class="weui-input" placeholder-class="input-placeholder" />
+</view>
+<view class="submit">
+  <button bindtap="submit">{{task_save_file.submit}}</button>
+  <button bindtap="viewfile">{{task_save_file.seefile}}</button>
+</view>

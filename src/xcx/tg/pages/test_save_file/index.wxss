@@ -1,0 +1,62 @@
+@import '../../template/wxss/photo_task.wxss';
+
+.fileInfo {
+  text-align: center;
+  padding: 40rpx;
+}
+
+.status {
+  width: 80%;
+  text-align: center;
+  margin: 40rpx auto 0;
+}
+
+.close {
+  flex: 1;
+  margin-left: 10px;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  font-size: 28rpx;
+}
+
+.preview {
+  flex: 1;
+  margin-right: 10px;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  font-size: 28rpx;
+  background: #7abdff !important;
+}
+
+.submit {
+  width:90%;
+  margin:30px auto;
+  display:flex;
+}
+
+.submit button {
+  background:#15b3e4 !important;
+  color:#fff;
+  flex:1;
+  margin:0 6px;
+}
+.submit button:last-child{
+  background: olivedrab !important;
+}
+.submit button:hover {
+  background: #7abdff;
+  color: #fff;
+}
+
+.fileitem{
+  margin: 0 40rpx;
+  border: 2rpx dashed #f0f0f0;
+  padding:10rpx 20rpx;
+  background:#f8f8f8;
+}
+.input-placeholder{
+  font-size: 26rpx;
+  color:#666;
+}

@@ -1,0 +1,94 @@
+.icon {
+  margin: 75rpx auto;
+  text-align: center;
+  display: block;
+}
+
+.title {
+  font-size: 36rpx;
+  color: #333;
+  text-align: center;
+}
+
+.con {
+  font-size: 26rpx;
+  color: #c6c6c6;
+  text-align: center;
+  line-height: 50rpx;
+  margin-bottom: 40rpx;
+}
+
+.weui-form-preview {
+  position: relative;
+  background-color: #fff;
+}
+
+.weui-form-preview:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border-top: 1px solid #e5e5e5;
+  color: #e5e5e5;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+
+.weui-form-preview__hd {
+  position: relative;
+  padding: 10px 15px;
+  text-align: right;
+  line-height: 2.5em;
+}
+
+.weui-form-preview__item {
+  overflow: hidden;
+}
+
+.weui-form-preview__label {
+  float: left;
+  margin-right: 1em;
+  min-width: 4em;
+  color: #808080;
+  text-align: justify;
+  text-align-last: justify;
+}
+
+.weui-form-preview__hd .weui-form-preview__value {
+  font-style: normal;
+  font-size: 1.6em;
+}
+
+.weui-form-preview__value {
+  display: block;
+  overflow: hidden;
+  word-break: normal;
+  word-wrap: break-word;
+}
+
+.weui-form-preview__hd:after {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1px solid #e5e5e5;
+  color: #e5e5e5;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  left: 15px;
+}
+
+.weui-form-preview__bd {
+  padding: 10px 15px;
+  font-size: 0.9em;
+  text-align: right;
+  color: #808080;
+  line-height: 2;
+}

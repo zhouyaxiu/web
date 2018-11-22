@@ -1,0 +1,64 @@
+.weui-cells__title {
+  margin-top: 1em;
+  margin-bottom: 0.8em;
+  padding-right: 15px;
+  padding-left: 15px;
+  color: #808080;
+  font-size: 14px;
+}
+
+.weui-textarea {
+  display: block;
+  border: 0;
+  resize: none;
+  width: auto;
+  line-height: inherit;
+  outline: 0;
+  padding: 20rpx;
+  box-sizing: border-sizing;
+  min-height: 100%;
+  font-size: 30rpx;
+  color: #666;
+  background: #f0f0f0;
+}
+
+.weui-cell__bd {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.weui-cell {
+  padding: 0;
+}
+
+.weui-cell:before {
+  border: 0;
+}
+
+.con {
+  background: #f8f8f8;
+  font-size: 30rpx;
+  color: #666;
+}
+
+.foot button {
+  width: 80%;
+  height: 80rpx;
+  line-height: 80rpx;
+  -webkit-border-radius: 40rpx;
+  -moz-border-radius: 40rpx;
+  -ms-border-radius: 40rpx;
+  -o-border-radius: 40rpx;
+  border-radius: 40rpx;
+  background: #15b3e4;
+  color: #fff;
+  font-size: 34rpx;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.place {
+  font-size: 30rpx;
+}
+

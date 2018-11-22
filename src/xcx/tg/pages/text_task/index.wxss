@@ -1,0 +1,2 @@
+@import '../../template/wxss/task_list.wxss';
+@import '../../template/wxss/task_detail.wxss';

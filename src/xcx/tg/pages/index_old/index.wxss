@@ -1,0 +1,2 @@
+@import '../../template/list/discovery_list_template.wxss';
+@import '../../template/wxss/index.wxss';

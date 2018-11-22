@@ -1,0 +1,9 @@
+<import src="../../template/list/projects.wxml"></import>
+<view wx:if="{{tasks.length}}">
+  <view wx:for="{{tasks}}" wx:key="index" wx:for-item="item">
+    <view class="weui-media-box weui-media-box_appmsg" catchtap="viewProject" data-id="{{item.id}}">
+      <template is="tasks" data="{{...item}}" />
+    </view>
+  </view>
+</view>
+<text class="nodata" wx:else>{{mytask.nodata}}</text>

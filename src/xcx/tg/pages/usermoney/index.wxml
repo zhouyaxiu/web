@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="integral {{bg}}" style="height:{{screenHeight}}">
+    <view class="integral-con">
+      <view class="avator">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <view class="username">
+        <text>{{user.username}}</text>
+      </view>
+    </view>
+    <view class="integral-bom">
+      <view class="integralinfo">
+        {{usermoney.integral}}
+        <text>{{integral}}</text>
+      </view>
+      <button size="mini" plain="{{true}}" type="default" bindtap="exchange" class="exchange" wx:if="{{exchange}}">
+        {{usermoney.exchange}}
+      </button>
+       <text class="shenhe" wx:else>{{usermoney.beaudited}}</text>
+    </view>
+  </view>
+  <view class="user_classfy">
+    <view class="con">
+      <navigator url="../real_name/index?title=index">
+        <view class="li">
+          <image src="../../images/user_info.png" class="fl"></image>
+          <view class="p">{{usermoney.real}}</view>
+          <view class="fr"></view>
+        </view>
+      </navigator>
+    </view>
+    <view class="con">
+      <navigator url="../my_task/index?title=index">
+        <view class="li">
+          <image src="../../images/widthdraw.png" class="fl"></image>
+          <view class="p">{{usermoney.mytask}}</view>
+          <view class="fr"></view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</view>

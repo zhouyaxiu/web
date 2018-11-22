@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="logo">
+    <image src="{{logo}}"></image>
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__hd">
+      <label class="weui-label login" for="username"></label>
+    </view>
+    <input id="username" type="text" placeholder="用户名" bindinput="bindNameInput" class="weui-input" />
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__hd">
+      <label class="weui-label mobile" for="mobile"></label>
+    </view>
+    <input id="mobile" maxlength="11" type="text" placeholder="手机号码" bindinput="bindMobileInput" class="weui-input" />
+  </view>
+  <view class="weui-cell sms">
+    <view class="weui-cell__hd">
+      <label class="weui-label yzm" for="code"></label>
+    </view>
+    <view class="weui-cell__bd">
+      <input id="code" maxlength="6" type="text" placeholder="验证码" bindinput="bindCodeInput" class="weui-input" />
+    </view>
+    <view class="weui-cell_ft">
+      <button bindtap="checkMobile" size="mini" disabled="{{smsCodeDisabled}}" style="background-color:{{getSmsCodeBtnColor}}">
+        {{getSmsCode}}
+      </button>
+    </view>
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__hd">
+      <label class="weui-label password"></label>
+    </view>
+    <input name="passowrd" bindinput="bindPasswordInput" minlength="6" maxlength="20" type="password" placeholder="请输入新密码" />
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__hd">
+      <label class="weui-label password"></label>
+    </view>
+    <input name="confirm" bindinput="bindConfirmInput" maxlength="20" type="password" placeholder="请输入确认密码" />
+  </view>
+  <view class="button-sp-area">
+    <button bindtap="indexTap">确认</button>
+  </view>
+</view>

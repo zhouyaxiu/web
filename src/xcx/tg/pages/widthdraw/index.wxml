@@ -1,0 +1,37 @@
+<view class="container bg">
+  <view class="yu">
+    余额
+    <text>{{rest}}</text> 元
+  </view>
+  <view class="widthdraw_con">
+    <view class="widthdraw_rmb">
+      <view class="rmbBtn">
+        <view class="rmbBtn_con">
+          <block wx:for="{{rmbList}}" wx:for-item="item" wx:for-index="idx" wx:key="index">
+            <button size="mini" bindtap="onSelectedTag" data-id="{{item.id}}" type="default" class="{{(selectedid==item.id) ?'active':''}}">
+              {{item.rmb}}元
+            </button>
+          </block>
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells bag">
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          <view>使用红包提现</view>
+        </view>
+        <view class="weui-cell__ft">不使用红包提现</view>
+      </view>
+    </view>
+    <view class="width_btn">
+      <button type="primary" size="" bindtap="widthTap">提现至微信</button>
+    </view>
+    <view class="note">
+      <view>{{note}}</view>
+      <view class="note_con">{{note_con}}</view>
+    </view>
+    <!-- <view class="pic">
+      <image src="../../images/code.jpg"></image>
+    </view> -->
+  </view>
+</view>

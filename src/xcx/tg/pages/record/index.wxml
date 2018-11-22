@@ -1,0 +1,56 @@
+<view class="contain">
+  <view class="num">
+    <em>{{account}}</em>
+    /{{allaccount}}
+  </view>
+  <view class="text_task">
+    <view style="margin-bottom:60rpx;">
+      <view class="task_title">{{task_title}}</view>
+      <view class="task_info">{{task_info}}</view>
+    </view>
+     <!-- <text class="progress" wx:if="{{progress>0}}">上传进度:{{item.progress || 0}}%</text> -->
+    <view class="text_task_con">
+      <view class="radio-main">
+        <view class="time">
+          <text>{{formatedRecordTime}}</text>
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="speak-main">
+            <!-- 重录 -->
+            <button disabled="{{reStart}}" class="playstatus {{disableNext?'nextDisabled':''}}" bindtap="reStart">
+              {{record.restart}}
+            </button>
+            <!-- 开始录音 -->
+            <view bindtap="startRecord" wx:if="{{status===1}}">
+              <image src="../../images/startRecord.png"></image>
+            </view>
+            <!-- 暂停录音 -->
+            <view bindtap="pauseRecord" wx:if="{{status===2}}">
+              <image src="../../images/stopRecord.png"></image>
+            </view>
+            <!-- 继续录音 -->
+            <view bindtap="resumeRecord" wx:if="{{status===3}}">
+              <image src="../../images/startRecord.png"></image>
+            </view>
+            <!-- 开始播放 -->
+            <view bindtap="playRecord" wx:if="{{status===4}}">
+              <image src="../../images/play_01.png"></image>
+            </view>
+            <!-- 暂停播放 -->
+            <view bindtap="pausePlay" wx:if="{{status===5}}">
+              <image src="../../images/pause_play.png"></image>
+            </view>
+            <!-- 完成 -->
+            <button bindtap="stopRecord" disabled="{{finish}}" class="playstatus {{disableNext?'nextDisabled':''}}">
+              {{record.complete}}
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="next">
+    <button bindtap="frontTask" type="danger" plain wx:if="{{account>1}}">{{record.lasttask}}</button>
+    <button bindtap="nextTask" type="danger" plain>{{allaccount>account?record.nexttask:record.submit}}</button>
+  </view>
+</view>

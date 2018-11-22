@@ -1,0 +1,67 @@
+{
+  "pages": [
+    "pages/oauth_login/index",
+    "pages/record/index",
+    "pages/agreement/index",
+    "pages/agreement/en",
+    "pages/real_name/index",
+    "pages/widthdraw_cash/index",
+    "pages/oauth_bind/index",
+    "pages/oauth_register/index",
+    "pages/index/index",
+    "pages/setting/index",
+    "pages/text_10qc/index",
+    "pages/my_task/index",
+    "pages/my_submission/index",
+    "pages/task_revises/index",
+    "pages/task_revise/index",
+    "pages/camera/index",
+    "pages/camera1/index",
+    "pages/camera2/index",
+    "pages/camera3/index",
+    "pages/register/index",
+    "pages/user/index",
+    "pages/userfake/index",
+    "pages/usermoney/index",
+    "pages/task/index",
+    "pages/task_detail/index",
+    "pages/password/index",
+    "pages/text_task/index",
+    "pages/photo_task/index",
+    "pages/user_info/index",
+    "pages/edit_userinfo/index",
+    "pages/skill_display/index",
+    "pages/realname_auth/index",
+    "pages/widthdraw/index",
+    "pages/widthdraw_success/index",
+    "pages/remain/index",
+    "pages/commit/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#15b3e4",
+    "navigationBarTitleText": "泛函科技",
+    "navigationBarTextStyle": "#fff"
+  },
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#15b3e4",
+    "backgroundColor": "#FFF",
+    "borderStyle": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./images/home.png",
+        "selectedIconPath": "./images/home_01.png"
+      },
+      {
+        "pagePath": "pages/usermoney/index",
+        "text": "我的",
+        "iconPath": "./images/user.png",
+        "selectedIconPath": "./images/user_01.png"
+      }
+    ]
+  },
+  "debug": false
+}

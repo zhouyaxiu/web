@@ -1,0 +1,71 @@
+<view class="container">
+  <view>
+    <view class="logo">
+      <image src="{{logo}}"></image>
+      <text class="wave"></text>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label login" for="username"></label>
+      </view>
+      <input id="username" type="text" placeholder="{{register.username}}" bindinput="bindNameInput" class="weui-input" />
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label email" for="email"></label>
+      </view>
+      <input id="email" type="text" placeholder="{{register.email}}" bindinput="bindEmailInput" class="weui-input" />
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label mobile" for="mobile"></label>
+      </view>
+      <input id="mobile" maxlength="11" type="text" placeholder="{{register.phone}}" bindinput="bindMobileInput" class="weui-input" />
+    </view>
+    <view class="weui-cell sms">
+      <view class="weui-cell__hd">
+        <label class="weui-label yzm" for="code"></label>
+      </view>
+      <view class="weui-cell__bd">
+        <input id="code" maxlength="6" type="text" placeholder="{{register.code}}" bindinput="bindCodeInput" class="weui-input" />
+      </view>
+      <view class="weui-cell_ft">
+        <button bindtap="checkMobile" size="mini" disabled="{{smsCodeDisabled}}" class="{{isactive?'isactive':'noactive'}}">
+          {{getSmsCode}}
+        </button>
+      </view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label password"></label>
+      </view>
+      <input name="passowrd" bindinput="bindPasswordInput" minlength="6" maxlength="20" type="password" placeholder="{{register.password}}" />
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label password"></label>
+      </view>
+      <input name="confirm" bindinput="bindPassword2Input" maxlength="20" type="password" placeholder="{{register.repassword}}" />
+    </view>
+    <view class="rem1">
+      <!-- <checkbox-group bindchange="bindRemberInput">
+        <label class="checkbox rem" wx:for="{{items}}" wx:key="item">
+          <checkbox value="{{item.name}}" checked="{{item.checked}}" /> {{item.value}}
+        </label>
+      </checkbox-group> -->
+      <checkbox-group bindchange="bindRemberInput">
+        <label class="checkbox rem">
+          <checkbox value="{{agree}}" checked="{{checked}}" /> {{register.isagree}}
+        </label>
+      </checkbox-group>
+    </view>
+    <view class="button-sp-area">
+      <button class="weui-btn weui-btn_primary" bindtap="register">{{register.register}}</button>
+    </view>
+    <view class="txt-area">
+      <navigator redirect url="../login/index">
+        <text class="register">{{register.account}}</text>
+      </navigator>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,71 @@
+<view class="container">
+  <view>
+    <view class="logo">
+      <image src="{{logo}}"></image>
+      <text class="wave"></text>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label login" for="username"></label>
+      </view>
+      <input id="username" type="text" placeholder="{{oauth_register.username}}" bindinput="bindNameInput" class="weui-input" />
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <label class="weui-label mobile" for="mobile"></label>
+      </view>
+      <input id="mobile" type="text" placeholder="{{oauth_register.phone}}" bindinput="bindMobileInput" class="weui-input" />
+      <text bindtap="countrycode">+{{countrydata}}</text>
+    </view>
+    <view class="weui-cell sms">
+      <view class="weui-cell__hd">
+        <label class="weui-label yzm" for="code"></label>
+      </view>
+      <view class="weui-cell__bd">
+        <input id="code" type="text" placeholder="{{oauth_register.code}}" bindinput="bindCodeInput" class="weui-input" />
+        <view class="weui-cell_ft">
+          <button bindtap="checkMobile" size="mini" disabled="{{smsCodeDisabled}}" class="{{isactive?'isactive':'noactive'}}">
+            {{getSmsCode}}
+          </button>
+        </view>
+      </view>
+    </view>
+    <view class="rem1">
+      <checkbox-group bindchange="bindRemberInput">
+        <label class="checkbox rem">
+          <checkbox value="{{agree}}" checked="{{checked}}" style="zoom:70%;"/> {{oauth_register.isagree}}<text catchtap="agree" style="color:blue">{{oauth_register.protocol}}</text>
+        </label>
+      </checkbox-group>
+    </view>
+    <view class="button-sp-area">
+      <button class="weui-btn weui-btn_primary" bindtap="register">
+        {{oauth_register.confirm}}
+      </button>
+    </view>
+    <view class="languages">
+      <picker bindchange="bindSelectLanguage" value="{{langIndex}}" range="{{lang}}">
+        <view>{{oauth_register.Language}}：{{lang[langIndex]}}</view>
+      </picker>
+    </view>
+    <view class="hasaccount">
+      {{oauth_register.hasusername}}
+      <navigator redirect url="../oauth_bind/index">
+        <text class="register">{{oauth_register.account}}</text>
+      </navigator>
+    </view>
+  </view>
+  <view class="country" wx:if="{{clickcountry}}">
+    <view class="countrycode">
+      <radio-group bindchange="choiceCountry">
+        <view wx:for="{{countrycode}}" wx:key="{{item.value}}" wx:for-item="item">
+          <text>{{item.name}} {{item.label}}</text>
+          <!-- <text>{{item.label}}</text> -->
+          <label class="radio">
+            <radio value="{{item.value}}" />
+            <!-- {{item.label}} -->
+          </label>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+</view>

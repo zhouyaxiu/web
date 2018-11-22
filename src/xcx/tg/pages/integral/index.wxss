@@ -1,0 +1,60 @@
+.integral {
+    background: #15b3e4;
+    text-align: center;
+    color: #fff;
+    font-size: 34rpx;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.integral text {
+    font-size: 36rpx;
+    padding: 0 10rpx;
+}
+
+.widthdraw_con {
+    padding: 0 40rpx;
+}
+
+.integral_con {
+    width: 100%;
+    text-align: center;
+    margin-top: 80rpx;
+    font-size: 34rpx;
+}
+
+.integral_con .url {
+    font-size: 30rpx;
+    padding: 30rpx 0 0 0;
+    color: #999;
+    text-align: center;
+}
+
+.userinfo {
+    display: block;
+    padding-top: 60rpx;
+}
+
+.avator {
+    width: 140rpx;
+    border-radius: 50%;
+    height: 140rpx;
+    display: block;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, .6);
+    margin: 0 auto 20rpx;
+}
+
+.username {
+    color: rgba(255, 255, 255, .8);
+    font-size: 30rpx;
+}
+
+.integralinfo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 80rpx;
+}

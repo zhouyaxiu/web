@@ -1,0 +1,17 @@
+<import src="../../template/list/examine_list_template.wxml" />
+<view class="recommend">
+  <view class="channel" wx:if="{{item.status!==0}}">
+    <scroll-view hidden="{{currentTab!==0}}">
+      <view wx:if="{{item.id!==0}}">
+        <block wx:for="{{projects}}" wx:for-item="item" wx:key="index">
+          <template is="examine_list_template" data="{{...item}}"></template>
+        </block>
+      </view>
+      <text class="nodata" wx:else>暂无数据哦</text>
+    </scroll-view>
+  </view>
+  <view class="nodata" wx:else>
+    <text>还没创建任务</text>
+    <button bindtap="taskTap">做任务</button>
+  </view>
+</view>

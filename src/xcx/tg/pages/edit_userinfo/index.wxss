@@ -1,0 +1,2 @@
+@import '../../template/wxss/common.wxss';
+@import '../../template/wxss/user_info.wxss';

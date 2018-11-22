@@ -1,0 +1,32 @@
+@import '../../template/wxss/common.wxss';
+
+.logo view {
+  color: #fff;
+  font-size: 32rpx;
+  padding-top: 20rpx;
+}
+
+.setting {
+  padding-left: 80rpx;
+  color: #999;
+  font-size: 34rpx;
+  margin: 60rpx 0 20rpx;
+  position: relative;
+}
+
+.setting text:before {
+  position: absolute;
+  left: 40rpx;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #dedede;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  content: '';
+}
+
+button {
+  width: 100%;
+}

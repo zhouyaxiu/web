@@ -1,0 +1,23 @@
+<template name="examine_list_template">
+  <view class="list-container" bindtap="taskTap" data-id="{{id}}">
+    <view class="id">
+      <view>编号：28483378578478578989</view>
+    </view>
+    <view class="weui-media-box weui-media-box_appmsg">
+      <view class="weui-media-box__hd">
+        <image src="{{'https://www.fanhantech.com'+cover ||'/images/default.jpg'}}" class="weui-media-box__thumb"></image>
+      </view>
+      <view class="weui-media-box__bd">
+        <view class="weui-media-box__title">No.{{id}}{{name}}</view>
+        <view class="weui-media-box__desc">
+          请于
+          <em>{{duration}}</em>
+          内提交审核任务
+        </view>
+      </view>
+      <view class="">
+        <view class="weui-media-box__title">￥{{price}}</view>
+      </view>
+    </view>
+  </view>
+</template>

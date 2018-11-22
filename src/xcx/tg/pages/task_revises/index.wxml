@@ -1,0 +1,25 @@
+<import src="../../template/list/projects.wxml"></import>
+<view class="navbar">
+  <view class="select {{currentTab==index ? 'active' : ''}}" wx:for="{{navbar}}" wx:key="item" wx:key="{{item}}" data-index="{{index}}" bindtap="onNavbarTap">
+    {{item}}
+  </view>
+</view>
+<view class="tasklist">
+  <block wx:for="{{navbar.length}}" wx:key="item" wx:for-index="inx">
+    <scroll-view wx:if="{{currentTab===inx}}">
+      <block wx:for="{{waitArray}}" wx:key="index" wx:for-item="item" wx:if="{{inx===0}}">
+        <template is="task_revises" data="{{...item}}"  />
+      </block>
+      <block wx:for="{{passArray}}" wx:key="index" wx:for-item="item" wx:if="{{inx===1}}">
+        <template is="task_revises" data="{{...item}}"  />
+      </block>
+      <block wx:for="{{rejectArray}}" wx:key="index" wx:for-item="item" wx:if="{{inx===2}}">
+        <template is="task_revises" data="{{...item}}"  />
+      </block>
+      <view class="notask" wx:if="{{waitArray.length===0 && inx===0 || (passArray.length===0 && inx===1) || (rejectArray.length===0 && inx===2)}}">
+        <view>{{taskrevises.nodata}}</view>
+        <navigator url="../index/index" open-type="switchTab">{{taskrevises.start}}</navigator>
+      </view>
+    </scroll-view>
+  </block>
+</view>

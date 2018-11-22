@@ -1,0 +1,85 @@
+@import '../../template/wxss/photo_task.wxss';
+.sfz {
+    display: block;
+    text-align: center;
+    padding: 20rpx 40rpx;
+}
+
+.sfzname {
+    padding: 10rpx 0;
+    text-align: left;
+    font-size: 30rpx;
+    margin: 20rpx 0;
+}
+
+.sfz image {
+    width: 100%;
+    height: auto;
+}
+
+.button-sp-area button {
+    margin-top: 20rpx;
+    margin-bottom: 50rpx;
+}
+
+.integral {
+    text-align: center;
+    padding: 40rpx;
+    background: #f8f8f8;
+    width: 100%;
+}
+
+.integral em {
+    font-size: 32rpx;
+}
+
+.integral text {
+    display: block;
+    font-size: 50rpx;
+    font-weight: bold;
+    margin-top: 14rpx
+}
+
+.weui-cell {
+    padding: 0;
+}
+
+.weui-cell::before {
+    border: 0
+}
+
+.tx {
+    padding: 20rpx 30rpx;
+    font-size: 30rpx;
+}
+
+.shenhe {
+    padding: 40rpx 30rpx;
+    background: #f8f8f8;
+}
+
+.audit text {
+    color: #15b3e4;
+}
+
+.pass text {
+    color: #1AAD19;
+}
+
+.nopass text {
+    color: #E64340;
+}
+
+.display {
+    display: none
+}
+
+.refresh {
+    position: absolute;
+    right: 40rpx;
+    color: #fff !important;
+    background: #15b3e4;
+    border-radius: 40rpx;
+    font-size: 28rpx;
+    padding: 10rpx 20rpx;
+}

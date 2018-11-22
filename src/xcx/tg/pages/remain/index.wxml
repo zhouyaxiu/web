@@ -1,0 +1,56 @@
+<view class="contain">
+  <view class="remain_header">
+    <view>钱包剩余(元)</view>
+    <view class="remain-money">{{remain_money}}</view>
+    <button class="weui-btn weui-btn_mini weui-btn_default" bindtap="widthdrawTap">提现</button>
+  </view>
+  <view class="navbar">
+    <text class="select {{currentTab==index ? 'active' : ''}}" wx:for="{{navbar}}" wx:key="{{index}}" data-index="{{index}}" bindtap="onNavbarTap">
+      {{item}}
+    </text>
+  </view>
+  <view class="recommend" hidden="{{currentTab!==0}}">
+    <view class="channel">
+      <view class="list-container">
+        <view class="weui-panel weui-panel_access" wx:for="{{income}}" wx:for-item="item" wx:key="index">
+          <view class="weui-media-box weui-media-box_appmsg">
+            <view class="weui-media-box__bd">
+              <view class="weui-media-box__title">{{item.status}}</view>
+              <view class="weui-media-box__desc">
+                <em>{{item.time}}</em>
+              </view>
+            </view>
+            <view class="income_price">
+              <view class="weui-media-box__title">
+                <em>+</em>
+                {{item.money}}元
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{nodata}}">暂无数据</view>
+  </view>
+  <!-- 待审核 -->
+  <view class="topList" hidden="{{currentTab!==1}}">
+    <view class="list-container">
+      <view class="weui-panel weui-panel_access" wx:for="{{paid}}" wx:key="*this" wx:key="{{index}}" data-id="{{item.radioid}}">
+        <view class="weui-media-box weui-media-box_appmsg">
+          <view class="weui-media-box__bd">
+            <view class="weui-media-box__title">{{item.status}}</view>
+            <view class="weui-media-box__desc">
+              <em>{{item.time}}</em>
+            </view>
+          </view>
+          <view class="">
+            <view class="weui-media-box__title">
+              <em>-</em>
+              {{item.money}}元
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

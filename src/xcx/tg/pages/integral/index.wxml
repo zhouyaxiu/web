@@ -1,0 +1,15 @@
+<view class="container">
+    <view class="integral {{bg}}" style="height:{{screenHeight}}">
+        <view class="userinfo">
+            <view class="avator"><open-data type="userAvatarUrl"></open-data></view>
+            <view class="username"><open-data type="userNickName"></open-data></view>
+        </view>
+        <view class="integralinfo">
+            {{yours}}<text>{{integral}}</text>
+        </view>
+    </view>
+    <view class="integral_con">
+        <view>如需提现，请访问官网</view>
+        <view class="url" bindtap="copyTap">{{url}}</view>
+    </view>
+</view>

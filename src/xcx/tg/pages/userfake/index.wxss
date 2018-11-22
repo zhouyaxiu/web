@@ -1,0 +1,21 @@
+
+.logo{
+   text-align: center;
+}
+
+.logo image{
+    width:288rpx;
+    height:288rpx;
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    margin: auto;
+}
+.logo view{
+    position:absolute;
+    bottom:50rpx;
+    text-align:center;
+    width:100%;
+}

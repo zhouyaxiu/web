@@ -1,0 +1,11 @@
+<view class="user_classfy">
+  <view class="con">
+    <navigator url="../{{item.url}}/index?title=index" wx:for="{{list}}" wx:for-index="idx" wx:for-item="item" wx:key="{{item.url}}">
+      <view class="li">
+        <image src="{{item.img}}" class="fl" style="background:{{item.bg}}"></image>
+        <view class="p">{{item.name}}</view>
+        <view class="fr"></view>
+      </view>
+    </navigator>
+  </view>
+</view>

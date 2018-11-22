@@ -1,0 +1,53 @@
+<view>
+  <view class="weui-article">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-media-box weui-media-box_appmsg">
+        <view class="weui-media-box__hd">
+          <text class="weui-media-box__thumb"></text>
+        </view>
+        <view class="weui-media-box__bd">
+          <view class="weui-media-box__title">{{project.id}}</view>
+          <view class="weui-media-box__desc">
+            {{task_detail.type}}{{project.status4QC}} | {{task_detail.price}}{{project.price}}
+          </view>
+          <view class="weui-media-box__info">
+            <text class="weui-media-box__info__meta">
+              {{task_detail.cycle}}{{project.duration}}{{task_detail.day}} | {{project.statusStr}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="task_info">
+      <view class="task_info">
+        <view class="weui-article_name">{{task_detail.intro}}</view>
+        <view class="weui-article_con">
+          <text>{{project.abstract}}</text>
+        </view>
+      </view>
+      <view class="task_info">
+        <view class="weui-article_name">{{task_detail.desc}}</view>
+        <view class="weui-article_con">
+          <text>{{project.description}}</text>
+        </view>
+      </view>
+      <!-- <view class="task_info">
+        <view class="weui-article_name">{{task_detail.require}}</view>
+        <view class="weui-article_con">
+          <text>...</text>
+        </view>
+      </view> -->
+      <view class="task_info">
+        <view class="weui-article_name">{{task_detail.labelrules}}</view>
+        <view class="weui-article_con">
+          <text bindtap="bindRead" wx:if="{{clickview===true}}" style="color:#15b3e4">{{task_detail.clickview}}</text>
+          <web-view src="{{project.taskProfile.ruleSrc}}" wx:if="{{project.taskProfile.ruleSrc!=='' && display==='block'}}" style="display:{{display}}"></web-view> 
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="foot">
+    <view class="{{active?'':'noactive'}}" bindtap="mySubmission">{{task_detail.mysubmission}}</view>
+    <view class="{{active?'active':'noactive'}}" bindtap="startbutton">{{task_detail.starttask}}</view>
+  </view>
+</view>

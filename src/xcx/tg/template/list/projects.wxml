@@ -1,0 +1,28 @@
+<template name="tasks">
+  <view class="weui-media-box__hd">
+    <text class="weui-media-box__thumb"></text>
+  </view>
+  <view class="weui-media-box__bd">
+    <view class="weui-media-box__title">{{abstract}}</view>
+    <view class="weui-media-box__desc">{{id}}</view>
+  </view>
+  <view class="text-right">
+    <view class="fr"></view>
+    <!-- <view class="weui-media-box__title see">
+          {{mytask.view}}
+        </view>
+        <view class="weui-media-box__desc color_primary">{{item.statusStr}}</view> -->
+  </view>
+</template>
+<template name="task_revises">
+  <view class="weui-media-box weui-media-box_appmsg">
+    <view class="weui-media-box__hd">
+      <text class="weui-media-box__thumb"></text>
+    </view>
+    <view class="weui-media-box__bd">
+      <view class="weui-media-box__title">{{taskid}}</view>
+      <view class="weui-media-box__desc">{{uuid}}</view>
+    </view>
+    <view class="weui-media-box__desc color_primary text-right">{{review}}</view>
+  </view>
+</template>

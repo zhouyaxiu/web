@@ -1,0 +1,33 @@
+<view class="container">
+  <form bindsubmit="realnme_auth">
+    <view class="weui-cells">
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label mobile" for="realname"></label>
+        </view>
+        <input id="realname" name="name2" type="text" placeholder="{{realname_auth.realname}}" bindinput="bindNameInput" class="weui-input" />
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__hd">
+          <label class="weui-label card" for="idcard"></label>
+        </view>
+        <view class="weui-cell__bd">
+          <input name="card2" class="weui-input" id="idcard" bindinput="bindCardInput" type="text" placeholder="{{realname_auth.idcard}}" />
+        </view>
+      </view>
+      <view class="sfz">
+        <view wx:for="{{imagePaths}}" wx:key="index" data-index="{{index}}">
+          <view class="uploadphoto">
+            <image data-id="{{index}}" name="img2" src="{{item.src||'/images/default.jpg'}}"></image>
+          </view>
+          <view class="sfzname" data-id="{{index}}" bindtap="chooseimage">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+      <view class="button-sp-area">
+        <button class="weui-btn weui-btn_primary" formType="submit">{{realname_auth.submit}}</button>
+      </view>
+    </view>
+  </form>
+</view>

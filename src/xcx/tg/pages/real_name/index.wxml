@@ -1,0 +1,43 @@
+<view class="">
+  <form bindsubmit="realname_auth">
+    <view class="weui-cells">
+      <view class="weui-cell tx shenhe {{status?status:''}}" wx:if="{{status}}">
+        <view class="weui-cell__hd">
+          {{realname.auditstatus}}<text>{{realStatus}}</text>
+        </view>
+        <text class="refresh" wx:if="{{realname.realStatus3===realStatus}}" bindtap="refresh">{{realname.recertication}}</text>
+      </view>
+      <view class="weui-cell tx">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{realname.truename}}</label>
+        </view>
+        <input name="truename" type="text" placeholder="{{realname.truename}}" bindinput="bindNameInput" value="{{truename}}" class="weui-input" />
+      </view>
+      <view class="weui-cell tx">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{realname.idcard}}</label>
+        </view>
+        <input name="idcard" type="idcard" maxlength="18" minlength="15"  bindinput="bindIdCardInput" placeholder="{{realname.idcard}}" value="{{idcard}}" class="weui-input" />
+      </view>
+      <!-- <view class="weui-cell tx">
+        <view class="weui-cell__hd">
+          <label class="weui-label">{{realname.alipay}}</label>
+        </view>
+        <input name="alipay" type="number" placeholder="{{realname.alipay}}" class="weui-input" />
+      </view> -->
+      <view class="sfz" wx:if="{{status!='pass'}}">
+        <view wx:for="{{imagePaths}}" wx:key="index" data-index="{{index}}">
+          <view class="sfzname" data-id="{{index}}">{{item.name}}</view>
+          <view class="uploadphoto">
+            <image data-id="{{index}}" bindtap="chooseImage" mode="widthFix" src="{{item.imgsrc||'/images/add.png'}}"></image>
+          </view>
+        </view>
+      </view>
+      <view class="button-sp-area {{display?display:''}}">
+        <button class="weui-btn weui-btn_primary" formType="submit">
+          {{realname.submit}}
+        </button>
+      </view>
+    </view>
+  </form>
+</view>

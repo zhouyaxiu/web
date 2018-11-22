@@ -1,0 +1,62 @@
+@import '../../template/wxss/index.wxss';
+
+page {
+  background: #f8f8f8;
+}
+
+.con {
+  width: 100%;
+}
+
+.con .li {
+  line-height: 160rpx;
+  font-size: 36rpx;
+  color: #333;
+  position: relative;
+  margin: 0 20rpx 10px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.con .li .fl {
+  float: left;
+  margin-left: 25rpx;
+  display: inline-block;
+  height: 70rpx;
+  width: 70rpx;
+  margin-top: 45rpx;
+  margin-right: 18rpx;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  padding: 18rpx;
+  background: red;
+}
+
+.con .li .fr {
+  display: inline-block;
+  height: 15rpx;
+  width: 15rpx;
+  transform: rotate(-45deg) translate(-50%, -50%);
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+  position: absolute;
+  right: 15rpx;
+  top: 40%;
+}
+
+.user_classfy {
+  background: #f8f8f8;
+  padding-top: 20rpx;
+}

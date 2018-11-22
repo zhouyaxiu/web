@@ -1,0 +1,49 @@
+@import '../../template/wxss/index.wxss';
+@import '../index/index.wxss';
+.navbar {
+    display: flex;
+    background: #f8f8f8;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 32rpx;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar .select {
+    position: relative;
+    flex: auto;
+    text-align: center;
+}
+
+.navbar .select.active {
+    color: #15b3e4;
+}
+
+.tasklist {
+    padding-top: 80rpx;
+}
+
+.notask {
+    text-align: center;
+    position: fixed;
+    top: 30%;
+    width: 100%;
+    font-size:34rpx;
+    color:#999
+}
+
+.notask navigator {
+    display: inline-block;
+    border: 1px solid #f0f0f0;
+    padding: 20rpx 40rpx;
+    color: #15b3e4;
+    font-size: 34rpx;
+    border-radius: 10rpx;
+    margin-top: 50rpx;
+    width:50%
+}
