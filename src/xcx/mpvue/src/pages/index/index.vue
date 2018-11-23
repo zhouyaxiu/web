@@ -1,105 +1,69 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+  <div>
+    <i-cell-group  v-for="(item,index) in projects" :key="index">
+      <i-cell :title="item.abstract" :label="item.id" is-link :url="'/pages/task_detail/main?taskid='+item.id">
+      </i-cell>
+    </i-cell-group>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-
+import app from '../../App.vue'
 export default {
   data () {
     return {
-      motto: 'Hello World',
-      userInfo: {}
+      projects: []
     }
-  },
-
-  components: {
-    card
   },
 
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+    handleReachBottom () {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const last = this.list1[this.list1.length - 1]
+          for (let i = 1; i < 11; i++) {
+            this.list1.push(last + i)
+          }
+          resolve()
+        }, 2000)
+      })
     },
-    getUserInfo () {
+    filterSopType: (tasklist) => {
+      var tmp = []
+      for (var k in tasklist) {
+        if (tasklist[k].sopType.indexOf('COLLECT') !== -1 ||
+          tasklist[k].sopType.indexOf('TEXTTRANS') !== -1) {
+          tmp.push(tasklist[k])
+        }
+      }
+      return tmp
+    },
+    getProject () {
       // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
+      wx.request({
+        url: 'https://www.fanhantech.com/api/projects',
+        method: 'get',
+        header: app.globalData.header,
+        success: (response) => {
+          this.projects = this.filterSopType(response.data.projects)
+        },
+        fail: (response) => {
+          wx.showToast({
+            title: '获取任务失败',
+            duration: 1500
           })
         }
       })
-    },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
     }
   },
 
-  created () {
+  onLoad () {
     // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
+    this.getProject()
   }
 }
 </script>
 
 <style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
-}
 </style>

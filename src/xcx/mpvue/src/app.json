@@ -2,13 +2,14 @@
   "pages": [
     "pages/login/main",
     "pages/index/main",
+    "pages/task_detail/main",
     "pages/logs/main",
     "pages/counter/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "33545",
     "navigationBarTextStyle": "black"
   }
 }
