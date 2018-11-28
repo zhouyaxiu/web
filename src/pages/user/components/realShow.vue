@@ -1,7 +1,7 @@
 <template>
 <div class="real">
   <div class="user-form-title">
-    <h2>实名认证</h2>
+    <h2>{{$t("user.real_from.realname")}}</h2>
     <div class="d-inline-block align-self-center ml-auto" v-if="showReIdentify">
       <router-link :to="{ name: 'real'}">
         <el-button type="primary" round size="mini">{{$t("user.real.reform")}}</el-button>
@@ -38,7 +38,7 @@
         <span class="real-name"><span style="color:#F56C6C">*</span>{{$t("user.real.truename")}}{{form.realName}}</span>
       </div>
       <div class="col-md-5">
-        <span class="id-card-num"><span style="color:#F56C6C">*</span>护照号{{form.idCardNum}}</span>
+        <span class="id-card-num"><span style="color:#F56C6C">*</span>{{$t("user.real.passportNum")}}{{form.idCardNum}}</span>
       </div>
       <div class="col-md-4">
         <span class="real-status">{{$t("user.real.status")}}{{getRealStatus('passPortForm')}}</span>

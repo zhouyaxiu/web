@@ -16,7 +16,7 @@
         PostButtonVisible=false
         CheckRadioVisible=true
       >
-        <el-button type="primary" id="revise" @click="reviseTask">修改并提交</el-button>
+        <el-button type="primary" id="revise" @click="reviseTask">{{$t('taskPublic.reviseTask')}}</el-button>
       </collect>
     </div>
     <div class="theBottom">
@@ -116,7 +116,7 @@ export default {
         } else {
           console.log('code not 0??')
           vm.$notify.error({
-            title: '失败',
+            title: language('taskPublic.error'),
             message: rsp.message,
             duration: 2000
           })
@@ -209,7 +209,7 @@ export default {
             vm.$refs.Template.load(result, vm.question.comment)
           } else {
             vm.$notify.error({
-              title: '失败',
+              title: language('taskPublic.error'),
               message: rsp.message,
               duration: 2000
             })
@@ -231,8 +231,8 @@ export default {
       // var url = '/api/projects/' + vm.projectId + '/task/revise' + '?taskid=wbvFBAmv001&uuid=drTRz0jcm918FZq6JlSQzz2i4aSg403C&status=1001999'
       if (!vm.$refs.Template.valid()) {
         vm.$notify.error({
-          title: '失败',
-          message: '请检查所有标注是否都已完成',
+          title: language('taskPublic.error'),
+          message: language('taskPublic.errorMessage'),
           duration: 2000
         })
         return
@@ -248,7 +248,7 @@ export default {
           console.log(rsp)
           if (rsp.code === 0) {
             vm.$notify.success({
-              title: '成功',
+              title: language('taskPublic.success'),
               message: rsp.message,
               duration: 2000
             })
@@ -259,7 +259,7 @@ export default {
             }, 2000)
           } else {
             vm.$notify.error({
-              title: '失败',
+              title: language('taskPublic.error'),
               message: rsp.message,
               duration: 2000
             })

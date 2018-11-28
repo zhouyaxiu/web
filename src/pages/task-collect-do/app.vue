@@ -62,7 +62,7 @@ export default {
     this.$nextTick(function () {
       // get current page project id
       let projectId = document.location.pathname.split('/')[2]
-      // projectId = 'wbvFBAmv001'
+      // projectId = 'gNFJdlWN001'
       if (projectId !== '') {
         vm.projectId = projectId
       }
@@ -112,7 +112,7 @@ export default {
         } else {
           console.log('code not 0??')
           vm.$notify.error({
-            title: '失败',
+            title: language('taskPublic.error'),
             message: rsp.message,
             duration: 2000
           })
@@ -202,7 +202,7 @@ export default {
             // }
           } else {
             vm.$notify.error({
-              title: '失败',
+              title: language('taskPublic.error'),
               message: rsp.message,
               duration: 2000
             })
@@ -234,7 +234,7 @@ export default {
           // console.log(rsp.Code)
           if (rsp.code === 0) {
             vm.$notify.success({
-              title: '成功',
+              title: language('taskPublic.success'),
               message: rsp.message,
               duration: 2000
             })
@@ -243,7 +243,7 @@ export default {
             }, 1000)
           } else {
             vm.$notify.error({
-              title: '失败',
+              title: language('taskPublic.error'),
               message: rsp.message,
               duration: 2000
             })

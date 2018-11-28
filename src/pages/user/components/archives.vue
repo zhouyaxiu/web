@@ -1,148 +1,148 @@
 <template>
 <div class="archives">
-  <h2>个人档案</h2>
+  <h2>{{$t("user.nav.profile")}}</h2>
   <div class="user-form-list" v-bind:class="{ active: status.sexStatus }">
-    <div class="user-list-label">性别</div>
+    <div class="user-list-label">{{$t("user.profile.sex")}}</div>
     <div class="user-list-content" v-if = "status.sexStatus === 0">{{getGender}}</div>
-    <div class="user-list-edit" v-if = "status.sexStatus === 0" @click="modifyState('sexStatus', 'sexForm')">编辑</div>
+    <div class="user-list-edit" v-if = "status.sexStatus === 0" @click="modifyState('sexStatus', 'sexForm')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.sexStatus === 1">
       <el-form :model="sexForm" ref="sexForm" :rules="rules">
         <el-form-item prop="gender">
-          <el-select v-model="sexForm.gender" placeholder="您的性别" size="small">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+          <el-select v-model="sexForm.gender" :placeholder="$t('user.your')+$t('user.profile.sex')" size="small">
+            <el-option :label="$t('user.profile.male')" value="1"></el-option>
+            <el-option :label="$t('user.profile.female')" value="2"></el-option>
           </el-select>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('sexStatus', 'sexForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('sexStatus', 'sexForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('sexStatus', 'sexForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('sexStatus', 'sexForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.birthStatus }">
-    <div class="user-list-label">出生日期</div>
+    <div class="user-list-label">{{$t("user.profile.birthday")}}</div>
     <div class="user-list-content" v-if = "status.birthStatus === 0">{{getBirthday}}</div>
-    <div class="user-list-edit" v-if = "status.birthStatus === 0" @click="modifyState('birthStatus', 'birthForm')">编辑</div>
+    <div class="user-list-edit" v-if = "status.birthStatus === 0" @click="modifyState('birthStatus', 'birthForm')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.birthStatus === 1">
       <el-form :model="birthForm" ref="birthForm" :rules="rules">
         <el-form-item prop="birthday">
           <el-date-picker
             v-model="birthForm.birthday"
             type="date"
-            placeholder="您的出生日期"
+            :placeholder="$t('user.your')+$t('user.profile.birthday')"
             size="small"
             value-format="timestamp">
           </el-date-picker>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('birthStatus', 'birthForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('birthStatus', 'birthForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('birthStatus', 'birthForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('birthStatus', 'birthForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.areaStatus }">
-    <div class="user-list-label">所在地</div>
+    <div class="user-list-label">{{$t("user.profile.location")}}</div>
     <div class="user-list-content" v-if = "status.areaStatus === 0">
-      {{profile.location.country === '' ? '您的所在地' : profile.location.country +'/'+profile.location.province}}
+      {{profile.location.country === '' ? $t("user.your")+$t("user.profile.location") : profile.location.country +'/'+profile.location.province}}
     </div>
-    <div class="user-list-edit" v-if = "status.areaStatus === 0" @click="modifyState('areaStatus', 'areaForm')">编辑</div>
+    <div class="user-list-edit" v-if = "status.areaStatus === 0" @click="modifyState('areaStatus', 'areaForm')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.areaStatus === 1">
       <el-form :model="areaForm" ref="areaForm" :rules="rules">
         <el-form-item prop="location">
-          <el-cascader :options="locationList" v-model="areaForm.location" placeholder="您的所在地"></el-cascader>
+          <el-cascader :options="locationList" v-model="areaForm.location" :placeholder="$t('user.your')+$t('user.profile.location')"></el-cascader>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('areaStatus', 'areaForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('areaStatus', 'areaForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('areaStatus', 'areaForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('areaStatus', 'areaForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.nationStatus }">
-    <div class="user-list-label">国籍</div>
+    <div class="user-list-label">{{$t("user.profile.nationality")}}</div>
     <div class="user-list-content" v-if = "status.nationStatus === 0">
-      {{profile.nationality === '' ? '您的国籍' : profile.nationality}}
+      {{profile.nationality === '' ? $t("user.your")+$t("user.profile.nationality") : profile.nationality}}
     </div>
-    <div class="user-list-edit" v-if = "status.nationStatus === 0" @click="modifyState('nationStatus', 'nationForm')">编辑</div>
+    <div class="user-list-edit" v-if = "status.nationStatus === 0" @click="modifyState('nationStatus', 'nationForm')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.nationStatus === 1">
       <el-form :model="nationForm" ref="nationForm" :rules="rules">
         <el-form-item prop="nationality">
-          <el-select v-model="nationForm.nationality" placeholder="您的国籍" size="small">
+          <el-select v-model="nationForm.nationality" :placeholder="$t('user.your')+$t('user.profile.nationality')" size="small">
             <el-option v-for="item in nationalityList" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('nationStatus', 'nationForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('nationStatus', 'nationForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('nationStatus', 'nationForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('nationStatus', 'nationForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.raceStatus }">
-    <div class="user-list-label">种族</div>
+    <div class="user-list-label">{{$t("user.profile.ethnicity")}}</div>
     <div class="user-list-content" v-if = "status.raceStatus === 0">
-      {{profile.ethnicity === '' ? '您的种族' : profile.ethnicity}}
+      {{profile.ethnicity === '' ? $t("user.your")+$t("user.profile.ethnicity") : profile.ethnicity}}
     </div>
-    <div class="user-list-edit" v-if = "status.raceStatus === 0" @click="modifyState('raceStatus', 'raceForm')">编辑</div>
+    <div class="user-list-edit" v-if = "status.raceStatus === 0" @click="modifyState('raceStatus', 'raceForm')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.raceStatus === 1">
       <el-form :model="raceForm" ref="raceForm" :rules="rules">
         <el-form-item prop="ethnicity">
-          <el-select v-model="raceForm.ethnicity" placeholder="您的种族" size="small">
-            <el-option label="白种人" value="白种人"></el-option>
-            <el-option label="黑种人" value="黑种人"></el-option>
-            <el-option label="黄种人" value="黄种人"></el-option>
+          <el-select v-model="raceForm.ethnicity" :placeholder="$t('user.your')+$t('user.profile.ethnicity')" size="small">
+            <el-option :label="$t('user.profile.whiteperson')" :value="$t('user.profile.whiteperson')"></el-option>
+            <el-option :label="$t('user.profile.blackperson')" :value="$t('user.profile.blackperson')"></el-option>
+            <el-option :label="$t('user.profile.yellowperson')" :value="$t('user.profile.yellowperson')"></el-option>
           </el-select>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('raceStatus', 'raceForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('raceStatus', 'raceForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('raceStatus', 'raceForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('raceStatus', 'raceForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.marrStatus }">
-    <div class="user-list-label">婚姻状态</div>
+    <div class="user-list-label">{{$t("user.profile.marriage")}}</div>
     <div class="user-list-content" v-if = "status.marrStatus === 0">{{getMarital}}</div>
-    <div class="user-list-edit" v-if = "status.marrStatus === 0" @click="modifyState('marrStatus', 'marrForm')">编辑</div>
+    <div class="user-list-edit" v-if = "status.marrStatus === 0" @click="modifyState('marrStatus', 'marrForm')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.marrStatus === 1">
       <el-form :model="marrForm" ref="marrForm" :rules="rules">
         <el-form-item prop="marital">
-          <el-select v-model="marrForm.marital" placeholder="您的婚姻状态" size="small">
-            <el-option label="未婚" value="1"></el-option>
-            <el-option label="已婚" value="2"></el-option>
+          <el-select v-model="marrForm.marital" :placeholder="$t('user.your')+$t('user.profile.marriage')" size="small">
+            <el-option :label="$t('user.profile.unmarry')" value="1"></el-option>
+            <el-option :label="$t('user.profile.married')" value="2"></el-option>
           </el-select>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('marrStatus', 'marrForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('marrStatus', 'marrForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('marrStatus', 'marrForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('marrStatus', 'marrForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.langStatus }">
-    <div class="user-list-label">母语</div>
+    <div class="user-list-label">{{$t("user.profile.monthertonue")}}</div>
     <div class="user-list-content" v-if = "status.langStatus === 0">
-      {{profile.motherLanguage === '' ? '您的母语' : profile.motherLanguage}}
+      {{profile.motherLanguage === '' ? $t("user.your")+$t("user.profile.monthertonue") : profile.motherLanguage}}
     </div>
-    <div class="user-list-edit" v-if = "status.langStatus === 0" @click="modifyState('langStatus', 'langForm')">编辑</div>
+    <div class="user-list-edit" v-if = "status.langStatus === 0" @click="modifyState('langStatus', 'langForm')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.langStatus === 1">
       <el-form :model="langForm" ref="langForm" :rules="rules">
         <el-form-item prop="motherLanguage">
-          <el-select v-model="langForm.motherLanguage" placeholder="您的母语" size="small">
+          <el-select v-model="langForm.motherLanguage" :placeholder="$t('user.your')+$t('user.profile.monthertonue')" size="small">
             <el-option
               v-for="(language,index) in languages"
               :key="index"
@@ -153,107 +153,117 @@
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('langStatus', 'langForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('langStatus', 'langForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('langStatus', 'langForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('langStatus', 'langForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.educateStatus }">
-    <div class="user-list-label">学历</div>
+    <div class="user-list-label">{{$t("user.profile.education")}}</div>
     <div class="user-list-content" v-if = "status.educateStatus === 0">
-      {{profile.education === '' ? '您的学历' : profile.education}}
+      {{profile.education === '' ? $t("user.your")+$t("user.profile.education") : profile.education}}
     </div>
-    <div class="user-list-edit" v-if = "status.educateStatus === 0" @click="modifyState('educateStatus')">编辑</div>
+    <div class="user-list-edit" v-if = "status.educateStatus === 0" @click="modifyState('educateStatus')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.educateStatus === 1">
       <el-form :model="educateForm" ref="educateForm" :rules="rules">
         <el-form-item prop="education">
-          <el-select v-model="educateForm.education" placeholder="您的学历" size="small">
-            <el-option label="初中" value="初中"></el-option>
-            <el-option label="高中" value="高中"></el-option>
-            <el-option label="大专" value="大专"></el-option>
-            <el-option label="本科" value="本科"></el-option>
-            <el-option label="研究生" value="研究生"></el-option>
-            <el-option label="博士" value="博士"></el-option>
+          <el-select v-model="educateForm.education" :placeholder="$t('user.your')+$t('user.profile.education')" size="small">
+            <el-option :label="$t('user.profile.juniorschool')" :value="$t('user.profile.juniorschool')"></el-option>
+            <el-option :label="$t('user.profile.highschool')" :value="$t('user.profile.highschool')"></el-option>
+            <el-option :label="$t('user.profile.juniorcollege')" :value="$t('user.profile.juniorcollege')"></el-option>
+            <el-option :label="$t('user.profile.regularcollege')" :value="$t('user.profile.regularcollege')"></el-option>
+            <el-option :label="$t('user.profile.graduatestudent')" :value="$t('user.profile.graduatestudent')"></el-option>
+            <el-option :label="$t('user.profile.doctor')" :value="$t('user.profile.doctor')"></el-option>
           </el-select>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('educateStatus', 'educateForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('educateStatus', 'educateForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('educateStatus', 'educateForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('educateStatus', 'educateForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.industryStatus }">
-    <div class="user-list-label">行业</div>
+    <div class="user-list-label">{{$t("user.profile.industry")}}</div>
     <div class="user-list-content" v-if = "status.industryStatus === 0">
-      {{profile.industry === '' ? '您的行业' : profile.industry}}
+      {{profile.industry === '' ? $t("user.your")+$t("user.profile.industry") : profile.industry}}
     </div>
-    <div class="user-list-edit" v-if = "status.industryStatus === 0" @click="modifyState('industryStatus')">编辑</div>
+    <div class="user-list-edit" v-if = "status.industryStatus === 0" @click="modifyState('industryStatus')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.industryStatus === 1">
       <el-form :model="industryForm" ref="industryForm" :rules="rules">
         <el-form-item prop="industry">
-          <el-select v-model="industryForm.industry" placeholder="您的行业" size="small">
-            <el-option label="互联网" value="互联网"></el-option>
-            <el-option label="金融" value="金融"></el-option>
-            <el-option label="教育" value="教育"></el-option>
-            <el-option label="服务" value="服务"></el-option>
+          <el-select v-model="industryForm.industry" :placeholder="$t('user.your')+$t('user.profile.industry')" size="small">
+            <el-option :label="$t('user.profile.internet')" :value="$t('user.profile.internet')"></el-option>
+            <el-option :label="$t('user.profile.finance')" :value="$t('user.profile.finance')"></el-option>
+            <el-option :label="$t('user.profile.edu')" :value="$t('user.profile.edu')"></el-option>
+            <el-option :label="$t('user.profile.service')" :value="$t('user.profile.service')"></el-option>
           </el-select>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('industryStatus', 'industryForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('industryStatus', 'industryForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('industryStatus', 'industryForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('industryStatus', 'industryForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
   <div class="user-form-list" v-bind:class="{ active: status.incomeStatus }">
-    <div class="user-list-label">收入</div>
+    <div class="user-list-label">{{$t("user.profile.income")}}</div>
     <div class="user-list-content" v-if = "status.incomeStatus === 0">
-      {{profile.income === '' ? '您的收入' : profile.income}}
+      {{profile.income === '' ? $t("user.your")+$t("user.profile.income") : profile.income}}
     </div>
-    <div class="user-list-edit" v-if = "status.incomeStatus === 0" @click="modifyState('incomeStatus')">编辑</div>
+    <div class="user-list-edit" v-if = "status.incomeStatus === 0" @click="modifyState('incomeStatus')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.incomeStatus === 1">
       <el-form :model="incomeForm" ref="incomeForm" :rules="rules">
         <el-form-item prop="income">
-          <el-select v-model="incomeForm.income" placeholder="您的收入" size="small">
-            <el-option label="1000以下" value="1000以下"></el-option>
+          <el-select v-model="incomeForm.income" :placeholder="$t('user.your')+$t('user.profile.income')" size="small">
+            <el-option :label="$t('user.profile.lessthan')" :value="$t('user.profile.lessthan')"></el-option>
             <el-option label="1000~3000" value="1000~3000"></el-option>
             <el-option label="3000~5000" value="3000~5000"></el-option>
-            <el-option label="5000以上" value="5000以上"></el-option>
+            <el-option :label="$t('user.profile.morethan')" :value="$t('user.profile.morethan')"></el-option>
           </el-select>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('incomeStatus', 'incomeForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('incomeStatus', 'incomeForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('incomeStatus', 'incomeForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('incomeStatus', 'incomeForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
   </div>
-  <h2 class="mt-20">技能展示</h2>
+  <h2 class="mt-20">{{$t("user.skill.skillshow")}}</h2>
   <div class="user-form-list" v-bind:class="{ active: status.skillLangStatus }">
-    <div class="user-list-label">擅长的语言</div>
-    <div class="user-list-content" v-if = "status.skillLangStatus === 0">{{profile.language}}</div>
-    <div class="user-list-edit" v-if = "status.skillLangStatus === 0" @click="modifyState('skillLangStatus')">编辑</div>
+    <div class="user-list-label">{{$t("user.skill.language")}}</div>
+    <div class="user-list-content" v-if = "status.skillLangStatus === 0">
+      {{profile.language === '' ? $t("user.skill.language") : profile.language}}
+    </div>
+    <div class="user-list-edit" v-if = "status.skillLangStatus === 0" @click="modifyState('skillLangStatus')">{{$t("user.editinfo")}}</div>
     <div class="user-list-content" v-if = "status.skillLangStatus === 1">
       <el-form :model="skillLangForm" ref="skillLangForm" :rules="rules">
         <el-form-item prop="language">
-          <el-select class="skill-lang-select" v-model="skillLangForm.language" multiple filterable allow-create default-first-option placeholder="您擅长的语言" size="small">
+          <el-select
+            class="skill-lang-select"
+            v-model="skillLangForm.language"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+            :placeholder="$t('user.skill.language')"
+            size="small">
             <el-option v-for="(language,index) in languages" :key="index" :label="language" :value="language">
             </el-option>
           </el-select>
         </el-form-item>
         <div class="user-list-btn">
           <el-form-item>
-            <el-button type="primary" @click="submitForm('skillLangStatus', 'skillLangForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm ('skillLangStatus', 'skillLangForm')">取消</el-button>
+            <el-button type="primary" @click="submitForm('skillLangStatus', 'skillLangForm')" size="small">{{$t("user.save")}}</el-button>
+            <el-button size="small" @click="resetForm ('skillLangStatus', 'skillLangForm')">{{$t("user.reset")}}</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -293,7 +303,7 @@ export default {
         education: '',
         industry: '',
         income: '',
-        language: '您擅长的语言'
+        language: ''
       },
       // 开关状态
       status: {
@@ -343,22 +353,22 @@ export default {
         language: []
       },
       rules: {
-        gender: [{type: 'string', required: true, message: '不能为空'}],
-        nationality: [{type: 'string', required: true, message: '不能为空'}],
-        ethnicity: [{type: 'string', required: true, message: '不能为空'}],
-        marital: [{type: 'string', required: true, message: '不能为空'}],
-        motherLanguage: [{type: 'string', required: true, message: '不能为空'}],
-        education: [{type: 'string', required: true, message: '不能为空'}],
-        industry: [{type: 'string', required: true, message: '不能为空'}],
-        income: [{type: 'string', required: true, message: '不能为空'}],
-        language: [{type: 'array', required: true, message: '不能为空'}],
-        birthday: [{type: 'number', required: true, message: '不能为空'}],
+        gender: [{type: 'string', required: true, message: language('user.profile.js.pleaseselect')}],
+        nationality: [{type: 'string', required: true, message: language('user.profile.js.pleaseselect')}],
+        ethnicity: [{type: 'string', required: true, message: language('user.profile.js.pleaseselect')}],
+        marital: [{type: 'string', required: true, message: language('user.profile.js.pleaseselect')}],
+        motherLanguage: [{type: 'string', required: true, message: language('user.profile.js.pleaseselect')}],
+        education: [{type: 'string', required: true, message: language('user.profile.js.pleaseselect')}],
+        industry: [{type: 'string', required: true, message: language('user.profile.js.pleaseselect')}],
+        income: [{type: 'string', required: true, message: language('user.profile.js.pleaseselect')}],
+        language: [{type: 'array', required: true, message: language('user.profile.js.pleaseselect')}],
+        birthday: [{type: 'number', required: true, message: language('user.profile.js.pleaseselect')}],
         location: [{type: 'array',
           required: true,
           len: 2,
           fields: {
-            0: {type: 'string', required: true, message: '1不能为空'},
-            1: {type: 'string', required: true, message: '2不能为空'}
+            0: {type: 'string', required: true, message: language('user.profile.js.pleaseselect')},
+            1: {type: 'string', required: true, message: language('user.profile.js.pleaseselect')}
           }
         }]
       }
@@ -372,7 +382,7 @@ export default {
       } else if (this.profile.gender && this.profile.gender === 2) {
         return language('user.profile.js.woman')
       } else {
-        return '您的性别'
+        return language('user.your') + language('user.profile.sex')
       }
     },
     getMarital () {
@@ -381,12 +391,12 @@ export default {
       } else if (this.profile.marital === 2) {
         return language('user.profile.js.marital2')
       } else {
-        return '您的婚姻状态'
+        return language('user.your') + language('user.profile.marriage')
       }
     },
     getBirthday () {
       if (this.profile.birthday === '') {
-        return '您的出生日期'
+        return language('user.your') + language('user.profile.birthday')
       } else {
         let res = new Date(this.profile.birthday * 1000)
         return res.getFullYear() + '-' + (res.getMonth() + 1) + '-' + res.getDate()
@@ -486,7 +496,7 @@ export default {
             let rsp = response.data
             if (rsp.code === 0) {
               vm.$notify.success({
-                title: '成功',
+                title: language('user.profile.js.success'),
                 message: rsp.message,
                 duration: 2000
               })
@@ -502,7 +512,7 @@ export default {
               vm.status[statusName] = 0
             } else {
               vm.$notify.error({
-                title: '失败',
+                title: language('user.profile.js.error.type1'),
                 message: rsp.message,
                 duration: 2000
               })

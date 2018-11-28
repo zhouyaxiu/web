@@ -27,7 +27,7 @@
       </el-tooltip> -->
       <button type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="acceptTask">通过</button>
       <button type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="rejectTask">拒绝</button>
-      <button type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="reviseAndacceptTask">提交并通过</button>
+      <button v-if="((tuflag & (1 << 10)) !== 0)" type="button" class="btn btn-danger btn-sm mb-2" style="width:5rem" @click="refuseReviseAndAcceptTask">提交并通过</button>
     </Image007>
     <Image002 v-if="templet==2" ref="Template"
       :SopType="SopType"
@@ -44,7 +44,7 @@
     >
       <el-button type="primary" @click="acceptTask">通过</el-button>
       <el-button type="primary" @click="rejectTask">拒绝</el-button>
-      <el-button type="primary" @click="reviseAndacceptTask">提交并通过</el-button>
+      <el-button type="primary" @click="refuseReviseAndAcceptTask">提交并通过</el-button>
       <!-- <el-button id="test" type="primary" @click="test">测试</el-button> -->
     </Image002>
     <div class="message load-icon-box" v-show="progStatus === true">
@@ -89,6 +89,7 @@ export default {
       rectMinArea: 400, // 矩形最小面积
       pointSetRest: {},
       SopType: 1001,
+      tuflag: 14,
       question: {},
       progStatus: false,
       request: '',
@@ -180,6 +181,9 @@ export default {
                 vm.vQuesDo.push(vQues[i])
               }
             }
+          }
+          if (rsp.tuflag !== undefined) {
+            vm.tuflag = rsp.tuflag
           }
           vm.$nextTick(function () {
             vm.gettask()
@@ -372,6 +376,49 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    refuseReviseAndAcceptTask () {
+      let vm = this
+      this.$confirm('确认要修改并通过任务吗？', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let url = '/api/projects/' + vm.projectId + '/task/review' + window.location.search
+        // let url = '/api/projects/' + vm.projectId + '/task/review' + '?taskid=167SDSZX001&uuid=02rraSa74TIzcqqNY7nI4rfmbT99Lj00&status=1001999'
+        let comment = 'before checkuser revise'
+        // 鬼知道哪来的回车符。
+        if (!comment || comment === '\n' || comment === '') {
+          vm.$notify.error({
+            title: '失败',
+            message: '请填写拒绝理由到备注',
+            duration: 2000
+          })
+          return
+        }
+        http.post(url, {
+          accept: false,
+          comment: comment
+        })
+          .then(function (response) {
+            let rsp = response.data
+            console.log(rsp)
+            if (rsp.code === 0) {
+              vm.reviseAndacceptTask()
+            } else {
+              vm.$notify.error({
+                title: '失败',
+                message: rsp.message,
+                duration: 2000
+              })
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }).catch(() => {
+        // console.log('取消')
+      })
     },
     reviseAndacceptTask () {
       let vm = this

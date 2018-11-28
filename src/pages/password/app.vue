@@ -23,7 +23,7 @@
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="password('form')" style="width: 100%;">确定</el-button>
+              <el-button type="primary" @click="password('form')" style="width: 100%;">{{$t("oauth.confirm")}}</el-button>
             </el-form-item>
           </div>
           <div v-if="step === 2">

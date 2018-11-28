@@ -1,33 +1,43 @@
 <template>
 <div class="accountSet">
-  <h2>账号信息</h2>
+  <h2>{{$t("user.nav.accountset")}}</h2>
   <div class="user-form-list">
-    <div class="user-list-label">电子邮箱</div>
-    <div class="user-list-content">{{userInfo.mail}}</div>
+    <div class="user-list-label">{{$t("register.email")}}</div>
+    <div class="user-list-content">{{userInfo.mail === '' ? $t("user.your")+$t("register.email") : userInfo.mail}}</div>
   </div>
   <div class="user-form-list">
-    <div class="user-list-label">手机号</div>
-    <div class="user-list-content">{{userInfo.phone}}</div>
+    <div class="user-list-label">{{$t("register.mobile")}}</div>
+    <div class="user-list-content">{{userInfo.phone === '' ? $t("user.your")+$t("register.mobile") : userInfo.phone}}</div>
   </div>
   <div class="user-form-list">
-    <div class="user-list-label">密码</div>
-    <div class="user-list-content"><a href="/password.html">更改密码</a></div>
+    <div class="user-list-label">{{$t("user.account.password")}}</div>
+    <div class="user-list-content"><a href="/password.html">{{$t("user.account.pwdchange")}}</a></div>
   </div>
-  <h2 class="mt-20">账号关联</h2>
+  <h2 class="mt-20">{{$t("user.account.associate")}}</h2>
   <div class="user-form-list">
     <div class="user-list-label"><i class="fa fa-weixin weixin-color"></i>Weixin</div>
-    <div class="user-list-content">{{weixinStatus}}</div>
-    <div class="user-list-edit" v-if="userInfo.weixin === 0"><a href="javascript:void(0)">关联</a></div>
+    <div class="user-list-content">{{userInfo.weixin === 0 ? $t("user.account.unassociated") : $t("user.account.associated")}}</div>
+    <div class="user-list-edit" v-if="userInfo.weixin === 0"><a :href="oauth.weixin">{{$t("user.account.associate")}}</a></div>
+  </div>
+  <div class="user-form-list">
+    <div class="user-list-label"><i class="fa fa-google google-color"></i>Google</div>
+    <div class="user-list-content">{{userInfo.google === 0 ? $t("user.account.unassociated") : $t("user.account.associated")}}</div>
+    <div class="user-list-edit" v-if="userInfo.google === 0"><a :href="oauth.google">{{$t("user.account.associate")}}</a></div>
+  </div>
+  <div class="user-form-list">
+    <div class="user-list-label"><i class="fa fa-facebook facebook-color"></i>Facebook</div>
+    <div class="user-list-content">{{userInfo.facebook === 0 ? $t("user.account.unassociated") : $t("user.account.associated")}}</div>
+    <div class="user-list-edit" v-if="userInfo.facebook === 0"><a :href="oauth.facebook">{{$t("user.account.associate")}}</a></div>
   </div>
   <div class="user-form-list">
     <div class="user-list-label"><i class="fa fa-weibo weibo-color"></i>Weibo</div>
-    <div class="user-list-content">{{weiboStatus}}</div>
-    <div class="user-list-edit" v-if="userInfo.weibo === 0">开发中</div>
+    <div class="user-list-content">{{userInfo.weibo === 0 ? $t("user.account.unassociated") : $t("user.account.associated")}}</div>
+    <div class="user-list-edit" v-if="userInfo.weibo === 0">{{$t("user.account.developing")}}</div>
   </div>
   <div class="user-form-list">
     <div class="user-list-label"><i class="fa fa-qq qq-color"></i>QQ</div>
-    <div class="user-list-content">{{qqStatus}}</div>
-    <div class="user-list-edit" v-if="userInfo.qq === 0">开发中</div>
+    <div class="user-list-content">{{userInfo.qq === 0 ? $t("user.account.unassociated") : $t("user.account.associated")}}</div>
+    <div class="user-list-edit" v-if="userInfo.qq === 0">{{$t("user.account.developing")}}</div>
   </div>
 </div>
 </template>
@@ -42,34 +52,18 @@ export default {
   data () {
     return {
       userInfo: {
-        mail: '您的电子邮箱',
-        phone: '您的手机号',
+        mail: '',
+        phone: '',
         weixin: 0,
+        google: 0,
+        facebook: 0,
         weibo: 0,
         qq: 0
-      }
-    }
-  },
-  computed: {
-    weixinStatus () {
-      if (this.userInfo.weixin === 0) {
-        return '未关联'
-      } else {
-        return '已关联'
-      }
-    },
-    weiboStatus () {
-      if (this.userInfo.weibo === 0) {
-        return '未关联'
-      } else {
-        return '已关联'
-      }
-    },
-    qqStatus () {
-      if (this.userInfo.qq === 0) {
-        return '未关联'
-      } else {
-        return '已关联'
+      },
+      oauth: {
+        weixin: 'https://open.weixin.qq.com/connect/qrconnect?appid=wx31bd8c7fe1628298&redirect_uri=https://www.fanhantech.com/api/oauth/login/weixin&response_type=code&scope=snsapi_login&state=',
+        facebook: 'https://www.facebook.com/v3.2/dialog/oauth?client_id=1875757705826407&redirect_uri=https://www.fanhantech.com/api/oauth/login/facebook/&response_type=code&scope=email',
+        google: 'https://accounts.google.com/o/oauth2/auth?client_id=437691762848-oktemnfuvdm1qpd83cd2cs3m68df2e9v.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fwww.fanhantech.com%2Fapi%2Foauth%2Flogin%2Fgoogle%2F&response_type=code&scope=email'
       }
     }
   },
@@ -153,5 +147,11 @@ export default {
 }
 .qq-color {
   background: #2d9fe2;
+}
+.facebook-color {
+  background: #0077b9;
+}
+.google-color {
+  background: #3182f6;
 }
 </style>

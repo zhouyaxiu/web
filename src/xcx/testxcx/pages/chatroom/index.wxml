@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="container">
+    <scroll-view class='main' scroll-y>
+        <message wx:for="{{items}}"
+            nick-name="{{item.nickName}}"
+            avatar-url="{{item.avatarUrl}}"
+            text="{{item.text}}"
+            is-self="{{item.isSelf}}"
+            wx:key="{{items.key}}"
+        ></message>
+    </scroll-view>
+    <view class='foot'>
+        <input class='input' bindinput="getInput" value="{{inputValue}}"></input>
+        <button class='send' bindtap='send'>发送</button>
+    </view>
+</view>

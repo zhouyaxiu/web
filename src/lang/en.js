@@ -5,7 +5,7 @@ export default {
     title: 'Fanhan Tech Data Service Platform',
     project: 'Project',
     help: 'Help',
-    register: 'Register',
+    register: 'Sign up',
     login: 'Log in',
     logout: 'Log out',
     workbench: 'Workbench',
@@ -39,11 +39,11 @@ export default {
     }
   },
   register: {
-    title: 'Register',
+    title: 'Sign up',
     username: 'Username',
     email: 'Email',
-    mobile: 'Telephone',
-    code: 'Enter verification code',
+    mobile: 'Phone number',
+    code: 'Verification code',
     password: 'Create password',
     confirm: 'Confirm password',
     agree: 'I agree',
@@ -57,13 +57,14 @@ export default {
     }
   },
   login: {
-    title: 'Login',
-    username: 'Username',
+    title: 'Log in',
+    username: 'Username or email',
     password: 'Password',
-    remember: 'Remember me',
-    forgot: 'Forgot my password',
-    login: 'Enter',
-    socialAccount: 'Login with WeChat',
+    logways1: 'Login in with phone',
+    logways2: 'Log in with password',
+    forgot: 'Forgot password?',
+    login: 'Log in',
+    socialAccount: 'OR',
     js: {
       error: 'Failure',
       success: 'Success'
@@ -146,11 +147,25 @@ export default {
       }
     }
   },
+  collect: {
+    title: 'data and requirements',
+    upload: 'upload data',
+    sample: 'Sample',
+    result: 'quality inspection result',
+    qualified: 'qualified',
+    unqualified: 'unqualified',
+    editor: 'comments',
+    js: {
+      unfinished: 'unfinished',
+      error: 'error',
+      nodatas: 'no data'
+    }
+  },
   password: {
     title: 'Reset password',
     username: 'Enter username',
-    mobile: 'Enter telephone',
-    code: 'Enter verification code',
+    mobile: 'Phone number',
+    code: 'Verification code',
     password: 'Create new password',
     confirm: 'Confirm new password',
     form: 'Set new password',
@@ -188,60 +203,50 @@ export default {
     label: '233 people annotating'
   },
   user: {
+    your: ' ',
+    editinfo: 'Edit',
+    save: 'Save',
+    reset: 'Cancel',
     nav: {
-      title1: 'Basic information',
+      settings: 'Settings',
       profile: 'Personal information',
-      title2: 'Skill information',
-      skill: 'Skill demonstration',
-      title3: 'Account & Security',
+      accountset: 'Account',
       real: 'Real-name authentication'
     },
-    profile_form: {
-      editinfo: 'Edit profile',
-      tips: 'Tips: Please fill in all information with “*”',
-      username: 'Username: ',
-      sex: 'Gender: ',
+    profile: {
+      uploadavatar: 'Upload a photo',
+      username: 'Username',
+      sex: 'Gender',
       male: 'Male',
       female: 'Female',
-      birthday: 'Birthdate: ',
-      selectday: 'Choose',
-      location: 'Residence: ',
-      uploadavatar: 'Upload a photo',
-      nationality: 'Nationality: ',
-      pleaseselect: 'Choose',
-      ethnicity: 'Ethnicity: ',
+      birthday: 'Birthdate',
+      location: 'Residence',
+      nationality: 'Nationality',
+      ethnicity: 'Ethnicity',
       whiteperson: 'White',
       yellowperson: 'Yellow',
       blackperson: 'Black',
-      marriage: 'Marriage status: ',
+      marriage: 'Marriage status',
       unmarry: 'Single',
       married: 'Married',
-      monthertonue: 'Mother tongue: ',
-      chinese: 'Chinese',
-      english: 'English',
-      education: 'Education background: ',
+      monthertonue: 'Mother tongue',
+      education: 'Education background',
       juniorschool: 'Junior high school degree',
       highschool: 'High school degree',
       juniorcollege: 'Undergraduate degree',
       regularcollege: 'Graduate degree',
       graduatestudent: 'Doctor degree',
       doctor: 'Post doctor',
-      industry: 'Industry: ',
+      industry: 'Industry',
       internet: 'Internet',
       finance: 'Finance',
       edu: 'Education',
       service: 'Service',
-      income: 'Income: ',
+      income: 'Income',
       lessthan: 'Below 1,000',
       morethan: 'Above 5,000',
-      save: 'Save',
-      reset: 'Cancel',
       js: {
-        rules: {
-          gender: 'Please choose gender',
-          birthday: 'Please choose date',
-          fields: 'Please choose residence'
-        },
+        pleaseselect: 'Choose',
         error: {
           type1: 'Failure',
           type2: 'The photo must be jpg!',
@@ -250,15 +255,13 @@ export default {
         success: 'Success '
       }
     },
-    profile: {
-      info: 'Basic information',
-      edit: 'Edit',
-      js: {
-        man: 'Male',
-        woman: 'Female',
-        marital1: 'Single',
-        marital2: 'Married'
-      }
+    account: {
+      password: 'Password',
+      pwdchange: 'Change password',
+      associate: 'Associate',
+      associated: 'Associated',
+      unassociated: 'Unassociated',
+      developing: 'Developing'
     },
     real_from: {
       realname: 'Real name authentication',
@@ -305,20 +308,8 @@ export default {
       }
     },
     skill: {
-      editskill: 'Edit skill',
-      language: 'Languages: ',
-      select: 'Choose',
-      save: 'Save',
-      reset: 'Cancel',
-      skillshow: 'Skill demonstration',
-      edit: 'Edit',
-      js: {
-        success: 'Success',
-        error: 'Failure',
-        chinese: 'Chinese',
-        english: 'English',
-        spanish: 'Spanish'
-      }
+      language: 'Languages',
+      skillshow: 'Skill demonstration'
     }
   },
   workbench: {
@@ -962,7 +953,8 @@ export default {
     reviseTask: 'Revise and submit',
     success: 'Success',
     warning: 'Warning',
-    error: 'Fail'
+    error: 'Fail',
+    errorMessage: 'Please check and make sure that all the annotations are finished'
   },
   task3Do: {
     title: 'Please annotate according to the requirements.',

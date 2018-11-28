@@ -58,9 +58,10 @@ export default {
   },
   login: {
     title: '登录泛函标注平台',
-    username: '用户名',
+    username: '用户名或邮箱',
     password: '请输入密码',
-    remember: '记住我',
+    logways1: '使用手机登录',
+    logways2: '使用密码登录',
     forgot: '找回密码',
     login: '登录',
     // 这里有增加
@@ -150,6 +151,20 @@ export default {
         type1: '成功',
         type2: '上传成功'
       }
+    }
+  },
+  collect: {
+    title: '数据和要求',
+    upload: '上传数据',
+    sample: '样例',
+    result: '质检结果',
+    qualified: '合格',
+    unqualified: '不合格',
+    editor: '评论',
+    js: {
+      unfinished: '未完成',
+      error: '错误',
+      nodatas: '没有数据'
     }
   },
   pushTask: {
@@ -962,60 +977,50 @@ export default {
     }
   },
   user: {
+    your: '您的',
+    save: '保存',
+    reset: '取消',
+    editinfo: '编辑',
     nav: {
-      title1: '基础信息',
-      profile: '个人信息',
-      title2: '技能信息',
-      skill: '技能展示',
-      title3: '账户&安全',
+      settings: '设置',
+      profile: '个人档案',
+      accountset: '账号设置',
       real: '实名认证'
     },
-    profile_form: {
-      editinfo: '编辑个人信息',
-      tips: '提示：您需要完善标有星号 (*) 的信息才能参与项目',
-      username: '用户名：',
-      sex: '性别：',
+    profile: {
+      username: '您的名字',
+      uploadavatar: '上传新头像',
+      sex: '性别',
       male: '男',
       female: '女',
-      birthday: '出生日期：',
-      selectday: '选择日期',
-      location: '所在地：',
-      uploadavatar: '点击上传头像',
-      nationality: '国籍：',
-      pleaseselect: '请选择',
-      ethnicity: '种族：',
+      birthday: '出生日期',
+      location: '所在地',
+      nationality: '国籍',
+      ethnicity: '种族',
       whiteperson: '白种人',
       yellowperson: '黄种人',
       blackperson: '黑种人',
-      marriage: '婚姻状态：',
+      marriage: '婚姻状态',
       unmarry: '未婚',
       married: '已婚',
-      monthertonue: '母语：',
-      chinese: '汉语',
-      english: '英语',
-      education: '学历：',
+      monthertonue: '母语',
+      education: '学历',
       juniorschool: '初中',
       highschool: '高中',
       juniorcollege: '大专',
       regularcollege: '本科',
       graduatestudent: '研究生',
       doctor: '博士',
-      industry: '行业：',
+      industry: '行业',
       internet: '互联网',
       finance: '金融',
       edu: '教育',
       service: '服务',
-      income: '收入：',
+      income: '收入',
       lessthan: '1000以下',
       morethan: '5000以上',
-      save: '保存',
-      reset: '取消',
       js: {
-        rules: {
-          gender: '请选择性别',
-          birthday: '请选择日期',
-          fields: '请选择所在地'
-        },
+        pleaseselect: '请选择',
         error: {
           type1: '失败',
           type2: '上传头像图片只能是 JPG 格式!',
@@ -1024,15 +1029,13 @@ export default {
         success: '成功'
       }
     },
-    profile: {
-      info: '个人信息',
-      edit: '编辑',
-      js: {
-        man: '男',
-        woman: '女',
-        marital1: '未婚',
-        marital2: '已婚'
-      }
+    account: {
+      password: '密码',
+      pwdchange: '更改密码',
+      associate: '关联',
+      associated: '已关联',
+      unassociated: '未关联',
+      developing: '开发中'
     },
     real_from: {
       realname: '实名认证',
@@ -1079,20 +1082,8 @@ export default {
       }
     },
     skill: {
-      editskill: '编辑技能信息',
-      language: '擅长的语言：',
-      select: '请选择',
-      save: '保存',
-      reset: '取消',
-      skillshow: '技能展示',
-      edit: '编辑',
-      js: {
-        success: '成功',
-        error: '失败',
-        chinese: '汉语',
-        english: '英语',
-        spanish: '西班牙语'
-      }
+      language: '擅长的语言',
+      skillshow: '技能展示'
     }
   },
   voiceExample: {
@@ -1143,7 +1134,8 @@ export default {
     reviseTask: '修改并提交',
     success: '成功',
     warning: '警告',
-    error: '失败'
+    error: '失败',
+    errorMessage: '请检查所有标注是否都已完成'
   },
   task3Do: {
     title: '请按要求标注下面一段语音。',

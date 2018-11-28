@@ -82,7 +82,7 @@ module.exports = {
 }
 
 function httpproxy() {
-  var ip = '127.0.0.1'
-  var port = '8080'
+  var ip = '10.0.0.19'
+  var port = '80'
   return 'http://' + ip + ':' + port
 }

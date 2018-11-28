@@ -10,7 +10,7 @@
           <!-- 密码登录 -->
           <div v-if="loginWay === 1">
             <el-form-item prop="name">
-              <el-input v-model="form.name" placeholder="用户名/邮箱"></el-input>
+              <el-input v-model="form.name" :placeholder="$t('register.username')"></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <el-input type="password" v-model="form.password" :placeholder="$t('login.password')" required></el-input>
@@ -35,8 +35,8 @@
             </el-form-item>
           </div>
           <el-form-item class="mb-2">
-            <a href="javascript:void(0);" v-if="loginWay === 1" @click="loginWay = 2">使用手机登录</a>
-            <a href="javascript:void(0);" v-if="loginWay === 2" @click="loginWay = 1">使用密码登录</a>
+            <a href="javascript:void(0);" v-if="loginWay === 1" @click="loginWay = 2">{{$t("login.logways1")}}</a>
+            <a href="javascript:void(0);" v-if="loginWay === 2" @click="loginWay = 1">{{$t("login.logways2")}}</a>
             <a href="/password" style="float:right">{{$t("login.forgot")}}</a>
           </el-form-item>
           <el-button type="primary" @click="login('form')" style="width:100%">{{$t("login.login")}}</el-button>
@@ -286,9 +286,9 @@ export default {
 }
 .login-other-title {
   font-size: 14px;
-  top:-10px;
   padding:0 10px;
-  left: calc(50% - 52px);
+  left: 50%;
+  transform: translate(-50%,-10px)
 }
 .f-pointer {
   cursor: pointer;

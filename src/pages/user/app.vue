@@ -5,7 +5,7 @@
     <div class="user-top">
       <div class="user-top-img"></div>
       <div class="container">
-        <el-dialog class="upload-dialog-box" title="上传新头像" :visible.sync="dialogFormVisible" :width="dialogWidtn" center>
+        <el-dialog class="upload-dialog-box" :title="$t('user.profile.uploadavatar')" :visible.sync="dialogFormVisible" :width="dialogWidtn" center>
           <el-form :model="form" class="uploadDialog">
             <el-upload
               class="avatar-uploader"
@@ -18,8 +18,8 @@
             </el-upload>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="updateProfile(form)">保存</el-button>
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="updateProfile(form)">{{$t("user.save")}}</el-button>
+            <el-button @click="dialogFormVisible = false">{{$t("user.reset")}}</el-button>
           </div>
         </el-dialog>
         <el-row class="user-top-title">
@@ -29,7 +29,7 @@
               <i class="el-icon-plus showImg"></i>
             </div>
           </el-col>
-          <el-col :span="6" :xs="24"><span>{{username}}</span></el-col>
+          <el-col :span="6" :xs="24"><span>{{username === '' ? $t("user.profile.username") : username}}</span></el-col>
         </el-row>
       </div>
     </div>
@@ -37,7 +37,7 @@
       <el-row>
         <el-col :span="6" :xs="24">
           <div class="user-nav">
-            <div class="user-set">设置</div>
+            <div class="user-set">{{$t("user.nav.settings")}}</div>
             <el-menu
               :default-active="$route.path"
               class="el-menu-vertical-demo"
@@ -47,19 +47,19 @@
               <router-link :to="{ name: 'archives'}">
                 <el-menu-item index="/" @click="hideMenu()">
                   <i class="el-icon-tickets"></i>
-                  <span slot="title">个人档案</span>
+                  <span slot="title">{{$t("user.nav.profile")}}</span>
                 </el-menu-item>
               </router-link>
               <router-link :to="{ name: 'accountSet'}">
                 <el-menu-item index="/accountSet" @click="hideMenu()">
                   <i class="el-icon-setting"></i>
-                  <span slot="title">账号设置</span>
+                  <span slot="title">{{$t("user.nav.accountset")}}</span>
                 </el-menu-item>
               </router-link>
               <router-link :to="{ name: 'realShow'}">
                 <el-menu-item index="/realShow" @click="hideMenu()">
                   <i class="el-icon-location"></i>
-                  <span slot="title">实名认证</span>
+                  <span slot="title">{{$t("user.nav.real")}}</span>
                 </el-menu-item>
               </router-link>
             </el-menu>
@@ -84,6 +84,7 @@ import axios from 'axios'
 import Header from 'components/header'
 import Footer from 'components/footer'
 import $ from 'jquery'
+import {language} from 'lang'
 
 // let url = '/api/user/profile'
 let http = axios.create()
@@ -99,7 +100,7 @@ export default {
       screenWidth: 0,
       dialogFormVisible: false,
       imgUrl: '',
-      username: '您的名字',
+      username: '',
       form: {
         avatar: ''
       },
@@ -136,15 +137,15 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
         vm.$notify.error({
-          title: '失败',
-          message: '上传头像图片只能是 JPG 格式!',
+          title: language('user.profile.js.error.type1'),
+          message: language('user.profile.js.error.type2'),
           duration: 2000
         })
       }
       if (!isLt2M) {
         vm.$notify.error({
-          title: '失败',
-          message: '上传头像图片大小不能超过 2MB!',
+          title: language('user.profile.js.error.type1'),
+          message: language('user.profile.js.error.type3'),
           duration: 2000
         })
       }
@@ -156,9 +157,9 @@ export default {
       setTimeout(() => {
         const userInfo = vm.$refs.header.user
         console.log(vm.$refs.header.user)
-        vm.username = userInfo.username
-        vm.imgUrl = userInfo.avatar
-        vm.form.avatar = userInfo.avatar
+        vm.username = userInfo.username || language('user.profile.username')
+        vm.imgUrl = userInfo.avatar || ''
+        vm.form.avatar = userInfo.avatar || ''
       }, 500)
     },
     updateProfile (form) {
@@ -171,7 +172,7 @@ export default {
           if (rsp.code === 0) {
             vm.dialogFormVisible = false
             vm.$notify.success({
-              title: '成功',
+              title: language('user.profile.js.success'),
               message: rsp.message,
               duration: 2000
             })
@@ -179,7 +180,7 @@ export default {
             vm.$refs.header.userSet(vm.form.avatar)
           } else {
             vm.$notify.error({
-              title: '失败',
+              title: language('user.profile.js.error.type1'),
               message: rsp.message,
               duration: 2000
             })
@@ -199,7 +200,7 @@ export default {
     //       if (rsp.code === 0) {
     //         vm.dialogFormVisible = false
     //         vm.$notify.success({
-    //           title: '成功',
+    //           title: language('user.profile.js.success'),
     //           message: rsp.message,
     //           duration: 2000
     //         })
@@ -208,7 +209,7 @@ export default {
     //         }, 1000)
     //       } else {
     //         vm.$notify.error({
-    //           title: '失败',
+    //           title: language('user.profile.js.error.type1'),
     //           message: rsp.message,
     //           duration: 2000
     //         })

@@ -1,25 +1,25 @@
 <template>
 <div class="real">
   <div class="user-form-title">
-    <h2>实名认证</h2>
+    <h2>{{$t("user.real_from.realname")}}</h2>
     <el-switch
       v-model="realNameMode"
-      active-text="身份证"
-      inactive-text="护照">
+      :active-text="$t('user.real_from.idcard')"
+      :inactive-text="$t('user.real_from.passport')">
     </el-switch>
   </div>
   <div style="padding-top: 12px;" v-if="realNameMode">
-    <el-form :model="form" :rules="rules" ref="form"  style="margin-top：20px;">
+    <el-form :model="form" :rules="rules" ref="form" label-position="top" style="margin-top：20px;">
       <el-form-item :label="$t('user.real_from.truename')" prop="realName">
-        <el-input v-model="form.realName" style="width:50%"></el-input>
+        <el-input v-model="form.realName" style="max-width:220px"></el-input>
       </el-form-item>
       <el-form-item :label="$t('user.real_from.idcrdnum')" prop="idCardNum">
-        <el-input v-model="form.idCardNum" style="width:50%"></el-input>
+        <el-input v-model="form.idCardNum" style="max-width:220px"></el-input>
       </el-form-item>
       <div class="row">
         <div class="col-md-4">
           <el-form-item :label="$t('user.real_from.idcardfront')" prop="idCardFront">
-            <el-upload class="avatar-uploader" action="/api/user/idcard?type=front" :show-file-list="false" :on-success="handleIdCardFrontSuccess" :before-upload="beforeUpload">
+            <el-upload class="avatar-uploader" action="/api/upload/user/idcard?type=front" :show-file-list="false" :on-success="handleIdCardFrontSuccess" :before-upload="beforeUpload">
               <img v-if="form.idCardFront" :src="form.idCardFront" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-4">
           <el-form-item :label="$t('user.real_from.idcardback')" prop="idCardBack">
-            <el-upload class="avatar-uploader" action="/api/user/idcard?type=back" :show-file-list="false" :on-success="handleIdCardBackSuccess" :before-upload="beforeUpload">
+            <el-upload class="avatar-uploader" action="/api/upload/user/idcard?type=back" :show-file-list="false" :on-success="handleIdCardBackSuccess" :before-upload="beforeUpload">
               <img v-if="form.idCardBack" :src="form.idCardBack" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-4">
           <el-form-item :label="$t('user.real_from.idcardhold')" prop="idCardHold">
-            <el-upload class="avatar-uploader" action="/api/user/idcard?type=hold" :show-file-list="false" :on-success="handleIdCardHoldSuccess" :before-upload="beforeUpload">
+            <el-upload class="avatar-uploader" action="/api/upload/user/idcard?type=hold" :show-file-list="false" :on-success="handleIdCardHoldSuccess" :before-upload="beforeUpload">
               <img v-if="form.idCardHold" :src="form.idCardHold" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
@@ -48,16 +48,16 @@
     </el-form>
   </div>
   <div style="padding-top: 12px;" v-if="!realNameMode">
-    <el-form :model="formPassport" :rules="rules" ref="formPassport"  style="margin-top：20px;">
+    <el-form :model="formPassport" :rules="rules" ref="formPassport" label-position="top" style="margin-top：20px;">
       <el-form-item :label="$t('user.real_from.truename')" prop="realName">
-        <el-input v-model="formPassport.realName" style="width:50%"></el-input>
+        <el-input v-model="formPassport.realName" style="max-width:220px"></el-input>
       </el-form-item>
-      <el-form-item label="护照号码" prop="PassportNum">
-        <el-input v-model="formPassport.PassportNum" style="width:50%"></el-input>
+      <el-form-item :label="$t('user.real_from.passportNum')" prop="PassportNum">
+        <el-input v-model="formPassport.PassportNum" style="max-width:220px"></el-input>
       </el-form-item>
       <div class="row">
         <div class="col-md-4">
-          <el-form-item label="上传护照照片" prop="PassportFront">
+          <el-form-item :label="$t('user.real_from.passportImg')" prop="PassportFront">
             <el-upload class="avatar-uploader" action="/api/user/idcard?type=front" :show-file-list="false" :on-success="handlePassportFrontSuccess" :before-upload="beforeUpload">
               <img v-if="formPassport.PassportFront" :src="formPassport.PassportFront" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -104,9 +104,9 @@ export default {
         idCardBack: [{ required: true, message: language('user.real_from.js.rules.idCardBack'), trigger: 'change' }],
         idCardHold: [{ required: true, message: language('user.real_from.js.rules.idCardHold'), trigger: 'change' }],
         PassportNum: [
-          { required: true, message: '请填写护照号', trigger: 'blur' }
+          { required: true, message: language('user.real_from.js.rules.passportNum'), trigger: 'blur' }
         ],
-        PassportFront: [{ required: true, message: '请上传护照照片', trigger: 'change' }]
+        PassportFront: [{ required: true, message: language('user.real_from.js.rules.passportFront'), trigger: 'change' }]
       },
       dialogImageUrl: '',
       dialogVisible: false
@@ -170,6 +170,7 @@ export default {
           idType = 'idcard'
           idForm = {
             realName: vm.form.realName,
+            realType: 'idcard',
             idCardNum: vm.form.idCardNum,
             idCardFront: vm.form.idCardFront,
             idCardBack: vm.form.idCardBack,
@@ -179,6 +180,7 @@ export default {
           idType = 'passport'
           idForm = {
             realName: vm.formPassport.realName,
+            realType: 'passport',
             PassportNum: vm.formPassport.PassportNum,
             PassportFront: vm.formPassport.PassportFront
           }

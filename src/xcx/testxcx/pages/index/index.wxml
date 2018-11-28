@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+  <view class="usermotto" bindtap="bindViewTap">
+    <text class="user-motto">进入聊天室</text>
+  </view>
+  
+  <view>
+    <navigator url='../chatroom/index'>进入聊天室</navigator>
+    <navigator url='../addPhoneContact/index'>addPhoneContact</navigator>
+    <navigator url='../onGyroscopeChange/index'>onGyroscopeChange</navigator>
+    <navigator url='../nodesref/index'>nodesref</navigator>
+    <navigator url='../observer/index'>observer</navigator>
+  </view> 
+  <a href="http://www.qq.com" data-miniprogram-appid="wx788f35a15aae3305" data-miniprogram-path="pages/index/index">点击跳小程序</a>
+</view>

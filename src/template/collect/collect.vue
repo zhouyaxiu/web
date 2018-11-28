@@ -1,7 +1,7 @@
 <template>
   <div class="text-template">
     <div class="container">
-      <p class="font-italic">数据和要求:</p>
+      <p class="font-italic">{{$t('collect.title')}}:</p>
       <div>
         <div class="messageInLab" v-for="(messageLab,messIndex) in wholeRadios" :key='messageLab.title'>
           <span>{{messIndex + 1}}.{{messageLab.title}}:</span>
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div v-show="data.length > 0">
-        <p>上传数据</p>
+        <p>{{$t('collect.upload')}}</p>
         <div class="g-item-box" v-for="(item,oindex) in data" :key="item">
           <div>
             <div>
@@ -38,7 +38,7 @@
                   <div class="collect-show" v-if="item.type === 3 && item.sample">
                     <video preload="auto" controls="controls" :src="item.sample" style="width: 100%;"></video>
                   </div>
-                  <div class="el-upload__tip s-item-sample" v-if="item.sample">样例</div>
+                  <div class="el-upload__tip s-item-sample" v-if="item.sample">{{$t('collect.sample')}}</div>
                 </div>
                 <div>
                   <div class="collect-show" v-if="item.type === 1 && result[oindex].raw">
@@ -53,7 +53,7 @@
                 </div>
               </div>
               <span v-if="UploadButtonVisible === true" class="btn btn-primary btn-sm fileinput-button">
-                <span>上传数据</span>
+                <span>{{$t('collect.upload')}}</span>
                 <input type="file" :accept="upLoadFile(item.type)" :id="'select-file'+oindex" @change="(value) => addFile(value, oindex)">
               </span>
               <el-progress :percentage="progress[oindex]" style="max-width:360px;" v-show="progress[oindex] > 0"></el-progress>
@@ -76,20 +76,20 @@
             </div>
           </div>
           <div class="result" v-if="CheckRadioVisible">
-            <span>质检结果：</span>
+            <span>{{$t('collect.result')}}：</span>
             <el-radio-group v-model="checkRadio[oindex]">
-              <el-radio :label=0>合格</el-radio>
-              <el-radio :label=1>不合格</el-radio>
+              <el-radio :label=0>{{$t('collect.qualified')}}</el-radio>
+              <el-radio :label=1>{{$t('collect.unqualified')}}</el-radio>
             </el-radio-group>
           </div>
         </div>
       </div>
       <div class="d-flex justify-content-end" style="margin-top: 1rem;">
-        <el-button v-if="PostButtonVisible === true" type="success" @click="postTask" >提交</el-button>
+        <el-button v-if="PostButtonVisible === true" type="success" @click="postTask" >{{$t('collectWav.submit')}}</el-button>
       </div>
     </div>
     <div v-show="CommentVisible">
-      <div>评论:</div>
+      <div>{{$t('collect.editor')}}:</div>
       <div id="editor"></div>
     </div>
     <slot></slot>
@@ -215,7 +215,7 @@ export default {
     errInfo (msg) {
       let vm = this
       vm.$notify.error({
-        title: '错误',
+        title: language('collect.js.error'),
         message: msg,
         duration: 2000
       })
@@ -227,14 +227,14 @@ export default {
           return false
         }
         if (vm.result[i].raw === '') {
-          vm.errInfo('id为' + (i + 1) + '处没有数据')
+          vm.errInfo('id' + (i + 1) + ':' + language('collect.js.nodatas'))
           return false
         }
       }
       let i = 0
       if (vm.wholeRadios.length > 0 && Array.isArray(vm.wholeRadioContents)) {
         if (vm.wholeRadioContents.length !== vm.wholeRadios.length) {
-          vm.errInfo((language('labelTool.radio') + '未完成'))
+          vm.errInfo((language('labelTool.radio') + language('collect.js.unfinished')))
           return false
         }
         for (i = 0; i < vm.wholeRadioContents.length; i++) {
@@ -247,7 +247,7 @@ export default {
 
       if (vm.wholeCheckBoxs.length > 0 && Array.isArray(vm.wholeCheckBoxContents)) {
         if (vm.wholeCheckBoxContents.length !== vm.wholeCheckBoxs.length) {
-          vm.errInfo(language('labelTool.checkbox') + '未完成')
+          vm.errInfo(language('labelTool.checkbox') + language('collect.js.unfinished'))
           return false
         }
         for (i = 0; i < vm.wholeCheckBoxContents.length; i++) {
@@ -260,7 +260,7 @@ export default {
 
       if (vm.wholeInputs.length > 0 && Array.isArray(vm.wholeInputContents)) {
         if (vm.wholeInputContents.length !== vm.wholeInputs.length) {
-          vm.errInfo(language('labelTool.input') + '未完成')
+          vm.errInfo(language('labelTool.input') + language('collect.js.unfinished'))
           return false
         }
         for (i = 0; i < vm.wholeInputContents.length; i++) {

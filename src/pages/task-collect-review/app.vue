@@ -17,8 +17,8 @@
         CheckRadioVisible=true
         UploadButtonVisible=false
       >
-        <el-button type="primary" @click="acceptTask">通过</el-button>
-        <el-button type="primary" @click="rejectTask">拒绝</el-button>
+        <el-button type="primary" @click="acceptTask">{{$t('taskPublic.acceptTask')}}</el-button>
+        <el-button type="primary" @click="rejectTask">{{$t('taskPublic.rejectTask')}}</el-button>
       </collect>
     </div>
     <div class="theBottom">
@@ -33,7 +33,7 @@ import Footer from 'components/footer'
 import Collect from 'template/collect/collect'
 import axios from 'axios'
 import $ from 'jquery'
-// import {language} from 'lang'
+import {language} from 'lang'
 
 var http = axios.create({
   headers: {'X-Xsrftoken': $('meta[name=_xsrf]').attr('content')}
@@ -118,7 +118,7 @@ export default {
         } else {
           console.log('code not 0??')
           vm.$notify.error({
-            title: '失败',
+            title: language('taskPublic.error'),
             message: rsp.message,
             duration: 2000
           })
@@ -152,7 +152,7 @@ export default {
             vm.$refs.Template.load(result, vm.question.comment)
           } else {
             vm.$notify.error({
-              title: '失败',
+              title: language('taskPublic.error'),
               message: rsp.message,
               duration: 2000
             })
@@ -174,14 +174,14 @@ export default {
       // let url = '/api/projects/' + vm.projectId + '/task/review' + '?taskid=wbvFBAmv001&uuid=drTRz0jcm918FZq6JlSQzz2i4aSg403C&status=1001999'
       if (!vm.$refs.Template.valid()) {
         vm.$notify.error({
-          title: '失败',
-          message: '请检查所有标注是否都已完成',
+          title: language('taskPublic.error'),
+          message: language('taskPublic.errorMessage'),
           duration: 2000
         })
         return
       }
       let commentRes = {
-        comment: '通过',
+        comment: language('taskPublic.acceptTask'),
         radioContents: vm.$refs.Template.getCheckRadio()
       }
       http.post(url, {
@@ -192,7 +192,7 @@ export default {
           let rsp = response.data
           if (rsp.code === 0) {
             vm.$notify.success({
-              title: '成功',
+              title: language('taskPublic.success'),
               message: rsp.message,
               duration: 2000
             })
@@ -203,7 +203,7 @@ export default {
             }, 2000)
           } else {
             vm.$notify.error({
-              title: '失败',
+              title: language('taskPublic.error'),
               message: rsp.message,
               duration: 2000
             })
@@ -230,7 +230,7 @@ export default {
           console.log(rsp)
           if (rsp.code === 0) {
             vm.$notify.success({
-              title: '成功',
+              title: language('taskPublic.success'),
               message: rsp.message,
               duration: 2000
             })
@@ -241,7 +241,7 @@ export default {
             }, 2000)
           } else {
             vm.$notify.error({
-              title: '失败',
+              title: language('taskPublic.error'),
               message: rsp.message,
               duration: 2000
             })

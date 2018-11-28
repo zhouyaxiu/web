@@ -403,7 +403,7 @@ export default {
       filstySPs: '#00ff00',
       filstySP: '#0000ff',
       filstyZone: 'rgba(255,255,255,0)',
-      numsize: 20,
+      numsize: 10,
       pointradius: 2,
       linewidth: 2,
       projectid: '',
@@ -795,6 +795,7 @@ export default {
           continue
         }
         topctx.beginPath()
+        topctx.lineWidth = vm.linewidth / scalei
         if (connlines[i].type === 1 || connlines[i].type === 2) {
           topctx.moveTo(pts[connlines[i]['s'] - 1].x, pts[connlines[i]['s'] - 1].y)
           for (var j = 1; j < connlines[i]['d'] - connlines[i]['s'] + 1; j++) {
@@ -827,6 +828,7 @@ export default {
         let sP = pts[pointIndex[s]]
         let dP = pts[pointIndex[d]]
         topctx.beginPath()
+        topctx.lineWidth = vm.linewidth / scalei
         if (connlines[i].type === 1 || connlines[i].type === 2) {
           // 从s 依次画到 d
           topctx.moveTo(sP.x, sP.y)

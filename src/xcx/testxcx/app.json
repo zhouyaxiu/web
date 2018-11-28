@@ -1,0 +1,38 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/observer/index",
+    "pages/nodesref/index",
+    "pages/liveplayer/index",
+    "pages/addPhoneContact/index",
+    "pages/onGyroscopeChange/index",
+    "pages/chatroom/index",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "black",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"#fff"
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx788f35a15aae3305"
+  ],
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#15b3e4",
+    "backgroundColor": "#FFF",
+    "borderStyle": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/chatroom/index",
+        "text": "首页"
+      }
+    ]
+  },
+  "workers": "workers"
+}
