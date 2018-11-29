@@ -11,12 +11,13 @@
       <!-- <a style="padding: 15px;" :href="https://s301.fanhantech.com/descrpition/JFOFhX6Vhi2v6lWIvUqnAkSgt8xCeh0r.pdf"></a> -->
     </i-panel>
      <rich-text :nodes="nodes" bindtap="tap"></rich-text>
+     <embed src="https://s301.fanhantech.com/descrpition/JFOFhX6Vhi2v6lWIvUqnAkSgt8xCeh0r.pdf" type="application/pdf" width="100%" height="100%">  
   </div>
 </template>
 
 <script>
 import app from '../../App.vue'
-const PDF =require('./pdf.js')
+const PDF =require('./pdfobject.min.js')
 export default {
   data () {
     return {
@@ -63,6 +64,7 @@ export default {
   },
 
   onLoad (options) {
+    new PDF({ url: "https://s301.fanhantech.com/descrpition/JFOFhX6Vhi2v6lWIvUqnAkSgt8xCeh0r.pdf" }).embed()
     this.taskid = options.taskid
     console.log(PDF,'pdf')
     // let url='https://s301.fanhantech.com/descrpition/JFOFhX6Vhi2v6lWIvUqnAkSgt8xCeh0r.pdf'

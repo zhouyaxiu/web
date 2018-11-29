@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/three.js/r83/three.js"></script>
+  <script src="stats.js"></script>
+  <style type="text/css">
+    * {
+      margin: 0;
+    }
+
+    div#canvas-frame {
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      height: 600px;
+      background-color: #EEEEEE;
+    }
+  </style>
+</head>
+
+
+  <script>
+    var renderer;
+    var stats;
+    function initThree() {
+      width = document.getElementById('canvas-frame').clientWidth;
+      height = document.getElementById('canvas-frame').clientHeight;
+      renderer = new THREE.WebGLRenderer({
+        antialias: true
+      });
+      renderer.setSize(width, height);
+      document.getElementById('canvas-frame').appendChild(renderer.domElement);
+      renderer.setClearColor(0xFFFFFF, 1.0);
+      stats=new Stats();
+      stats.domElement.style.position='absolute';
+      stats.domElement.style.left='0px';
+      stats.domElement.style.top='0px';
+      document.getElementById('canvas-frame').appendChild(stats.domElement);
+    }
+    var camera;
+    function initCamera() {
+      camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
+      camera.position.x = 0;
+      camera.position.y = 0;
+      camera.position.z = 600;
+      camera.up.x = 0;
+      camera.up.y = 1;
+      camera.up.z = 0;
+      camera.lookAt({
+        x: 0, y: 0, z: 0
+      })
+    }
+    var scene;
+    function initScene() {
+      scene = new THREE.Scene();
+    }
+    var light;
+    function initLight() {
+      light = new THREE.AmbientLight(0xFF0000);
+      light.position.set(100, 100, 200);
+      scene.add(light);
+      light=new THREE.PointLight(0x00FF00);
+      light.position.set(0,0,300);
+      scene.add(light);
+    }
+    var cube;
+    var mesh;
+    function initObject() {
+      //CylinderGeometry几何体
+      var geometry = new THREE.CylinderGeometry(70,100,200);
+      //MeshLambertMaterial高级材质 
+      //ambient 环境色       emissive（发射的） wrapAround  wrapRGB
+      var material = new THREE.MeshLambertMaterial({ color:0xFFFF00 });
+      mesh=new THREE.Mesh(geometry,material);
+      mesh.position=new THREE.Vector3(0,0,0);
+      scene.add(mesh)
+    }
+    function threeStart() {
+      initThree();
+      initCamera();
+      initScene();
+      initLight();
+      initObject();
+      animation()
+    }
+    function animation(){
+      // camera.position.x=camera.position.x-1;
+      changeFov();
+      // mesh.position.x-=1;
+      renderer.render(scene,camera);
+      requestAnimationFrame(animation);
+      
+      stats.update()
+    }
+    function changeFov(){
+      var txtFov=document.getElementById('txtFov').value;
+      var val=parseFloat(txtFov);
+      setCameraFov(val);
+    }
+    function setCameraFov(fov){
+      camera.fov=fov;
+      camera.updateProjectionMatrix();
+    }
+  </script>
+
+  <body onload="threeStart();">
+    <div id="canvas-frame"></div>
+    <div>
+      Fov:<input type="text" value="45" id="txtFov" />(0到180的值)
+    </div>
+  </body>
+
+</html>
